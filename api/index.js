@@ -35,12 +35,15 @@ module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
     if (req.method === 'OPTIONS') {
-        res.status(200).end();
+        res.statusCode = 200;
+        res.end();
         return;
     }
 
     const sendJson = (data, statusCode = 200) => {
-        res.status(statusCode).json(data);
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = statusCode;
+        res.end(JSON.stringify(data));
     };
 
     const url = req.url || '';
