@@ -1,0 +1,246 @@
+{
+  "Cincinnati Reds vs St. Louis Cardinals": {
+    "homeTeam": "Cincinnati Reds",
+    "awayTeam": "St. Louis Cardinals",
+    "homePitcher": {
+      "name": "Rhett Lowder",
+      "id": 695076,
+      "wins": 4,
+      "losses": 8,
+      "era": "5.15",
+      "whip": "1.48",
+      "strikeouts": 77,
+      "k9": "7.35",
+      "innings": "94.1"
+    },
+    "awayPitcher": {
+      "name": "선발 미정 (발표 대기)"
+    }
+  },
+  "Tampa Bay Rays vs Baltimore Orioles": {
+    "homeTeam": "Tampa Bay Rays",
+    "awayTeam": "Baltimore Orioles",
+    "homePitcher": {
+      "name": "Shane McClanahan",
+      "id": 663556,
+      "wins": 9,
+      "losses": 6,
+      "era": "3.09",
+      "whip": "1.12",
+      "strikeouts": 91,
+      "k9": "8.27",
+      "innings": "99.0"
+    },
+    "awayPitcher": {
+      "name": "Brandon Young",
+      "id": 687064,
+      "wins": 9,
+      "losses": 3,
+      "era": "3.33",
+      "whip": "1.32",
+      "strikeouts": 93,
+      "k9": "7.36",
+      "innings": "113.2"
+    }
+  },
+  "Philadelphia Phillies vs Miami Marlins": {
+    "homeTeam": "Philadelphia Phillies",
+    "awayTeam": "Miami Marlins",
+    "homePitcher": {
+      "name": "Cristopher Sánchez",
+      "id": 650911,
+      "wins": 15,
+      "losses": 4,
+      "era": "2.54",
+      "whip": "1.19",
+      "strikeouts": 181,
+      "k9": "10.46",
+      "innings": "155.2"
+    },
+    "awayPitcher": {
+      "name": "Janson Junk",
+      "id": 676083,
+      "wins": 6,
+      "losses": 7,
+      "era": "4.41",
+      "whip": "1.32",
+      "strikeouts": 64,
+      "k9": "6.57",
+      "innings": "87.2"
+    }
+  },
+  "Pittsburgh Pirates vs Detroit Tigers": {
+    "homeTeam": "Pittsburgh Pirates",
+    "awayTeam": "Detroit Tigers",
+    "homePitcher": {
+      "name": "Carmen Mlodzinski",
+      "id": 669387,
+      "wins": 6,
+      "losses": 5,
+      "era": "3.79",
+      "whip": "1.40",
+      "strikeouts": 78,
+      "k9": "7.04",
+      "innings": "99.2"
+    },
+    "awayPitcher": {
+      "name": "Framber Valdez",
+      "id": 664285,
+      "wins": 7,
+      "losses": 8,
+      "era": "4.26",
+      "whip": "1.39",
+      "strikeouts": 106,
+      "k9": "7.17",
+      "innings": "133.0"
+    }
+  },
+  "Boston Red Sox vs Arizona Diamondbacks": {
+    "homeTeam": "Boston Red Sox",
+    "awayTeam": "Arizona Diamondbacks",
+    "homePitcher": {
+      "name": "선발 미정 (발표 대기)"
+    },
+    "awayPitcher": {
+      "name": "Mitch Bratt",
+      "id": 683352,
+      "wins": 1,
+      "losses": 1,
+      "era": "3.74",
+      "whip": "1.40",
+      "strikeouts": 25,
+      "k9": "6.68",
+      "innings": "33.2"
+    }
+  },
+  "New York Mets vs San Diego Padres": {
+    "homeTeam": "New York Mets",
+    "awayTeam": "San Diego Padres",
+    "homePitcher": {
+      "name": "Nolan McLean",
+      "id": 690997,
+      "wins": 8,
+      "losses": 8,
+      "era": "3.42",
+      "whip": "1.13",
+      "strikeouts": 159,
+      "k9": "10.47",
+      "innings": "136.2"
+    },
+    "awayPitcher": {
+      "name": "Walker Buehler",
+      "id": 621111,
+      "wins": 7,
+      "losses": 5,
+      "era": "4.88",
+      "whip": "1.43",
+      "strikeouts": 100,
+      "k9": "7.87",
+      "innings": "114.1"
+    }
+  },
+  "Kansas City Royals vs Athletics": {
+    "homeTeam": "Kansas City Royals",
+    "awayTeam": "Athletics",
+    "homePitcher": {
+      "name": "Michael Wacha",
+      "id": 608379,
+      "wins": 5,
+      "losses": 8,
+      "era": "3.46",
+      "whip": "1.15",
+      "strikeouts": 117,
+      "k9": "6.99",
+      "innings": "150.2"
+    },
+    "awayPitcher": {
+      "name": "Mason Barnett",
+      "id": 686930,
+      "wins": 1,
+      "losses": 3,
+      "era": "6.16",
+      "whip": "1.45",
+      "strikeouts": 36,
+      "k9": "8.53",
+      "innings": "38.0"
+    }
+  },
+  "Minnesota Twins vs Atlanta Braves": {
+    "homeTeam": "Minnesota Twins",
+    "awayTeam": "Atlanta Braves",
+    "homePitcher": {
+      "name": "Bailey Ober",
+      "id": 641927,
+      "wins": 7,
+      "losses": 4,
+      "era": "4.64",
+      "whip": "1.23",
+      "strikeouts": 67,
+      "k9": "6.09",
+      "innings": "99.0"
+    },
+    "awayPitcher": {
+      "name": "Martín Pérez",
+      "id": 527048,
+      "wins": 8,
+      "losses": 6,
+      "era": "2.96",
+      "whip": "1.15",
+      "strikeouts": 80,
+      "k9": "6.77",
+      "innings": "106.1"
+    }
+  },
+  "Chicago Cubs vs Chicago White Sox": {
+    "homeTeam": "Chicago Cubs",
+    "awayTeam": "Chicago White Sox",
+    "homePitcher": {
+      "name": "Shota Imanaga",
+      "id": 684007,
+      "wins": 8,
+      "losses": 9,
+      "era": "3.74",
+      "whip": "1.10",
+      "strikeouts": 130,
+      "k9": "8.52",
+      "innings": "137.1"
+    },
+    "awayPitcher": {
+      "name": "Luis Castillo",
+      "id": 622491,
+      "wins": 4,
+      "losses": 9,
+      "era": "4.96",
+      "whip": "1.35",
+      "strikeouts": 101,
+      "k9": "8.21",
+      "innings": "110.2"
+    }
+  },
+  "Colorado Rockies vs Los Angeles Dodgers": {
+    "homeTeam": "Colorado Rockies",
+    "awayTeam": "Los Angeles Dodgers",
+    "homePitcher": {
+      "name": "Tomoyuki Sugano",
+      "id": 608372,
+      "wins": 12,
+      "losses": 5,
+      "era": "4.43",
+      "whip": "1.25",
+      "strikeouts": 66,
+      "k9": "5.23",
+      "innings": "113.2"
+    },
+    "awayPitcher": {
+      "name": "Blake Snell",
+      "id": 605483,
+      "wins": 0,
+      "losses": 1,
+      "era": "5.00",
+      "whip": "1.33",
+      "strikeouts": 15,
+      "k9": "15.00",
+      "innings": "9.0"
+    }
+  }
+}

@@ -1,0 +1,2583 @@
+{
+  "runAt": "2026-08-17T04:07:49.465Z",
+  "gateResults": {
+    "vigMath": "PASS",
+    "betmanGamesFound": "PASS",
+    "battingEndpoint": "PASS",
+    "gamesMatched": "PASS",
+    "starterAdapter": "PASS",
+    "bullpenInputs": "PASS",
+    "probsNormalized": "PASS",
+    "snapshotsBuilt": "PASS",
+    "missingExplicit": "PASS",
+    "noFairProbs": "PASS",
+    "noPicks": "PASS"
+  },
+  "snapshots": [
+    {
+      "gameId": 824514,
+      "gamePk": 824514,
+      "gameDate": "2026-08-17T17:40:00Z",
+      "betmanMatchSeq": 4512,
+      "venue": "Great American Ball Park",
+      "homeTeam": {
+        "id": 113,
+        "name": "Cincinnati Reds"
+      },
+      "awayTeam": {
+        "id": 138,
+        "name": "St. Louis Cardinals"
+      },
+      "marketPrior": {
+        "gameId": 824514,
+        "marketId": "G101-4512-승패",
+        "homeOdds": 1.75,
+        "awayOdds": 1.77,
+        "rawHomeProbability": 0.5714285714285714,
+        "rawAwayProbability": 0.5649717514124294,
+        "overround": 1.1364003228410007,
+        "noVigHomeProbability": 0.5028409090909092,
+        "noVigAwayProbability": 0.497159090909091,
+        "observedAt": "2026-08-17T04:07:46.916Z"
+      },
+      "homeStarter": {
+        "pitcherId": null,
+        "fullName": null,
+        "handedness": null,
+        "status": "UNKNOWN",
+        "seasonStats": null,
+        "recentStarts": null,
+        "daysRest": null,
+        "uncertaintyFlag": true,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:46.916Z"
+      },
+      "awayStarter": {
+        "pitcherId": null,
+        "fullName": null,
+        "handedness": null,
+        "status": "UNKNOWN",
+        "seasonStats": null,
+        "recentStarts": null,
+        "daysRest": null,
+        "uncertaintyFlag": true,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:46.916Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 123,
+          "groundOuts": 918,
+          "airOuts": 1117,
+          "runs": 502,
+          "doubles": 177,
+          "triples": 11,
+          "homeRuns": 161,
+          "strikeOuts": 1166,
+          "baseOnBalls": 443,
+          "intentionalWalks": 9,
+          "hits": 925,
+          "hitByPitch": 40,
+          "avg": ".226",
+          "atBats": 4085,
+          "obp": ".306",
+          "slg": ".393",
+          "ops": ".699",
+          "caughtStealing": 29,
+          "stolenBases": 87,
+          "stolenBasePercentage": ".750",
+          "caughtStealingPercentage": ".250",
+          "groundIntoDoublePlay": 68,
+          "numberOfPitches": 18100,
+          "plateAppearances": 4612,
+          "totalBases": 1607,
+          "rbi": 479,
+          "leftOnBase": 842,
+          "sacBunts": 14,
+          "sacFlies": 27,
+          "babip": ".274",
+          "groundOutsToAirouts": "0.82",
+          "catchersInterference": 3,
+          "atBatsPerHomeRun": "25.37"
+        },
+        "team": {
+          "id": 113,
+          "name": "Cincinnati Reds",
+          "link": "/api/v1/teams/113"
+        },
+        "rank": 30
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 124,
+          "groundOuts": 1116,
+          "airOuts": 1142,
+          "runs": 548,
+          "doubles": 176,
+          "triples": 12,
+          "homeRuns": 129,
+          "strikeOuts": 952,
+          "baseOnBalls": 403,
+          "intentionalWalks": 14,
+          "hits": 997,
+          "hitByPitch": 77,
+          "avg": ".240",
+          "atBats": 4148,
+          "obp": ".316",
+          "slg": ".382",
+          "ops": ".698",
+          "caughtStealing": 21,
+          "stolenBases": 76,
+          "stolenBasePercentage": ".784",
+          "caughtStealingPercentage": ".216",
+          "groundIntoDoublePlay": 93,
+          "numberOfPitches": 18087,
+          "plateAppearances": 4689,
+          "totalBases": 1584,
+          "rbi": 535,
+          "leftOnBase": 852,
+          "sacBunts": 18,
+          "sacFlies": 41,
+          "babip": ".279",
+          "groundOutsToAirouts": "0.98",
+          "catchersInterference": 2,
+          "atBatsPerHomeRun": "32.16"
+        },
+        "team": {
+          "id": 138,
+          "name": "St. Louis Cardinals",
+          "link": "/api/v1/teams/138"
+        },
+        "rank": 20
+      },
+      "homeBullpen": {
+        "teamId": 113,
+        "teamName": "Cincinnati Reds",
+        "seasonBullpenEra": "4.51",
+        "seasonBullpenWhip": "1.40",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 138,
+        "teamName": "St. Louis Cardinals",
+        "seasonBullpenEra": "4.04",
+        "seasonBullpenWhip": "1.34",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 2602,
+        "venueName": "Great American Ball Park"
+      },
+      "restDays": {
+        "home": null,
+        "away": null
+      },
+      "injuries": null,
+      "missingFields": [
+        "homeStarter",
+        "awayStarter"
+      ],
+      "fetchedAt": "2026-08-17T04:07:46.917Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": false,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "LOW"
+      }
+    },
+    {
+      "gameId": 822939,
+      "gamePk": 822939,
+      "gameDate": "2026-08-17T22:05:00Z",
+      "betmanMatchSeq": 4526,
+      "venue": "Tropicana Field",
+      "homeTeam": {
+        "id": 139,
+        "name": "Tampa Bay Rays"
+      },
+      "awayTeam": {
+        "id": 110,
+        "name": "Baltimore Orioles"
+      },
+      "marketPrior": {
+        "gameId": 822939,
+        "marketId": "G101-4526-승패",
+        "homeOdds": 1.48,
+        "awayOdds": 2.17,
+        "rawHomeProbability": 0.6756756756756757,
+        "rawAwayProbability": 0.4608294930875576,
+        "overround": 1.1365051687632333,
+        "noVigHomeProbability": 0.5945205479452055,
+        "noVigAwayProbability": 0.4054794520547945,
+        "observedAt": "2026-08-17T04:07:46.917Z"
+      },
+      "homeStarter": {
+        "pitcherId": 663556,
+        "fullName": "Shane McClanahan",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "3.09",
+          "whip": "1.12",
+          "inningsPitched": "99.0",
+          "strikeouts": 91,
+          "walks": 35,
+          "homeRunsAllowed": 7,
+          "source": "https://statsapi.mlb.com/api/v1/people/663556/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:47.065Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-31",
+            "opponent": "Milwaukee Brewers",
+            "ip": "4.2",
+            "er": 2,
+            "k": 4,
+            "bb": 3,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-06",
+            "opponent": "Chicago Cubs",
+            "ip": "4.0",
+            "er": 2,
+            "k": 5,
+            "bb": 4,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-14",
+            "opponent": "Chicago White Sox",
+            "ip": "5.0",
+            "er": 2,
+            "k": 4,
+            "bb": 4,
+            "result": "W"
+          }
+        ],
+        "daysRest": 139,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:47.468Z"
+      },
+      "awayStarter": {
+        "pitcherId": 687064,
+        "fullName": "Brandon Young",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "3.33",
+          "whip": "1.32",
+          "inningsPitched": "113.2",
+          "strikeouts": 93,
+          "walks": 41,
+          "homeRunsAllowed": 12,
+          "source": "https://statsapi.mlb.com/api/v1/people/687064/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:47.424Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-04-06",
+            "opponent": "Chicago White Sox",
+            "ip": "5.0",
+            "er": 0,
+            "k": 2,
+            "bb": 2,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-24",
+            "opponent": "Boston Red Sox",
+            "ip": "5.2",
+            "er": 3,
+            "k": 5,
+            "bb": 1,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-30",
+            "opponent": "Houston Astros",
+            "ip": "4.0",
+            "er": 4,
+            "k": 2,
+            "bb": 2,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 133,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:47.424Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 123,
+          "groundOuts": 1093,
+          "airOuts": 1159,
+          "runs": 559,
+          "doubles": 177,
+          "triples": 20,
+          "homeRuns": 129,
+          "strikeOuts": 875,
+          "baseOnBalls": 405,
+          "intentionalWalks": 19,
+          "hits": 1078,
+          "hitByPitch": 45,
+          "avg": ".261",
+          "atBats": 4137,
+          "obp": ".331",
+          "slg": ".407",
+          "ops": ".738",
+          "caughtStealing": 38,
+          "stolenBases": 125,
+          "stolenBasePercentage": ".767",
+          "caughtStealingPercentage": ".233",
+          "groundIntoDoublePlay": 91,
+          "numberOfPitches": 17610,
+          "plateAppearances": 4658,
+          "totalBases": 1682,
+          "rbi": 532,
+          "leftOnBase": 864,
+          "sacBunts": 35,
+          "sacFlies": 33,
+          "babip": ".300",
+          "groundOutsToAirouts": "0.94",
+          "catchersInterference": 3,
+          "atBatsPerHomeRun": "32.07"
+        },
+        "team": {
+          "id": 139,
+          "name": "Tampa Bay Rays",
+          "link": "/api/v1/teams/139"
+        },
+        "rank": 1
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 124,
+          "groundOuts": 948,
+          "airOuts": 1103,
+          "runs": 563,
+          "doubles": 180,
+          "triples": 18,
+          "homeRuns": 148,
+          "strikeOuts": 1140,
+          "baseOnBalls": 480,
+          "intentionalWalks": 15,
+          "hits": 974,
+          "hitByPitch": 45,
+          "avg": ".237",
+          "atBats": 4118,
+          "obp": ".321",
+          "slg": ".397",
+          "ops": ".718",
+          "caughtStealing": 28,
+          "stolenBases": 65,
+          "stolenBasePercentage": ".699",
+          "caughtStealingPercentage": ".301",
+          "groundIntoDoublePlay": 86,
+          "numberOfPitches": 18767,
+          "plateAppearances": 4692,
+          "totalBases": 1634,
+          "rbi": 544,
+          "leftOnBase": 843,
+          "sacBunts": 16,
+          "sacFlies": 31,
+          "babip": ".289",
+          "groundOutsToAirouts": "0.86",
+          "catchersInterference": 2,
+          "atBatsPerHomeRun": "27.82"
+        },
+        "team": {
+          "id": 110,
+          "name": "Baltimore Orioles",
+          "link": "/api/v1/teams/110"
+        },
+        "rank": 24
+      },
+      "homeBullpen": {
+        "teamId": 139,
+        "teamName": "Tampa Bay Rays",
+        "seasonBullpenEra": "3.76",
+        "seasonBullpenWhip": "1.15",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 110,
+        "teamName": "Baltimore Orioles",
+        "seasonBullpenEra": "4.21",
+        "seasonBullpenWhip": "1.35",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 12,
+        "venueName": "Tropicana Field"
+      },
+      "restDays": {
+        "home": 139,
+        "away": 133
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:47.468Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    },
+    {
+      "gameId": 823427,
+      "gamePk": 823427,
+      "gameDate": "2026-08-17T22:40:00Z",
+      "betmanMatchSeq": 4531,
+      "venue": "Citizens Bank Park",
+      "homeTeam": {
+        "id": 143,
+        "name": "Philadelphia Phillies"
+      },
+      "awayTeam": {
+        "id": 146,
+        "name": "Miami Marlins"
+      },
+      "marketPrior": {
+        "gameId": 823427,
+        "marketId": "G101-4531-승패",
+        "homeOdds": 1.28,
+        "awayOdds": 2.82,
+        "rawHomeProbability": 0.78125,
+        "rawAwayProbability": 0.3546099290780142,
+        "overround": 1.1358599290780143,
+        "noVigHomeProbability": 0.6878048780487804,
+        "noVigAwayProbability": 0.3121951219512195,
+        "observedAt": "2026-08-17T04:07:47.468Z"
+      },
+      "homeStarter": {
+        "pitcherId": 650911,
+        "fullName": "Cristopher Sánchez",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "2.54",
+          "whip": "1.19",
+          "inningsPitched": "155.2",
+          "strikeouts": 181,
+          "walks": 35,
+          "homeRunsAllowed": 13,
+          "source": "https://statsapi.mlb.com/api/v1/people/650911/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:47.663Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-26",
+            "opponent": "Texas Rangers",
+            "ip": "6.0",
+            "er": 0,
+            "k": 10,
+            "bb": 0,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-01",
+            "opponent": "Washington Nationals",
+            "ip": "5.1",
+            "er": 1,
+            "k": 7,
+            "bb": 4,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-07",
+            "opponent": "San Francisco Giants",
+            "ip": "5.0",
+            "er": 2,
+            "k": 6,
+            "bb": 0,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 144,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:47.797Z"
+      },
+      "awayStarter": {
+        "pitcherId": 676083,
+        "fullName": "Janson Junk",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "4.41",
+          "whip": "1.32",
+          "inningsPitched": "87.2",
+          "strikeouts": 64,
+          "walks": 24,
+          "homeRunsAllowed": 12,
+          "source": "https://statsapi.mlb.com/api/v1/people/676083/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:47.649Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-31",
+            "opponent": "Chicago White Sox",
+            "ip": "4.1",
+            "er": 2,
+            "k": 5,
+            "bb": 1,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-06",
+            "opponent": "Cincinnati Reds",
+            "ip": "7.1",
+            "er": 2,
+            "k": 3,
+            "bb": 1,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-11",
+            "opponent": "Detroit Tigers",
+            "ip": "5.0",
+            "er": 4,
+            "k": 4,
+            "bb": 2,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 139,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:47.672Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 1045,
+          "airOuts": 1125,
+          "runs": 558,
+          "doubles": 178,
+          "triples": 20,
+          "homeRuns": 154,
+          "strikeOuts": 1069,
+          "baseOnBalls": 399,
+          "intentionalWalks": 14,
+          "hits": 1002,
+          "hitByPitch": 51,
+          "avg": ".239",
+          "atBats": 4191,
+          "obp": ".310",
+          "slg": ".401",
+          "ops": ".711",
+          "caughtStealing": 15,
+          "stolenBases": 95,
+          "stolenBasePercentage": ".864",
+          "caughtStealingPercentage": ".136",
+          "groundIntoDoublePlay": 81,
+          "numberOfPitches": 18273,
+          "plateAppearances": 4694,
+          "totalBases": 1682,
+          "rbi": 539,
+          "leftOnBase": 831,
+          "sacBunts": 8,
+          "sacFlies": 42,
+          "babip": ".282",
+          "groundOutsToAirouts": "0.93",
+          "catchersInterference": 3,
+          "atBatsPerHomeRun": "27.21"
+        },
+        "team": {
+          "id": 143,
+          "name": "Philadelphia Phillies",
+          "link": "/api/v1/teams/143"
+        },
+        "rank": 22
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 1009,
+          "airOuts": 1145,
+          "runs": 550,
+          "doubles": 200,
+          "triples": 27,
+          "homeRuns": 128,
+          "strikeOuts": 1017,
+          "baseOnBalls": 421,
+          "intentionalWalks": 9,
+          "hits": 1036,
+          "hitByPitch": 68,
+          "avg": ".250",
+          "atBats": 4149,
+          "obp": ".326",
+          "slg": ".403",
+          "ops": ".729",
+          "caughtStealing": 41,
+          "stolenBases": 130,
+          "stolenBasePercentage": ".760",
+          "caughtStealingPercentage": ".240",
+          "groundIntoDoublePlay": 76,
+          "numberOfPitches": 17878,
+          "plateAppearances": 4697,
+          "totalBases": 1674,
+          "rbi": 528,
+          "leftOnBase": 867,
+          "sacBunts": 19,
+          "sacFlies": 39,
+          "babip": ".298",
+          "groundOutsToAirouts": "0.88",
+          "catchersInterference": 1,
+          "atBatsPerHomeRun": "32.41"
+        },
+        "team": {
+          "id": 146,
+          "name": "Miami Marlins",
+          "link": "/api/v1/teams/146"
+        },
+        "rank": 7
+      },
+      "homeBullpen": {
+        "teamId": 143,
+        "teamName": "Philadelphia Phillies",
+        "seasonBullpenEra": "4.16",
+        "seasonBullpenWhip": "1.31",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 146,
+        "teamName": "Miami Marlins",
+        "seasonBullpenEra": "3.92",
+        "seasonBullpenWhip": "1.24",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 2681,
+        "venueName": "Citizens Bank Park"
+      },
+      "restDays": {
+        "home": 144,
+        "away": 139
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:47.797Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    },
+    {
+      "gameId": 823343,
+      "gamePk": 823343,
+      "gameDate": "2026-08-17T23:05:00Z",
+      "betmanMatchSeq": 4536,
+      "venue": "PNC Park",
+      "homeTeam": {
+        "id": 134,
+        "name": "Pittsburgh Pirates"
+      },
+      "awayTeam": {
+        "id": 116,
+        "name": "Detroit Tigers"
+      },
+      "marketPrior": {
+        "gameId": 823343,
+        "marketId": "G101-4536-승패",
+        "homeOdds": 1.87,
+        "awayOdds": 1.66,
+        "rawHomeProbability": 0.53475935828877,
+        "rawAwayProbability": 0.6024096385542169,
+        "overround": 1.1371689968429868,
+        "noVigHomeProbability": 0.4702549575070821,
+        "noVigAwayProbability": 0.529745042492918,
+        "observedAt": "2026-08-17T04:07:47.797Z"
+      },
+      "homeStarter": {
+        "pitcherId": 669387,
+        "fullName": "Carmen Mlodzinski",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "3.79",
+          "whip": "1.40",
+          "inningsPitched": "99.2",
+          "strikeouts": 78,
+          "walks": 35,
+          "homeRunsAllowed": 8,
+          "source": "https://statsapi.mlb.com/api/v1/people/669387/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:47.941Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-29",
+            "opponent": "New York Mets",
+            "ip": "4.1",
+            "er": 2,
+            "k": 8,
+            "bb": 0,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-04",
+            "opponent": "Baltimore Orioles",
+            "ip": "4.2",
+            "er": 2,
+            "k": 5,
+            "bb": 3,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-10",
+            "opponent": "Chicago Cubs",
+            "ip": "5.1",
+            "er": 0,
+            "k": 2,
+            "bb": 3,
+            "result": "W"
+          }
+        ],
+        "daysRest": 141,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.022Z"
+      },
+      "awayStarter": {
+        "pitcherId": 664285,
+        "fullName": "Framber Valdez",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "4.26",
+          "whip": "1.39",
+          "inningsPitched": "133.0",
+          "strikeouts": 106,
+          "walks": 50,
+          "homeRunsAllowed": 13,
+          "source": "https://statsapi.mlb.com/api/v1/people/664285/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:47.937Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-27",
+            "opponent": "San Diego Padres",
+            "ip": "6.0",
+            "er": 1,
+            "k": 5,
+            "bb": 1,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-03",
+            "opponent": "St. Louis Cardinals",
+            "ip": "6.0",
+            "er": 0,
+            "k": 5,
+            "bb": 2,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-08",
+            "opponent": "Minnesota Twins",
+            "ip": "5.0",
+            "er": 8,
+            "k": 2,
+            "bb": 2,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 143,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.027Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 126,
+          "groundOuts": 1040,
+          "airOuts": 1046,
+          "runs": 633,
+          "doubles": 195,
+          "triples": 13,
+          "homeRuns": 151,
+          "strikeOuts": 1184,
+          "baseOnBalls": 450,
+          "intentionalWalks": 8,
+          "hits": 1116,
+          "hitByPitch": 65,
+          "avg": ".257",
+          "atBats": 4349,
+          "obp": ".333",
+          "slg": ".412",
+          "ops": ".745",
+          "caughtStealing": 20,
+          "stolenBases": 107,
+          "stolenBasePercentage": ".843",
+          "caughtStealingPercentage": ".157",
+          "groundIntoDoublePlay": 97,
+          "numberOfPitches": 19150,
+          "plateAppearances": 4904,
+          "totalBases": 1790,
+          "rbi": 604,
+          "leftOnBase": 918,
+          "sacBunts": 7,
+          "sacFlies": 30,
+          "babip": ".317",
+          "groundOutsToAirouts": "0.99",
+          "catchersInterference": 3,
+          "atBatsPerHomeRun": "28.80"
+        },
+        "team": {
+          "id": 134,
+          "name": "Pittsburgh Pirates",
+          "link": "/api/v1/teams/134"
+        },
+        "rank": 3
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 124,
+          "groundOuts": 891,
+          "airOuts": 1258,
+          "runs": 565,
+          "doubles": 190,
+          "triples": 26,
+          "homeRuns": 150,
+          "strikeOuts": 1064,
+          "baseOnBalls": 439,
+          "intentionalWalks": 7,
+          "hits": 1015,
+          "hitByPitch": 47,
+          "avg": ".242",
+          "atBats": 4186,
+          "obp": ".319",
+          "slg": ".408",
+          "ops": ".727",
+          "caughtStealing": 18,
+          "stolenBases": 36,
+          "stolenBasePercentage": ".667",
+          "caughtStealingPercentage": ".333",
+          "groundIntoDoublePlay": 70,
+          "numberOfPitches": 18533,
+          "plateAppearances": 4719,
+          "totalBases": 1707,
+          "rbi": 538,
+          "leftOnBase": 867,
+          "sacBunts": 6,
+          "sacFlies": 36,
+          "babip": ".288",
+          "groundOutsToAirouts": "0.71",
+          "catchersInterference": 5,
+          "atBatsPerHomeRun": "27.91"
+        },
+        "team": {
+          "id": 116,
+          "name": "Detroit Tigers",
+          "link": "/api/v1/teams/116"
+        },
+        "rank": 16
+      },
+      "homeBullpen": {
+        "teamId": 134,
+        "teamName": "Pittsburgh Pirates",
+        "seasonBullpenEra": "4.31",
+        "seasonBullpenWhip": "1.32",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 116,
+        "teamName": "Detroit Tigers",
+        "seasonBullpenEra": "3.55",
+        "seasonBullpenWhip": "1.21",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 31,
+        "venueName": "PNC Park"
+      },
+      "restDays": {
+        "home": 141,
+        "away": 143
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:48.027Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    },
+    {
+      "gameId": 823589,
+      "gamePk": 823589,
+      "gameDate": "2026-08-17T23:10:00Z",
+      "betmanMatchSeq": 4541,
+      "venue": "Citi Field",
+      "homeTeam": {
+        "id": 121,
+        "name": "New York Mets"
+      },
+      "awayTeam": {
+        "id": 135,
+        "name": "San Diego Padres"
+      },
+      "marketPrior": {
+        "gameId": 823589,
+        "marketId": "G101-4541-승패",
+        "homeOdds": 1.63,
+        "awayOdds": 1.91,
+        "rawHomeProbability": 0.6134969325153374,
+        "rawAwayProbability": 0.5235602094240838,
+        "overround": 1.137057141939421,
+        "noVigHomeProbability": 0.5395480225988701,
+        "noVigAwayProbability": 0.46045197740113,
+        "observedAt": "2026-08-17T04:07:48.027Z"
+      },
+      "homeStarter": {
+        "pitcherId": 690997,
+        "fullName": "Nolan McLean",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "3.42",
+          "whip": "1.13",
+          "inningsPitched": "136.2",
+          "strikeouts": 159,
+          "walks": 50,
+          "homeRunsAllowed": 15,
+          "source": "https://statsapi.mlb.com/api/v1/people/690997/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:48.251Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-29",
+            "opponent": "Pittsburgh Pirates",
+            "ip": "5.0",
+            "er": 2,
+            "k": 8,
+            "bb": 2,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-03",
+            "opponent": "San Francisco Giants",
+            "ip": "5.1",
+            "er": 1,
+            "k": 4,
+            "bb": 2,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-09",
+            "opponent": "Arizona Diamondbacks",
+            "ip": "6.1",
+            "er": 2,
+            "k": 8,
+            "bb": 2,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 141,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.251Z"
+      },
+      "awayStarter": {
+        "pitcherId": 621111,
+        "fullName": "Walker Buehler",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "4.88",
+          "whip": "1.43",
+          "inningsPitched": "114.1",
+          "strikeouts": 100,
+          "walks": 47,
+          "homeRunsAllowed": 14,
+          "source": "https://statsapi.mlb.com/api/v1/people/621111/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:48.248Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-30",
+            "opponent": "San Francisco Giants",
+            "ip": "4.0",
+            "er": 3,
+            "k": 3,
+            "bb": 2,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-05",
+            "opponent": "Boston Red Sox",
+            "ip": "2.2",
+            "er": 4,
+            "k": 4,
+            "bb": 3,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-10",
+            "opponent": "Colorado Rockies",
+            "ip": "6.0",
+            "er": 0,
+            "k": 4,
+            "bb": 0,
+            "result": "W"
+          }
+        ],
+        "daysRest": 140,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.255Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 1026,
+          "airOuts": 1165,
+          "runs": 523,
+          "doubles": 157,
+          "triples": 17,
+          "homeRuns": 152,
+          "strikeOuts": 1066,
+          "baseOnBalls": 405,
+          "intentionalWalks": 10,
+          "hits": 991,
+          "hitByPitch": 42,
+          "avg": ".236",
+          "atBats": 4202,
+          "obp": ".307",
+          "slg": ".390",
+          "ops": ".697",
+          "caughtStealing": 26,
+          "stolenBases": 64,
+          "stolenBasePercentage": ".711",
+          "caughtStealingPercentage": ".289",
+          "groundIntoDoublePlay": 83,
+          "numberOfPitches": 18471,
+          "plateAppearances": 4699,
+          "totalBases": 1638,
+          "rbi": 500,
+          "leftOnBase": 840,
+          "sacBunts": 16,
+          "sacFlies": 30,
+          "babip": ".278",
+          "groundOutsToAirouts": "0.88",
+          "catchersInterference": 4,
+          "atBatsPerHomeRun": "27.64"
+        },
+        "team": {
+          "id": 121,
+          "name": "New York Mets",
+          "link": "/api/v1/teams/121"
+        },
+        "rank": 25
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 1118,
+          "airOuts": 1062,
+          "runs": 535,
+          "doubles": 183,
+          "triples": 11,
+          "homeRuns": 140,
+          "strikeOuts": 1011,
+          "baseOnBalls": 426,
+          "intentionalWalks": 16,
+          "hits": 979,
+          "hitByPitch": 49,
+          "avg": ".238",
+          "atBats": 4118,
+          "obp": ".314",
+          "slg": ".390",
+          "ops": ".704",
+          "caughtStealing": 33,
+          "stolenBases": 124,
+          "stolenBasePercentage": ".790",
+          "caughtStealingPercentage": ".210",
+          "groundIntoDoublePlay": 98,
+          "numberOfPitches": 18218,
+          "plateAppearances": 4646,
+          "totalBases": 1604,
+          "rbi": 516,
+          "leftOnBase": 813,
+          "sacBunts": 19,
+          "sacFlies": 33,
+          "babip": ".280",
+          "groundOutsToAirouts": "1.05",
+          "catchersInterference": 1,
+          "atBatsPerHomeRun": "29.41"
+        },
+        "team": {
+          "id": 135,
+          "name": "San Diego Padres",
+          "link": "/api/v1/teams/135"
+        },
+        "rank": 23
+      },
+      "homeBullpen": {
+        "teamId": 121,
+        "teamName": "New York Mets",
+        "seasonBullpenEra": "4.09",
+        "seasonBullpenWhip": "1.30",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 135,
+        "teamName": "San Diego Padres",
+        "seasonBullpenEra": "4.08",
+        "seasonBullpenWhip": "1.31",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 3289,
+        "venueName": "Citi Field"
+      },
+      "restDays": {
+        "home": 141,
+        "away": 140
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:48.255Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    },
+    {
+      "gameId": 824725,
+      "gamePk": 824725,
+      "gameDate": "2026-08-17T23:10:00Z",
+      "betmanMatchSeq": 4546,
+      "venue": "Fenway Park",
+      "homeTeam": {
+        "id": 111,
+        "name": "Boston Red Sox"
+      },
+      "awayTeam": {
+        "id": 109,
+        "name": "Arizona Diamondbacks"
+      },
+      "marketPrior": {
+        "gameId": 824725,
+        "marketId": "G101-4546-승패",
+        "homeOdds": 1.6,
+        "awayOdds": 1.96,
+        "rawHomeProbability": 0.625,
+        "rawAwayProbability": 0.5102040816326531,
+        "overround": 1.135204081632653,
+        "noVigHomeProbability": 0.550561797752809,
+        "noVigAwayProbability": 0.44943820224719105,
+        "observedAt": "2026-08-17T04:07:48.255Z"
+      },
+      "homeStarter": {
+        "pitcherId": null,
+        "fullName": null,
+        "handedness": null,
+        "status": "UNKNOWN",
+        "seasonStats": null,
+        "recentStarts": null,
+        "daysRest": null,
+        "uncertaintyFlag": true,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.255Z"
+      },
+      "awayStarter": {
+        "pitcherId": 683352,
+        "fullName": "Mitch Bratt",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "3.74",
+          "whip": "1.40",
+          "inningsPitched": "33.2",
+          "strikeouts": 25,
+          "walks": 19,
+          "homeRunsAllowed": 5,
+          "source": "https://statsapi.mlb.com/api/v1/people/683352/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:48.395Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-06-24",
+            "opponent": "St. Louis Cardinals",
+            "ip": "3.0",
+            "er": 1,
+            "k": 3,
+            "bb": 2,
+            "result": "W"
+          },
+          {
+            "date": "2026-07-12",
+            "opponent": "Los Angeles Dodgers",
+            "ip": "3.0",
+            "er": 3,
+            "k": 0,
+            "bb": 3,
+            "result": "W"
+          },
+          {
+            "date": "2026-07-20",
+            "opponent": "Athletics",
+            "ip": "4.2",
+            "er": 2,
+            "k": 4,
+            "bb": 1,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 54,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.457Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 124,
+          "groundOuts": 1043,
+          "airOuts": 1125,
+          "runs": 549,
+          "doubles": 224,
+          "triples": 18,
+          "homeRuns": 124,
+          "strikeOuts": 1021,
+          "baseOnBalls": 393,
+          "intentionalWalks": 9,
+          "hits": 1026,
+          "hitByPitch": 71,
+          "avg": ".248",
+          "atBats": 4144,
+          "obp": ".320",
+          "slg": ".400",
+          "ops": ".720",
+          "caughtStealing": 34,
+          "stolenBases": 93,
+          "stolenBasePercentage": ".732",
+          "caughtStealingPercentage": ".268",
+          "groundIntoDoublePlay": 79,
+          "numberOfPitches": 17923,
+          "plateAppearances": 4681,
+          "totalBases": 1658,
+          "rbi": 525,
+          "leftOnBase": 844,
+          "sacBunts": 28,
+          "sacFlies": 43,
+          "babip": ".297",
+          "groundOutsToAirouts": "0.93",
+          "catchersInterference": 2,
+          "atBatsPerHomeRun": "33.42"
+        },
+        "team": {
+          "id": 111,
+          "name": "Boston Red Sox",
+          "link": "/api/v1/teams/111"
+        },
+        "rank": 10
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 1096,
+          "airOuts": 1236,
+          "runs": 567,
+          "doubles": 214,
+          "triples": 33,
+          "homeRuns": 124,
+          "strikeOuts": 912,
+          "baseOnBalls": 419,
+          "intentionalWalks": 12,
+          "hits": 1023,
+          "hitByPitch": 45,
+          "avg": ".244",
+          "atBats": 4198,
+          "obp": ".316",
+          "slg": ".399",
+          "ops": ".715",
+          "caughtStealing": 18,
+          "stolenBases": 84,
+          "stolenBasePercentage": ".824",
+          "caughtStealingPercentage": ".176",
+          "groundIntoDoublePlay": 75,
+          "numberOfPitches": 18636,
+          "plateAppearances": 4733,
+          "totalBases": 1675,
+          "rbi": 539,
+          "leftOnBase": 861,
+          "sacBunts": 31,
+          "sacFlies": 38,
+          "babip": ".281",
+          "groundOutsToAirouts": "0.89",
+          "catchersInterference": 2,
+          "atBatsPerHomeRun": "33.86"
+        },
+        "team": {
+          "id": 109,
+          "name": "Arizona Diamondbacks",
+          "link": "/api/v1/teams/109"
+        },
+        "rank": 15
+      },
+      "homeBullpen": {
+        "teamId": 111,
+        "teamName": "Boston Red Sox",
+        "seasonBullpenEra": "3.52",
+        "seasonBullpenWhip": "1.22",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 109,
+        "teamName": "Arizona Diamondbacks",
+        "seasonBullpenEra": "4.09",
+        "seasonBullpenWhip": "1.27",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 3,
+        "venueName": "Fenway Park"
+      },
+      "restDays": {
+        "home": null,
+        "away": 54
+      },
+      "injuries": null,
+      "missingFields": [
+        "homeStarter"
+      ],
+      "fetchedAt": "2026-08-17T04:07:48.457Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": false,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "LOW"
+      }
+    },
+    {
+      "gameId": 823668,
+      "gamePk": 823668,
+      "gameDate": "2026-08-17T23:40:00Z",
+      "betmanMatchSeq": 4551,
+      "venue": "Target Field",
+      "homeTeam": {
+        "id": 142,
+        "name": "Minnesota Twins"
+      },
+      "awayTeam": {
+        "id": 144,
+        "name": "Atlanta Braves"
+      },
+      "marketPrior": {
+        "gameId": 823668,
+        "marketId": "G101-4551-승패",
+        "homeOdds": 1.89,
+        "awayOdds": 1.65,
+        "rawHomeProbability": 0.5291005291005292,
+        "rawAwayProbability": 0.6060606060606061,
+        "overround": 1.1351611351611353,
+        "noVigHomeProbability": 0.46610169491525427,
+        "noVigAwayProbability": 0.5338983050847458,
+        "observedAt": "2026-08-17T04:07:48.457Z"
+      },
+      "homeStarter": {
+        "pitcherId": 641927,
+        "fullName": "Bailey Ober",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "4.64",
+          "whip": "1.23",
+          "inningsPitched": "99.0",
+          "strikeouts": 67,
+          "walks": 25,
+          "homeRunsAllowed": 17,
+          "source": "https://statsapi.mlb.com/api/v1/people/641927/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:48.644Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-29",
+            "opponent": "Baltimore Orioles",
+            "ip": "4.0",
+            "er": 3,
+            "k": 1,
+            "bb": 1,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-03",
+            "opponent": "Tampa Bay Rays",
+            "ip": "4.0",
+            "er": 3,
+            "k": 4,
+            "bb": 2,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-08",
+            "opponent": "Detroit Tigers",
+            "ip": "5.2",
+            "er": 2,
+            "k": 2,
+            "bb": 1,
+            "result": "W"
+          }
+        ],
+        "daysRest": 141,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.703Z"
+      },
+      "awayStarter": {
+        "pitcherId": 527048,
+        "fullName": "Martín Pérez",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "2.96",
+          "whip": "1.15",
+          "inningsPitched": "106.1",
+          "strikeouts": 80,
+          "walks": 43,
+          "homeRunsAllowed": 11,
+          "source": "https://statsapi.mlb.com/api/v1/people/527048/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:48.600Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-31",
+            "opponent": "Athletics",
+            "ip": "4.1",
+            "er": 0,
+            "k": 3,
+            "bb": 0,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-05",
+            "opponent": "Arizona Diamondbacks",
+            "ip": "5.0",
+            "er": 4,
+            "k": 1,
+            "bb": 1,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-11",
+            "opponent": "Cleveland Guardians",
+            "ip": "5.0",
+            "er": 1,
+            "k": 2,
+            "bb": 3,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 139,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.707Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 973,
+          "airOuts": 1231,
+          "runs": 578,
+          "doubles": 204,
+          "triples": 18,
+          "homeRuns": 146,
+          "strikeOuts": 1021,
+          "baseOnBalls": 412,
+          "intentionalWalks": 7,
+          "hits": 1032,
+          "hitByPitch": 67,
+          "avg": ".245",
+          "atBats": 4214,
+          "obp": ".320",
+          "slg": ".406",
+          "ops": ".726",
+          "caughtStealing": 31,
+          "stolenBases": 73,
+          "stolenBasePercentage": ".702",
+          "caughtStealingPercentage": ".298",
+          "groundIntoDoublePlay": 74,
+          "numberOfPitches": 18344,
+          "plateAppearances": 4737,
+          "totalBases": 1710,
+          "rbi": 550,
+          "leftOnBase": 852,
+          "sacBunts": 6,
+          "sacFlies": 36,
+          "babip": ".287",
+          "groundOutsToAirouts": "0.79",
+          "catchersInterference": 1,
+          "atBatsPerHomeRun": "28.86"
+        },
+        "team": {
+          "id": 142,
+          "name": "Minnesota Twins",
+          "link": "/api/v1/teams/142"
+        },
+        "rank": 12
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 124,
+          "groundOuts": 1023,
+          "airOuts": 1179,
+          "runs": 599,
+          "doubles": 198,
+          "triples": 9,
+          "homeRuns": 166,
+          "strikeOuts": 998,
+          "baseOnBalls": 362,
+          "intentionalWalks": 10,
+          "hits": 1038,
+          "hitByPitch": 48,
+          "avg": ".247",
+          "atBats": 4195,
+          "obp": ".312",
+          "slg": ".418",
+          "ops": ".730",
+          "caughtStealing": 20,
+          "stolenBases": 61,
+          "stolenBasePercentage": ".753",
+          "caughtStealingPercentage": ".247",
+          "groundIntoDoublePlay": 59,
+          "numberOfPitches": 18031,
+          "plateAppearances": 4651,
+          "totalBases": 1752,
+          "rbi": 575,
+          "leftOnBase": 800,
+          "sacBunts": 7,
+          "sacFlies": 36,
+          "babip": ".284",
+          "groundOutsToAirouts": "0.87",
+          "catchersInterference": 3,
+          "atBatsPerHomeRun": "25.27"
+        },
+        "team": {
+          "id": 144,
+          "name": "Atlanta Braves",
+          "link": "/api/v1/teams/144"
+        },
+        "rank": 11
+      },
+      "homeBullpen": {
+        "teamId": 142,
+        "teamName": "Minnesota Twins",
+        "seasonBullpenEra": "4.67",
+        "seasonBullpenWhip": "1.39",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 144,
+        "teamName": "Atlanta Braves",
+        "seasonBullpenEra": "3.64",
+        "seasonBullpenWhip": "1.24",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 3312,
+        "venueName": "Target Field"
+      },
+      "restDays": {
+        "home": 141,
+        "away": 139
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:48.707Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    },
+    {
+      "gameId": 824077,
+      "gamePk": 824077,
+      "gameDate": "2026-08-17T23:40:00Z",
+      "betmanMatchSeq": 4556,
+      "venue": "Kauffman Stadium",
+      "homeTeam": {
+        "id": 118,
+        "name": "Kansas City Royals"
+      },
+      "awayTeam": {
+        "id": 133,
+        "name": "Athletics"
+      },
+      "marketPrior": {
+        "gameId": 824077,
+        "marketId": "G101-4556-승패",
+        "homeOdds": 1.47,
+        "awayOdds": 2.19,
+        "rawHomeProbability": 0.6802721088435374,
+        "rawAwayProbability": 0.4566210045662101,
+        "overround": 1.1368931134097475,
+        "noVigHomeProbability": 0.5983606557377049,
+        "noVigAwayProbability": 0.4016393442622951,
+        "observedAt": "2026-08-17T04:07:48.707Z"
+      },
+      "homeStarter": {
+        "pitcherId": 608379,
+        "fullName": "Michael Wacha",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "3.46",
+          "whip": "1.15",
+          "inningsPitched": "150.2",
+          "strikeouts": 117,
+          "walks": 41,
+          "homeRunsAllowed": 18,
+          "source": "https://statsapi.mlb.com/api/v1/people/608379/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:48.844Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-28",
+            "opponent": "Atlanta Braves",
+            "ip": "6.0",
+            "er": 0,
+            "k": 7,
+            "bb": 1,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-06",
+            "opponent": "Cleveland Guardians",
+            "ip": "7.0",
+            "er": 1,
+            "k": 3,
+            "bb": 3,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-11",
+            "opponent": "Chicago White Sox",
+            "ip": "8.0",
+            "er": 0,
+            "k": 7,
+            "bb": 1,
+            "result": "W"
+          }
+        ],
+        "daysRest": 142,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.955Z"
+      },
+      "awayStarter": {
+        "pitcherId": 686930,
+        "fullName": "Mason Barnett",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "6.16",
+          "whip": "1.45",
+          "inningsPitched": "38.0",
+          "strikeouts": 36,
+          "walks": 20,
+          "homeRunsAllowed": 11,
+          "source": "https://statsapi.mlb.com/api/v1/people/686930/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:48.846Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-04-19",
+            "opponent": "Chicago White Sox",
+            "ip": "2.0",
+            "er": 0,
+            "k": 1,
+            "bb": 2,
+            "result": "ND"
+          },
+          {
+            "date": "2026-06-05",
+            "opponent": "Houston Astros",
+            "ip": "4.0",
+            "er": 0,
+            "k": 7,
+            "bb": 2,
+            "result": "ND"
+          },
+          {
+            "date": "2026-06-09",
+            "opponent": "Milwaukee Brewers",
+            "ip": "2.0",
+            "er": 0,
+            "k": 4,
+            "bb": 0,
+            "result": "W"
+          }
+        ],
+        "daysRest": 120,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:48.928Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 968,
+          "airOuts": 1269,
+          "runs": 513,
+          "doubles": 220,
+          "triples": 16,
+          "homeRuns": 126,
+          "strikeOuts": 994,
+          "baseOnBalls": 382,
+          "intentionalWalks": 12,
+          "hits": 1014,
+          "hitByPitch": 44,
+          "avg": ".242",
+          "atBats": 4183,
+          "obp": ".310",
+          "slg": ".393",
+          "ops": ".703",
+          "caughtStealing": 26,
+          "stolenBases": 96,
+          "stolenBasePercentage": ".787",
+          "caughtStealingPercentage": ".213",
+          "groundIntoDoublePlay": 75,
+          "numberOfPitches": 17812,
+          "plateAppearances": 4671,
+          "totalBases": 1644,
+          "rbi": 489,
+          "leftOnBase": 839,
+          "sacBunts": 22,
+          "sacFlies": 40,
+          "babip": ".286",
+          "groundOutsToAirouts": "0.76",
+          "catchersInterference": 0,
+          "atBatsPerHomeRun": "33.20"
+        },
+        "team": {
+          "id": 118,
+          "name": "Kansas City Royals",
+          "link": "/api/v1/teams/118"
+        },
+        "rank": 17
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 124,
+          "groundOuts": 1083,
+          "airOuts": 1070,
+          "runs": 540,
+          "doubles": 196,
+          "triples": 11,
+          "homeRuns": 149,
+          "strikeOuts": 1068,
+          "baseOnBalls": 409,
+          "intentionalWalks": 18,
+          "hits": 1029,
+          "hitByPitch": 55,
+          "avg": ".244",
+          "atBats": 4211,
+          "obp": ".318",
+          "slg": ".402",
+          "ops": ".720",
+          "caughtStealing": 26,
+          "stolenBases": 66,
+          "stolenBasePercentage": ".717",
+          "caughtStealingPercentage": ".283",
+          "groundIntoDoublePlay": 95,
+          "numberOfPitches": 17934,
+          "plateAppearances": 4716,
+          "totalBases": 1694,
+          "rbi": 517,
+          "leftOnBase": 864,
+          "sacBunts": 17,
+          "sacFlies": 22,
+          "babip": ".292",
+          "groundOutsToAirouts": "1.01",
+          "catchersInterference": 2,
+          "atBatsPerHomeRun": "28.26"
+        },
+        "team": {
+          "id": 133,
+          "name": "Athletics",
+          "link": "/api/v1/teams/133"
+        },
+        "rank": 13
+      },
+      "homeBullpen": {
+        "teamId": 118,
+        "teamName": "Kansas City Royals",
+        "seasonBullpenEra": "4.78",
+        "seasonBullpenWhip": "1.41",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 133,
+        "teamName": "Athletics",
+        "seasonBullpenEra": "5.45",
+        "seasonBullpenWhip": "1.50",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 7,
+        "venueName": "Kauffman Stadium"
+      },
+      "restDays": {
+        "home": 142,
+        "away": 120
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:48.955Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    },
+    {
+      "gameId": 824641,
+      "gamePk": 824641,
+      "gameDate": "2026-08-18T00:05:00Z",
+      "betmanMatchSeq": 4561,
+      "venue": "Wrigley Field",
+      "homeTeam": {
+        "id": 112,
+        "name": "Chicago Cubs"
+      },
+      "awayTeam": {
+        "id": 145,
+        "name": "Chicago White Sox"
+      },
+      "marketPrior": {
+        "gameId": 824641,
+        "marketId": "G101-4561-승패",
+        "homeOdds": 1.48,
+        "awayOdds": 2.17,
+        "rawHomeProbability": 0.6756756756756757,
+        "rawAwayProbability": 0.4608294930875576,
+        "overround": 1.1365051687632333,
+        "noVigHomeProbability": 0.5945205479452055,
+        "noVigAwayProbability": 0.4054794520547945,
+        "observedAt": "2026-08-17T04:07:48.955Z"
+      },
+      "homeStarter": {
+        "pitcherId": 684007,
+        "fullName": "Shota Imanaga",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "3.74",
+          "whip": "1.10",
+          "inningsPitched": "137.1",
+          "strikeouts": 130,
+          "walks": 29,
+          "homeRunsAllowed": 28,
+          "source": "https://statsapi.mlb.com/api/v1/people/684007/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:49.093Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-29",
+            "opponent": "Washington Nationals",
+            "ip": "5.0",
+            "er": 4,
+            "k": 7,
+            "bb": 2,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-05",
+            "opponent": "Cleveland Guardians",
+            "ip": "5.0",
+            "er": 1,
+            "k": 4,
+            "bb": 1,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-10",
+            "opponent": "Pittsburgh Pirates",
+            "ip": "6.0",
+            "er": 0,
+            "k": 9,
+            "bb": 1,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 142,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:49.184Z"
+      },
+      "awayStarter": {
+        "pitcherId": 622491,
+        "fullName": "Luis Castillo",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "4.96",
+          "whip": "1.35",
+          "inningsPitched": "110.2",
+          "strikeouts": 101,
+          "walks": 35,
+          "homeRunsAllowed": 17,
+          "source": "https://statsapi.mlb.com/api/v1/people/622491/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:49.097Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-30",
+            "opponent": "New York Yankees",
+            "ip": "6.0",
+            "er": 0,
+            "k": 7,
+            "bb": 2,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-05",
+            "opponent": "Los Angeles Angels",
+            "ip": "3.2",
+            "er": 3,
+            "k": 4,
+            "bb": 1,
+            "result": "ND"
+          },
+          {
+            "date": "2026-04-11",
+            "opponent": "Houston Astros",
+            "ip": "3.1",
+            "er": 7,
+            "k": 3,
+            "bb": 1,
+            "result": "W"
+          }
+        ],
+        "daysRest": 141,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:49.206Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 966,
+          "airOuts": 1224,
+          "runs": 645,
+          "doubles": 209,
+          "triples": 20,
+          "homeRuns": 159,
+          "strikeOuts": 1075,
+          "baseOnBalls": 531,
+          "intentionalWalks": 17,
+          "hits": 1065,
+          "hitByPitch": 64,
+          "avg": ".248",
+          "atBats": 4291,
+          "obp": ".337",
+          "slg": ".417",
+          "ops": ".754",
+          "caughtStealing": 17,
+          "stolenBases": 94,
+          "stolenBasePercentage": ".847",
+          "caughtStealingPercentage": ".153",
+          "groundIntoDoublePlay": 83,
+          "numberOfPitches": 19594,
+          "plateAppearances": 4926,
+          "totalBases": 1791,
+          "rbi": 607,
+          "leftOnBase": 965,
+          "sacBunts": 5,
+          "sacFlies": 34,
+          "babip": ".293",
+          "groundOutsToAirouts": "0.79",
+          "catchersInterference": 1,
+          "atBatsPerHomeRun": "26.99"
+        },
+        "team": {
+          "id": 112,
+          "name": "Chicago Cubs",
+          "link": "/api/v1/teams/112"
+        },
+        "rank": 9
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 123,
+          "groundOuts": 1007,
+          "airOuts": 1077,
+          "runs": 594,
+          "doubles": 198,
+          "triples": 12,
+          "homeRuns": 164,
+          "strikeOuts": 1121,
+          "baseOnBalls": 420,
+          "intentionalWalks": 17,
+          "hits": 993,
+          "hitByPitch": 73,
+          "avg": ".240",
+          "atBats": 4145,
+          "obp": ".318",
+          "slg": ".412",
+          "ops": ".730",
+          "caughtStealing": 31,
+          "stolenBases": 69,
+          "stolenBasePercentage": ".690",
+          "caughtStealingPercentage": ".310",
+          "groundIntoDoublePlay": 56,
+          "numberOfPitches": 18077,
+          "plateAppearances": 4693,
+          "totalBases": 1707,
+          "rbi": 567,
+          "leftOnBase": 827,
+          "sacBunts": 24,
+          "sacFlies": 29,
+          "babip": ".287",
+          "groundOutsToAirouts": "0.94",
+          "catchersInterference": 2,
+          "atBatsPerHomeRun": "25.27"
+        },
+        "team": {
+          "id": 145,
+          "name": "Chicago White Sox",
+          "link": "/api/v1/teams/145"
+        },
+        "rank": 21
+      },
+      "homeBullpen": {
+        "teamId": 112,
+        "teamName": "Chicago Cubs",
+        "seasonBullpenEra": "4.16",
+        "seasonBullpenWhip": "1.26",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 145,
+        "teamName": "Chicago White Sox",
+        "seasonBullpenEra": "4.11",
+        "seasonBullpenWhip": "1.29",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 17,
+        "venueName": "Wrigley Field"
+      },
+      "restDays": {
+        "home": 142,
+        "away": 141
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:49.206Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    },
+    {
+      "gameId": 824320,
+      "gamePk": 824320,
+      "gameDate": "2026-08-18T00:40:00Z",
+      "betmanMatchSeq": 4566,
+      "venue": "Coors Field",
+      "homeTeam": {
+        "id": 115,
+        "name": "Colorado Rockies"
+      },
+      "awayTeam": {
+        "id": 119,
+        "name": "Los Angeles Dodgers"
+      },
+      "marketPrior": {
+        "gameId": 824320,
+        "marketId": "G101-4566-승패",
+        "homeOdds": 2.92,
+        "awayOdds": 1.26,
+        "rawHomeProbability": 0.3424657534246575,
+        "rawAwayProbability": 0.7936507936507936,
+        "overround": 1.136116547075451,
+        "noVigHomeProbability": 0.3014354066985646,
+        "noVigAwayProbability": 0.6985645933014354,
+        "observedAt": "2026-08-17T04:07:49.206Z"
+      },
+      "homeStarter": {
+        "pitcherId": 608372,
+        "fullName": "Tomoyuki Sugano",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "4.43",
+          "whip": "1.25",
+          "inningsPitched": "113.2",
+          "strikeouts": 66,
+          "walks": 26,
+          "homeRunsAllowed": 24,
+          "source": "https://statsapi.mlb.com/api/v1/people/608372/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:49.344Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-03-30",
+            "opponent": "Toronto Blue Jays",
+            "ip": "4.2",
+            "er": 1,
+            "k": 4,
+            "bb": 2,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-05",
+            "opponent": "Philadelphia Phillies",
+            "ip": "6.0",
+            "er": 1,
+            "k": 5,
+            "bb": 1,
+            "result": "W"
+          },
+          {
+            "date": "2026-04-10",
+            "opponent": "San Diego Padres",
+            "ip": "6.0",
+            "er": 2,
+            "k": 3,
+            "bb": 0,
+            "result": "ND"
+          }
+        ],
+        "daysRest": 141,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:49.464Z"
+      },
+      "awayStarter": {
+        "pitcherId": 605483,
+        "fullName": "Blake Snell",
+        "handedness": null,
+        "status": "CONFIRMED",
+        "seasonStats": {
+          "era": "5.00",
+          "whip": "1.33",
+          "inningsPitched": "9.0",
+          "strikeouts": 15,
+          "walks": 3,
+          "homeRunsAllowed": 0,
+          "source": "https://statsapi.mlb.com/api/v1/people/605483/stats?stats=season&group=pitching&season=2026",
+          "retrievedAt": "2026-08-17T04:07:49.347Z"
+        },
+        "recentStarts": [
+          {
+            "date": "2026-05-09",
+            "opponent": "Atlanta Braves",
+            "ip": "3.0",
+            "er": 4,
+            "k": 5,
+            "bb": 2,
+            "result": "ND"
+          },
+          {
+            "date": "2026-08-11",
+            "opponent": "Kansas City Royals",
+            "ip": "6.0",
+            "er": 1,
+            "k": 10,
+            "bb": 1,
+            "result": "W"
+          }
+        ],
+        "daysRest": 101,
+        "uncertaintyFlag": false,
+        "source": "statsapi.mlb.com",
+        "retrievedAt": "2026-08-17T04:07:49.419Z"
+      },
+      "homeOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 124,
+          "groundOuts": 982,
+          "airOuts": 1147,
+          "runs": 596,
+          "doubles": 224,
+          "triples": 26,
+          "homeRuns": 140,
+          "strikeOuts": 1065,
+          "baseOnBalls": 389,
+          "intentionalWalks": 7,
+          "hits": 1068,
+          "hitByPitch": 62,
+          "avg": ".254",
+          "atBats": 4204,
+          "obp": ".323",
+          "slg": ".420",
+          "ops": ".743",
+          "caughtStealing": 33,
+          "stolenBases": 84,
+          "stolenBasePercentage": ".718",
+          "caughtStealingPercentage": ".282",
+          "groundIntoDoublePlay": 73,
+          "numberOfPitches": 17585,
+          "plateAppearances": 4714,
+          "totalBases": 1764,
+          "rbi": 572,
+          "leftOnBase": 825,
+          "sacBunts": 15,
+          "sacFlies": 43,
+          "babip": ".305",
+          "groundOutsToAirouts": "0.86",
+          "catchersInterference": 1,
+          "atBatsPerHomeRun": "30.03"
+        },
+        "team": {
+          "id": 115,
+          "name": "Colorado Rockies",
+          "link": "/api/v1/teams/115"
+        },
+        "rank": 4
+      },
+      "awayOffense": {
+        "season": "2026",
+        "stat": {
+          "gamesPlayed": 125,
+          "groundOuts": 987,
+          "airOuts": 1200,
+          "runs": 616,
+          "doubles": 201,
+          "triples": 13,
+          "homeRuns": 160,
+          "strikeOuts": 979,
+          "baseOnBalls": 461,
+          "intentionalWalks": 26,
+          "hits": 1086,
+          "hitByPitch": 42,
+          "avg": ".259",
+          "atBats": 4201,
+          "obp": ".335",
+          "slg": ".427",
+          "ops": ".762",
+          "caughtStealing": 17,
+          "stolenBases": 48,
+          "stolenBasePercentage": ".738",
+          "caughtStealingPercentage": ".262",
+          "groundIntoDoublePlay": 105,
+          "numberOfPitches": 18703,
+          "plateAppearances": 4758,
+          "totalBases": 1793,
+          "rbi": 581,
+          "leftOnBase": 862,
+          "sacBunts": 12,
+          "sacFlies": 39,
+          "babip": ".299",
+          "groundOutsToAirouts": "0.82",
+          "catchersInterference": 3,
+          "atBatsPerHomeRun": "26.26"
+        },
+        "team": {
+          "id": 119,
+          "name": "Los Angeles Dodgers",
+          "link": "/api/v1/teams/119"
+        },
+        "rank": 2
+      },
+      "homeBullpen": {
+        "teamId": 115,
+        "teamName": "Colorado Rockies",
+        "seasonBullpenEra": "5.47",
+        "seasonBullpenWhip": "1.52",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "awayBullpen": {
+        "teamId": 119,
+        "teamName": "Los Angeles Dodgers",
+        "seasonBullpenEra": "3.68",
+        "seasonBullpenWhip": "1.17",
+        "recentWorkload": {
+          "last1day": null,
+          "last3days": null
+        },
+        "dataSource": "statsapi.mlb.com/teams/stats (pitching)",
+        "confidence": "MEDIUM",
+        "notes": [
+          "Team-level ERA (starters+bullpen combined) — true bullpen split unavailable",
+          "recentWorkload: null — team game log pitching not split by starter/bullpen",
+          "relieverAvailability: null — ESPN 403, no reliable source"
+        ]
+      },
+      "park": {
+        "venueId": 19,
+        "venueName": "Coors Field"
+      },
+      "restDays": {
+        "home": 141,
+        "away": 101
+      },
+      "injuries": null,
+      "missingFields": [],
+      "fetchedAt": "2026-08-17T04:07:49.464Z",
+      "dataQuality": {
+        "flags": {
+          "starterConfirmed": true,
+          "battingFresh": true,
+          "bullpenAvailable": true,
+          "parkKnown": true,
+          "injuryDataAvailable": false
+        },
+        "overall": "HIGH"
+      }
+    }
+  ]
+}

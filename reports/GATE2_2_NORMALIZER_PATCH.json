@@ -1,0 +1,853 @@
+{
+  "STATUS": "PASS",
+  "executedAt": "2026-08-15T11:22:49.589Z",
+  "fixtureFile": "betman_raw_G101_260096_2026-08-15T10-17-06-514Z_e462ab1d.json",
+  "ACCOUNTING": {
+    "sourceRows": 850,
+    "normalizedMarkets": 850,
+    "unsupportedRows": 0,
+    "invalidRows": 0,
+    "ambiguousRows": 0,
+    "checksum": 850,
+    "checksumMatch": true
+  },
+  "EVENTS": {
+    "count": 170,
+    "strategy": "homeId+awayId+leagueCode+gameDate composite key"
+  },
+  "MARKETS": {
+    "count": 850,
+    "strategy": "stable hash(eventId+matchSeq)",
+    "marketTypeBreakdown": {
+      "MONEYLINE_3WAY": 112,
+      "HANDICAP_2WAY": 210,
+      "TOTAL": 195,
+      "ODD_EVEN": 170,
+      "MONEYLINE_2WAY": 83,
+      "WIN1LOSE": 80
+    }
+  },
+  "SELECTIONS": {
+    "count": 1529
+  },
+  "ODD_EVEN": {
+    "normalized": 170,
+    "shortlistEligible": false,
+    "semantics": "ODD=winAllot, EVEN=loseAllot. betTypNm=일반 홀짝. Not shown in product shortlist."
+  },
+  "WIN1LOSE": {
+    "rows": 80,
+    "betId": "108",
+    "betNm": "야구 승1패",
+    "mapping": "WIN1LOSE. Draw selection preserved if drawAllot > 0.",
+    "sample": [
+      {
+        "matchSeq": 2403,
+        "betNm": "야구 승1패",
+        "w": 2.15,
+        "d": 3.25,
+        "l": 2.65
+      },
+      {
+        "matchSeq": 2418,
+        "betNm": "야구 승1패",
+        "w": 1.92,
+        "d": 3.45,
+        "l": 2.95
+      },
+      {
+        "matchSeq": 2427,
+        "betNm": "야구 승1패",
+        "w": 3.65,
+        "d": 3.3,
+        "l": 1.75
+      }
+    ]
+  },
+  "TOOLTIP_ODDS": {
+    "scale": "/100 required for BCHG_*/ACHG_* fields",
+    "examples": [
+      {
+        "raw": 480,
+        "normalized": 4.8
+      },
+      {
+        "raw": 405,
+        "normalized": 4.05
+      },
+      {
+        "raw": 0,
+        "normalized": null
+      },
+      {
+        "raw": null,
+        "normalized": null
+      }
+    ]
+  },
+  "TOOLTIP_TIMESTAMP": {
+    "raw": "20260815191634031948",
+    "parsedAt": null,
+    "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+    "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+  },
+  "TOOLTIP_SAMPLE": [
+    {
+      "GM_SEQ": 2313,
+      "joined": true,
+      "before": {
+        "w": 4.8,
+        "d": 1.82,
+        "l": 2.55
+      },
+      "after": {
+        "w": 4.05,
+        "d": 1.93,
+        "l": 2.6
+      },
+      "chgDtm": {
+        "raw": "20260815191634031948",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2309,
+      "joined": true,
+      "before": {
+        "w": 1.67,
+        "d": 3.15,
+        "l": 4.3
+      },
+      "after": {
+        "w": 1.63,
+        "d": 3.15,
+        "l": 4.6
+      },
+      "chgDtm": {
+        "raw": "20260815191511966336",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2324,
+      "joined": true,
+      "before": {
+        "w": 1.78,
+        "d": 3.5,
+        "l": 3.3
+      },
+      "after": {
+        "w": 1.8,
+        "d": 3.85,
+        "l": 3
+      },
+      "chgDtm": {
+        "raw": "20260815191438186240",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2332,
+      "joined": true,
+      "before": {
+        "w": 2.36,
+        "d": 3,
+        "l": 2.55
+      },
+      "after": {
+        "w": 2.15,
+        "d": 2.9,
+        "l": 2.95
+      },
+      "chgDtm": {
+        "raw": "20260815185801180795",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2333,
+      "joined": true,
+      "before": {
+        "w": 4.95,
+        "d": 3.8,
+        "l": 1.46
+      },
+      "after": {
+        "w": 4.2,
+        "d": 3.7,
+        "l": 1.56
+      },
+      "chgDtm": {
+        "raw": "20260815185801182422",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2329,
+      "joined": true,
+      "before": {
+        "w": 2.4,
+        "d": 2.01,
+        "l": 4.25
+      },
+      "after": {
+        "w": 2.45,
+        "d": 2.14,
+        "l": 3.65
+      },
+      "chgDtm": {
+        "raw": "20260815185444029814",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2325,
+      "joined": true,
+      "before": {
+        "w": 3.75,
+        "d": 3.35,
+        "l": 1.71
+      },
+      "after": {
+        "w": 4.2,
+        "d": 3.35,
+        "l": 1.63
+      },
+      "chgDtm": {
+        "raw": "20260815185433370127",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2292,
+      "joined": true,
+      "before": {
+        "w": 2.6,
+        "d": 2.9,
+        "l": 2.38
+      },
+      "after": {
+        "w": 2.95,
+        "d": 2.9,
+        "l": 2.15
+      },
+      "chgDtm": {
+        "raw": "20260815185412687341",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2293,
+      "joined": true,
+      "before": {
+        "w": 1.45,
+        "d": 3.7,
+        "l": 5.3
+      },
+      "after": {
+        "w": 1.56,
+        "d": 3.5,
+        "l": 4.5
+      },
+      "chgDtm": {
+        "raw": "20260815185412688694",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2232,
+      "joined": true,
+      "before": {
+        "w": 2.43,
+        "d": null,
+        "l": 1.38
+      },
+      "after": {
+        "w": 2.29,
+        "d": null,
+        "l": 1.43
+      },
+      "chgDtm": {
+        "raw": "20260815184721879222",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2216,
+      "joined": true,
+      "before": {
+        "w": 2.24,
+        "d": null,
+        "l": 1.45
+      },
+      "after": {
+        "w": 2.05,
+        "d": null,
+        "l": 1.54
+      },
+      "chgDtm": {
+        "raw": "20260815184710046659",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2224,
+      "joined": true,
+      "before": {
+        "w": 2.53,
+        "d": null,
+        "l": 1.35
+      },
+      "after": {
+        "w": 2.4,
+        "d": null,
+        "l": 1.39
+      },
+      "chgDtm": {
+        "raw": "20260815184710908374",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2229,
+      "joined": true,
+      "before": {
+        "w": 1.76,
+        "d": null,
+        "l": 1.76
+      },
+      "after": {
+        "w": 1.87,
+        "d": null,
+        "l": 1.66
+      },
+      "chgDtm": {
+        "raw": "20260815184334036508",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2217,
+      "joined": true,
+      "before": {
+        "w": 1.81,
+        "d": null,
+        "l": 1.71
+      },
+      "after": {
+        "w": 1.94,
+        "d": null,
+        "l": 1.61
+      },
+      "chgDtm": {
+        "raw": "20260815184252026369",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2213,
+      "joined": true,
+      "before": {
+        "w": 1.78,
+        "d": null,
+        "l": 1.74
+      },
+      "after": {
+        "w": 1.78,
+        "d": null,
+        "l": 1.74
+      },
+      "chgDtm": {
+        "raw": "20260815184231148473",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2319,
+      "joined": true,
+      "before": {
+        "w": 1.68,
+        "d": null,
+        "l": 1.85
+      },
+      "after": {
+        "w": 1.78,
+        "d": null,
+        "l": 1.74
+      },
+      "chgDtm": {
+        "raw": "20260815184047059953",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2260,
+      "joined": true,
+      "before": {
+        "w": 1.72,
+        "d": 3.15,
+        "l": 4
+      },
+      "after": {
+        "w": 1.63,
+        "d": 3.3,
+        "l": 4.3
+      },
+      "chgDtm": {
+        "raw": "20260815183549673169",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2261,
+      "joined": true,
+      "before": {
+        "w": 3.2,
+        "d": 3.2,
+        "l": 1.91
+      },
+      "after": {
+        "w": 2.85,
+        "d": 3.35,
+        "l": 2
+      },
+      "chgDtm": {
+        "raw": "20260815183549674524",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2346,
+      "joined": true,
+      "before": {
+        "w": 1.86,
+        "d": null,
+        "l": 1.67
+      },
+      "after": {
+        "w": 1.93,
+        "d": null,
+        "l": 1.62
+      },
+      "chgDtm": {
+        "raw": "20260815183255022766",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2324,
+      "joined": true,
+      "before": {
+        "w": 1.79,
+        "d": 3.25,
+        "l": 3.55
+      },
+      "after": {
+        "w": 1.78,
+        "d": 3.5,
+        "l": 3.3
+      },
+      "chgDtm": {
+        "raw": "20260815182323682367",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2325,
+      "joined": true,
+      "before": {
+        "w": 3.35,
+        "d": 3.35,
+        "l": 1.81
+      },
+      "after": {
+        "w": 3.75,
+        "d": 3.35,
+        "l": 1.71
+      },
+      "chgDtm": {
+        "raw": "20260815182312688623",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2308,
+      "joined": true,
+      "before": {
+        "w": 3.75,
+        "d": 2.9,
+        "l": 1.86
+      },
+      "after": {
+        "w": 3.35,
+        "d": 2.85,
+        "l": 2
+      },
+      "chgDtm": {
+        "raw": "20260815182228767888",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2309,
+      "joined": true,
+      "before": {
+        "w": 1.77,
+        "d": 3.15,
+        "l": 3.75
+      },
+      "after": {
+        "w": 1.67,
+        "d": 3.15,
+        "l": 4.3
+      },
+      "chgDtm": {
+        "raw": "20260815182228769184",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2310,
+      "joined": true,
+      "before": {
+        "w": 1.17,
+        "d": 5.4,
+        "l": 9.1
+      },
+      "after": {
+        "w": 1.13,
+        "d": 5.9,
+        "l": 10.5
+      },
+      "chgDtm": {
+        "raw": "20260815182228769932",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2321,
+      "joined": true,
+      "before": {
+        "w": 2.85,
+        "d": 1.88,
+        "l": 3.75
+      },
+      "after": {
+        "w": 2.95,
+        "d": 1.89,
+        "l": 3.55
+      },
+      "chgDtm": {
+        "raw": "20260815182146057036",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2316,
+      "joined": true,
+      "before": {
+        "w": 2.12,
+        "d": 2.95,
+        "l": 2.95
+      },
+      "after": {
+        "w": 2.24,
+        "d": 2.95,
+        "l": 2.75
+      },
+      "chgDtm": {
+        "raw": "20260815182104752576",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2317,
+      "joined": true,
+      "before": {
+        "w": 4.4,
+        "d": 3.5,
+        "l": 1.57
+      },
+      "after": {
+        "w": 4.8,
+        "d": 3.6,
+        "l": 1.51
+      },
+      "chgDtm": {
+        "raw": "20260815182104753955",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2318,
+      "joined": true,
+      "before": {
+        "w": 11,
+        "d": 6.3,
+        "l": 1.11
+      },
+      "after": {
+        "w": 12.5,
+        "d": 6.6,
+        "l": 1.09
+      },
+      "chgDtm": {
+        "raw": "20260815182104754795",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2229,
+      "joined": true,
+      "before": {
+        "w": 1.71,
+        "d": null,
+        "l": 1.81
+      },
+      "after": {
+        "w": 1.76,
+        "d": null,
+        "l": 1.76
+      },
+      "chgDtm": {
+        "raw": "20260815180142937887",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    },
+    {
+      "GM_SEQ": 2188,
+      "joined": true,
+      "before": {
+        "w": 1.66,
+        "d": null,
+        "l": 1.87
+      },
+      "after": {
+        "w": 1.71,
+        "d": null,
+        "l": 1.81
+      },
+      "chgDtm": {
+        "raw": "20260815175655041779",
+        "parsedAt": null,
+        "status": "UNVERIFIED_TIMESTAMP_FORMAT",
+        "note": "CHG_DTM format unverified. Looks like YYYYMMDDHHmmss+nanoseconds."
+      }
+    }
+  ],
+  "TESTS": {
+    "passed": 27,
+    "failed": 0,
+    "total": 27,
+    "details": [
+      {
+        "name": "checksum 850",
+        "result": "PASS",
+        "detail": "850 vs 850"
+      },
+      {
+        "name": "event count = 170",
+        "result": "PASS",
+        "detail": "got 170"
+      },
+      {
+        "name": "all rows accounted",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "WIN1LOSE rows = 80",
+        "result": "PASS",
+        "detail": "got 80"
+      },
+      {
+        "name": "WIN1LOSE not collapsed into MONEYLINE",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "ODD_EVEN rows = 170 (but counted in normalized)",
+        "result": "PASS",
+        "detail": "got 170"
+      },
+      {
+        "name": "ODD_EVEN not shortlistEligible",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "SUM never maps to MONEYLINE",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "광주FC vs 포항: multiple matchSeqs for one event",
+        "result": "PASS",
+        "detail": "8 matchSeqs"
+      },
+      {
+        "name": "광주FC vs 포항: grouped into ONE event",
+        "result": "PASS",
+        "detail": "eventId=EVT_5960ad7a44e1, markets=8"
+      },
+      {
+        "name": "same teams on different dates (N/A — only 1 date in fixture)",
+        "result": "PASS",
+        "detail": "Fixture covers single date"
+      },
+      {
+        "name": "providerMarketId = matchSeq preserved",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "all selections have odds > 0",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "normalizeTooltipOdds(480) = 4.80",
+        "result": "PASS",
+        "detail": "got 4.8"
+      },
+      {
+        "name": "normalizeTooltipOdds(405) = 4.05",
+        "result": "PASS",
+        "detail": "got 4.05"
+      },
+      {
+        "name": "normalizeTooltipOdds(null) = null",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "normalizeTooltipOdds(0) = null",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "compSchedules odds not scaled (winAllot < 10)",
+        "result": "PASS",
+        "detail": "sample winAllot=3.35"
+      },
+      {
+        "name": "tooltip CHG_DTM status = UNVERIFIED_TIMESTAMP_FORMAT",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "tooltip CHG_DTM parsedAt = null",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "unknown betId → OTHER (unsupported)",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "audit records = 850 (all rows traced)",
+        "result": "PASS",
+        "detail": "got 850"
+      },
+      {
+        "name": "marketTypeBreakdown totals = normalizedMarkets",
+        "result": "PASS",
+        "detail": "850 vs 850"
+      },
+      {
+        "name": "handicap field (handi) is present for HANDICAP_2WAY rows",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "parser works with reordered keys (canonical key stable)",
+        "result": "PASS",
+        "detail": ""
+      },
+      {
+        "name": "at least some markets are shortlistEligible",
+        "result": "PASS",
+        "detail": "count=605"
+      },
+      {
+        "name": "tooltip GM_SEQ joins to market matchSeq (at least 30)",
+        "result": "PASS",
+        "detail": "joined=139"
+      }
+    ]
+  },
+  "CORRECTIONS_APPLIED": [
+    "Event identity: matchSeq → homeId+awayId+leagueCode+gameDate",
+    "compSchedules parsing: now reads keys+datas instead of top-level array",
+    "Market types added: WIN1LOSE (betId 108), ODD_EVEN (betId 17/77/75), 전반 variants",
+    "SUM markets: normalized as ODD_EVEN, shortlistEligible=false",
+    "Tooltip odds helper: /100 scale normalization with null-guard",
+    "CHG_DTM: stored raw, status=UNVERIFIED_TIMESTAMP_FORMAT",
+    "Checksum enforced: normalized+unsupported+invalid+ambiguous=850"
+  ],
+  "REMAINING_UNVERIFIED": [
+    "gmTs decode formula (single fixture, UNVERIFIED)",
+    "tooltip CHG_DTM exact format (nanoseconds vs microseconds vs other)",
+    "W_BET_CNT / D_BET_CNT / L_BET_CNT (UNVERIFIED_BET_AGGREGATE)",
+    "DB round-trip (requires sql.js or alternative driver)"
+  ]
+}

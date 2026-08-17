@@ -1,0 +1,28 @@
+{
+  "name": "apick-v6",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A.PICK v6 — Korea-first Sports Decision Companion",
+  "workspaces": [
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "app": "node tools/dogfood_server.js",
+    "dogfood": "node tools/dogfood_server.js",
+    "security:check": "node tools/run_security_assertions.js",
+    "d31:reality": "node tools/run_security_assertions.js && node tools/run_phase_d31_reality_gate.js",
+    "test:d3": "node tools/run_phase_d3_tests.js",
+    "probe": "npm run probe --workspace=apps/api",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "test": "npm run test --workspace=apps/api"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "node-fetch": "^2.7.0",
+    "pg": "^8.23.0"
+  }
+}

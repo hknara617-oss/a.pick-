@@ -1,0 +1,1 @@
+function getContentsPath(){var a="";0<$("#contentsPath").length&&(a=$("#contentsPath").attr("src")?$("#contentsPath").attr("src").split("/js/")[0]:"");return a};

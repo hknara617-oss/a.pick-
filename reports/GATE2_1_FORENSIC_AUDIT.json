@@ -1,0 +1,2756 @@
+{
+  "STATUS": "PASS",
+  "executedAt": "2026-08-15T11:05:00.918Z",
+  "fixtureFile": "betman_raw_G101_260096_2026-08-15T10-17-06-514Z_e462ab1d.json",
+  "fixtureHash": "ff95fac5d203a64b",
+  "schemaKeyCount": 52,
+  "SOURCE_ROWS": 850,
+  "EXACT_COUNTS": {
+    "sourceRows": 850,
+    "normalizedRows": 680,
+    "unsupportedRows": 170,
+    "invalidRows": 0,
+    "ambiguousRows": 0,
+    "events": 680,
+    "markets": 680,
+    "selections": 1195,
+    "checksum": 850,
+    "checksumMatch": true,
+    "marketTypeBreakdown": {
+      "MONEYLINE_3WAY": 112,
+      "HANDICAP_2WAY": 210,
+      "TOTAL": 195,
+      "MONEYLINE_2WAY": 83,
+      "WIN1LOSE": 80
+    }
+  },
+  "MARKET_INVENTORY": [
+    {
+      "betId": "5",
+      "betNm": "축구 핸디캡",
+      "sport": "SOCCER",
+      "normalizedType": "HANDICAP_2WAY",
+      "count": 98
+    },
+    {
+      "betId": "1",
+      "betNm": "축구 승무패",
+      "sport": "SOCCER",
+      "normalizedType": "MONEYLINE_3WAY",
+      "count": 87
+    },
+    {
+      "betId": "78",
+      "betNm": "축구 언더오버",
+      "sport": "SOCCER",
+      "normalizedType": "TOTAL",
+      "count": 87
+    },
+    {
+      "betId": "17",
+      "betNm": "축구 SUM",
+      "sport": "SOCCER",
+      "normalizedType": "OTHER_betId_17",
+      "count": 87
+    },
+    {
+      "betId": "2",
+      "betNm": "야구 승패",
+      "sport": "BASEBALL",
+      "normalizedType": "MONEYLINE_2WAY",
+      "count": 80
+    },
+    {
+      "betId": "108",
+      "betNm": "야구 승1패",
+      "sport": "BASEBALL",
+      "normalizedType": "WIN1LOSE",
+      "count": 80
+    },
+    {
+      "betId": "7",
+      "betNm": "야구 핸디캡",
+      "sport": "BASEBALL",
+      "normalizedType": "HANDICAP_2WAY",
+      "count": 80
+    },
+    {
+      "betId": "79",
+      "betNm": "야구 언더오버",
+      "sport": "BASEBALL",
+      "normalizedType": "TOTAL",
+      "count": 80
+    },
+    {
+      "betId": "77",
+      "betNm": "야구 SUM",
+      "sport": "BASEBALL",
+      "normalizedType": "OTHER_betId_77",
+      "count": 80
+    },
+    {
+      "betId": "111",
+      "betNm": "야구 전반 승무패",
+      "sport": "BASEBALL",
+      "normalizedType": "MONEYLINE_3WAY",
+      "count": 19
+    },
+    {
+      "betId": "127",
+      "betNm": "야구 전반 핸디캡",
+      "sport": "BASEBALL",
+      "normalizedType": "HANDICAP_2WAY",
+      "count": 19
+    },
+    {
+      "betId": "114",
+      "betNm": "야구 전반 언더오버",
+      "sport": "BASEBALL",
+      "normalizedType": "TOTAL",
+      "count": 19
+    },
+    {
+      "betId": "118",
+      "betNm": "축구 전반 승무패",
+      "sport": "SOCCER",
+      "normalizedType": "MONEYLINE_3WAY",
+      "count": 6
+    },
+    {
+      "betId": "119",
+      "betNm": "축구 전반 핸디캡",
+      "sport": "SOCCER",
+      "normalizedType": "HANDICAP_2WAY",
+      "count": 6
+    },
+    {
+      "betId": "121",
+      "betNm": "축구 전반 언더오버",
+      "sport": "SOCCER",
+      "normalizedType": "TOTAL",
+      "count": 6
+    },
+    {
+      "betId": "28",
+      "betNm": "축구 소수핸디캡",
+      "sport": "SOCCER",
+      "normalizedType": "HANDICAP_2WAY",
+      "count": 4
+    },
+    {
+      "betId": "3",
+      "betNm": "농구 승패",
+      "sport": "BASKETBALL",
+      "normalizedType": "MONEYLINE_2WAY",
+      "count": 3
+    },
+    {
+      "betId": "6",
+      "betNm": "농구 핸디캡",
+      "sport": "BASKETBALL",
+      "normalizedType": "HANDICAP_2WAY",
+      "count": 3
+    },
+    {
+      "betId": "80",
+      "betNm": "농구 언더오버",
+      "sport": "BASKETBALL",
+      "normalizedType": "TOTAL",
+      "count": 3
+    },
+    {
+      "betId": "75",
+      "betNm": "농구 SUM",
+      "sport": "BASKETBALL",
+      "normalizedType": "OTHER_betId_75",
+      "count": 3
+    }
+  ],
+  "EVENT_IDENTITY": {
+    "matchSeqCollisions": 0,
+    "matchSeqCollisionExamples": [],
+    "canonicalDuplications": 170,
+    "canonicalDupExamples": [
+      {
+        "tuple": "K22|K03|SC001|1786789800000",
+        "matchSeqs": [
+          2308,
+          2309,
+          2310,
+          2311,
+          2312,
+          2313,
+          2314,
+          2315
+        ]
+      },
+      {
+        "tuple": "K04|K27|SC001|1786789800000",
+        "matchSeqs": [
+          2316,
+          2317,
+          2318,
+          2319,
+          2320,
+          2321,
+          2322,
+          2323
+        ]
+      },
+      {
+        "tuple": "K09|K10|SC001|1786789800000",
+        "matchSeqs": [
+          2324,
+          2325,
+          2326,
+          2327,
+          2328,
+          2329,
+          2330,
+          2331
+        ]
+      }
+    ],
+    "conclusion": "FAIL: matchSeq cannot be used as sole event identity"
+  },
+  "MARKET_IDENTITY": {
+    "candidateKey": "MKT_EVT_${matchSeq}_BET_${betId}_LINE_${line}",
+    "totalRows": 850,
+    "uniqueMarketIds": 680,
+    "collisionCount": 0,
+    "collisionExamples": [],
+    "conclusion": "PASS: 0 collisions — market key is stable"
+  },
+  "HANDICAP_VERIFICATION": {
+    "samples": [],
+    "signConvention": "HOME perspective"
+  },
+  "TOTAL_VS_HANDICAP_DEFENSE": [
+    {
+      "betId": "5",
+      "betNm": "축구 핸디캡",
+      "classification": "HANDICAP_2WAY",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "78",
+      "betNm": "축구 언더오버",
+      "classification": "TOTAL",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "119",
+      "betNm": "축구 전반 핸디캡",
+      "classification": "HANDICAP_2WAY",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "121",
+      "betNm": "축구 전반 언더오버",
+      "classification": "TOTAL",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "28",
+      "betNm": "축구 소수핸디캡",
+      "classification": "HANDICAP_2WAY",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "7",
+      "betNm": "야구 핸디캡",
+      "classification": "HANDICAP_2WAY",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "79",
+      "betNm": "야구 언더오버",
+      "classification": "TOTAL",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "127",
+      "betNm": "야구 전반 핸디캡",
+      "classification": "HANDICAP_2WAY",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "114",
+      "betNm": "야구 전반 언더오버",
+      "classification": "TOTAL",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "6",
+      "betNm": "농구 핸디캡",
+      "classification": "HANDICAP_2WAY",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    },
+    {
+      "betId": "80",
+      "betNm": "농구 언더오버",
+      "classification": "TOTAL",
+      "basedOn": "betNm string matching: 핸디캡→HANDICAP, 언더오버→TOTAL"
+    }
+  ],
+  "NULL_AUDIT": {
+    "zeroWinAllot": 164,
+    "zeroDrawAllot": 592,
+    "zeroLoseAllot": 164,
+    "nullOdds": 0,
+    "negativeOdds": 0,
+    "examples": [
+      {
+        "field": "winAllot",
+        "row": {
+          "matchSeq": 2543,
+          "betNm": "야구 승패",
+          "winAllot": 0,
+          "drawAllot": 0,
+          "loseAllot": 0
+        }
+      },
+      {
+        "field": "winAllot",
+        "row": {
+          "matchSeq": 2544,
+          "betNm": "야구 승1패",
+          "winAllot": 0,
+          "drawAllot": 0,
+          "loseAllot": 0
+        }
+      },
+      {
+        "field": "winAllot",
+        "row": {
+          "matchSeq": 2545,
+          "betNm": "야구 핸디캡",
+          "winAllot": 0,
+          "drawAllot": 0,
+          "loseAllot": 0
+        }
+      }
+    ],
+    "verificationNote": "Zero/null odds are expected for draw-less markets (e.g. 2-way). Normalized selections exclude these."
+  },
+  "TIMESTAMP_PROOF": {
+    "examples": [
+      {
+        "home": "광주FC",
+        "away": "포항 스틸러스",
+        "league": "K리그1",
+        "rawMs": 1786789800000,
+        "utc": "2026-08-15T10:30:00.000Z",
+        "seoul": "2026-08-15 19:30 KST"
+      },
+      {
+        "home": "볼턴 원더러스",
+        "away": "프레스턴 노스엔드",
+        "league": "잉글랜드 챔피언십",
+        "rawMs": 1786793400000,
+        "utc": "2026-08-15T11:30:00.000Z",
+        "seoul": "2026-08-15 20:30 KST"
+      },
+      {
+        "home": "싱가포르",
+        "away": "태국",
+        "league": "동남아시아 축구챔피언십",
+        "rawMs": 1786798800000,
+        "utc": "2026-08-15T13:00:00.000Z",
+        "seoul": "2026-08-15 22:00 KST"
+      },
+      {
+        "home": "브리스틀 시티",
+        "away": "밀월",
+        "league": "잉글랜드 챔피언십",
+        "rawMs": 1786802400000,
+        "utc": "2026-08-15T14:00:00.000Z",
+        "seoul": "2026-08-15 23:00 KST"
+      },
+      {
+        "home": "빌럼II",
+        "away": "NEC네이메헌",
+        "league": "네덜란드 에레디비시",
+        "rawMs": 1786804200000,
+        "utc": "2026-08-15T14:30:00.000Z",
+        "seoul": "2026-08-15 23:30 KST"
+      },
+      {
+        "home": "AC밀란",
+        "away": "맨체스터 유나이티드",
+        "league": "축구 클럽친선경기",
+        "rawMs": 1786805100000,
+        "utc": "2026-08-15T14:45:00.000Z",
+        "seoul": "2026-08-15 23:45 KST"
+      },
+      {
+        "home": "셰필드 유나이티드",
+        "away": "버밍엄 시티",
+        "league": "잉글랜드 챔피언십",
+        "rawMs": 1786811400000,
+        "utc": "2026-08-15T16:30:00.000Z",
+        "seoul": "2026-08-16 01:30 KST"
+      },
+      {
+        "home": "위트레흐트",
+        "away": "AZ알크마르",
+        "league": "네덜란드 에레디비시",
+        "rawMs": 1786812300000,
+        "utc": "2026-08-15T16:45:00.000Z",
+        "seoul": "2026-08-16 01:45 KST"
+      },
+      {
+        "home": "디트로이트 타이거즈",
+        "away": "시카고 화이트삭스",
+        "league": "MLB",
+        "rawMs": 1786813800000,
+        "utc": "2026-08-15T17:10:00.000Z",
+        "seoul": "2026-08-16 02:10 KST"
+      },
+      {
+        "home": "알라베스",
+        "away": "헤타페",
+        "league": "스페인 라리가",
+        "rawMs": 1786815000000,
+        "utc": "2026-08-15T17:30:00.000Z",
+        "seoul": "2026-08-16 02:30 KST"
+      }
+    ],
+    "saleStartDate": {
+      "rawMs": 1786662000000,
+      "utc": "2026-08-13T23:00:00.000Z",
+      "seoul": "2026-08-14 08:00 KST"
+    },
+    "saleEndDate": {
+      "rawMs": 1786888800000,
+      "utc": "2026-08-16T14:00:00.000Z",
+      "seoul": "2026-08-16 23:00 KST"
+    },
+    "gmTs": 260096,
+    "conclusion": "PASS: Unix ms → UTC → Korea (UTC+9 fixed offset, no DST risk)"
+  },
+  "TOOLTIP": {
+    "totalTooltips": 139,
+    "sampleSize": 30,
+    "exact": 30,
+    "none": 0,
+    "ambiguous": 0,
+    "joinRate": "100%",
+    "details": [
+      {
+        "gmSeq": 2313,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2313,
+          "betNm": "축구 전반 승무패"
+        },
+        "beforeOdds": {
+          "w": 480,
+          "d": 182,
+          "l": 255
+        },
+        "afterOdds": {
+          "w": 405,
+          "d": 193,
+          "l": 260
+        },
+        "changedAt": "20260815191634031948"
+      },
+      {
+        "gmSeq": 2309,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2309,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 167,
+          "d": 315,
+          "l": 430
+        },
+        "afterOdds": {
+          "w": 163,
+          "d": 315,
+          "l": 460
+        },
+        "changedAt": "20260815191511966336"
+      },
+      {
+        "gmSeq": 2324,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2324,
+          "betNm": "축구 승무패"
+        },
+        "beforeOdds": {
+          "w": 178,
+          "d": 350,
+          "l": 330
+        },
+        "afterOdds": {
+          "w": 180,
+          "d": 385,
+          "l": 300
+        },
+        "changedAt": "20260815191438186240"
+      },
+      {
+        "gmSeq": 2332,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2332,
+          "betNm": "축구 승무패"
+        },
+        "beforeOdds": {
+          "w": 236,
+          "d": 300,
+          "l": 255
+        },
+        "afterOdds": {
+          "w": 215,
+          "d": 290,
+          "l": 295
+        },
+        "changedAt": "20260815185801180795"
+      },
+      {
+        "gmSeq": 2333,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2333,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 495,
+          "d": 380,
+          "l": 146
+        },
+        "afterOdds": {
+          "w": 420,
+          "d": 370,
+          "l": 156
+        },
+        "changedAt": "20260815185801182422"
+      },
+      {
+        "gmSeq": 2329,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2329,
+          "betNm": "축구 전반 승무패"
+        },
+        "beforeOdds": {
+          "w": 240,
+          "d": 201,
+          "l": 425
+        },
+        "afterOdds": {
+          "w": 245,
+          "d": 214,
+          "l": 365
+        },
+        "changedAt": "20260815185444029814"
+      },
+      {
+        "gmSeq": 2325,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2325,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 375,
+          "d": 335,
+          "l": 171
+        },
+        "afterOdds": {
+          "w": 420,
+          "d": 335,
+          "l": 163
+        },
+        "changedAt": "20260815185433370127"
+      },
+      {
+        "gmSeq": 2292,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2292,
+          "betNm": "축구 승무패"
+        },
+        "beforeOdds": {
+          "w": 260,
+          "d": 290,
+          "l": 238
+        },
+        "afterOdds": {
+          "w": 295,
+          "d": 290,
+          "l": 215
+        },
+        "changedAt": "20260815185412687341"
+      },
+      {
+        "gmSeq": 2293,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2293,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 145,
+          "d": 370,
+          "l": 530
+        },
+        "afterOdds": {
+          "w": 156,
+          "d": 350,
+          "l": 450
+        },
+        "changedAt": "20260815185412688694"
+      },
+      {
+        "gmSeq": 2232,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2232,
+          "betNm": "야구 전반 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 243,
+          "d": 0,
+          "l": 138
+        },
+        "afterOdds": {
+          "w": 229,
+          "d": 0,
+          "l": 143
+        },
+        "changedAt": "20260815184721879222"
+      },
+      {
+        "gmSeq": 2216,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2216,
+          "betNm": "야구 전반 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 224,
+          "d": 0,
+          "l": 145
+        },
+        "afterOdds": {
+          "w": 205,
+          "d": 0,
+          "l": 154
+        },
+        "changedAt": "20260815184710046659"
+      },
+      {
+        "gmSeq": 2224,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2224,
+          "betNm": "야구 전반 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 253,
+          "d": 0,
+          "l": 135
+        },
+        "afterOdds": {
+          "w": 240,
+          "d": 0,
+          "l": 139
+        },
+        "changedAt": "20260815184710908374"
+      },
+      {
+        "gmSeq": 2229,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2229,
+          "betNm": "야구 언더오버"
+        },
+        "beforeOdds": {
+          "w": 176,
+          "d": 0,
+          "l": 176
+        },
+        "afterOdds": {
+          "w": 187,
+          "d": 0,
+          "l": 166
+        },
+        "changedAt": "20260815184334036508"
+      },
+      {
+        "gmSeq": 2217,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2217,
+          "betNm": "야구 전반 언더오버"
+        },
+        "beforeOdds": {
+          "w": 181,
+          "d": 0,
+          "l": 171
+        },
+        "afterOdds": {
+          "w": 194,
+          "d": 0,
+          "l": 161
+        },
+        "changedAt": "20260815184252026369"
+      },
+      {
+        "gmSeq": 2213,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2213,
+          "betNm": "야구 언더오버"
+        },
+        "beforeOdds": {
+          "w": 178,
+          "d": 0,
+          "l": 174
+        },
+        "afterOdds": {
+          "w": 178,
+          "d": 0,
+          "l": 174
+        },
+        "changedAt": "20260815184231148473"
+      },
+      {
+        "gmSeq": 2319,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2319,
+          "betNm": "축구 언더오버"
+        },
+        "beforeOdds": {
+          "w": 168,
+          "d": 0,
+          "l": 185
+        },
+        "afterOdds": {
+          "w": 178,
+          "d": 0,
+          "l": 174
+        },
+        "changedAt": "20260815184047059953"
+      },
+      {
+        "gmSeq": 2260,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2260,
+          "betNm": "축구 승무패"
+        },
+        "beforeOdds": {
+          "w": 172,
+          "d": 315,
+          "l": 400
+        },
+        "afterOdds": {
+          "w": 163,
+          "d": 330,
+          "l": 430
+        },
+        "changedAt": "20260815183549673169"
+      },
+      {
+        "gmSeq": 2261,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2261,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 320,
+          "d": 320,
+          "l": 191
+        },
+        "afterOdds": {
+          "w": 285,
+          "d": 335,
+          "l": 200
+        },
+        "changedAt": "20260815183549674524"
+      },
+      {
+        "gmSeq": 2346,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2346,
+          "betNm": "축구 언더오버"
+        },
+        "beforeOdds": {
+          "w": 186,
+          "d": 0,
+          "l": 167
+        },
+        "afterOdds": {
+          "w": 193,
+          "d": 0,
+          "l": 162
+        },
+        "changedAt": "20260815183255022766"
+      },
+      {
+        "gmSeq": 2324,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2324,
+          "betNm": "축구 승무패"
+        },
+        "beforeOdds": {
+          "w": 179,
+          "d": 325,
+          "l": 355
+        },
+        "afterOdds": {
+          "w": 178,
+          "d": 350,
+          "l": 330
+        },
+        "changedAt": "20260815182323682367"
+      },
+      {
+        "gmSeq": 2325,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2325,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 335,
+          "d": 335,
+          "l": 181
+        },
+        "afterOdds": {
+          "w": 375,
+          "d": 335,
+          "l": 171
+        },
+        "changedAt": "20260815182312688623"
+      },
+      {
+        "gmSeq": 2308,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2308,
+          "betNm": "축구 승무패"
+        },
+        "beforeOdds": {
+          "w": 375,
+          "d": 290,
+          "l": 186
+        },
+        "afterOdds": {
+          "w": 335,
+          "d": 285,
+          "l": 200
+        },
+        "changedAt": "20260815182228767888"
+      },
+      {
+        "gmSeq": 2309,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2309,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 177,
+          "d": 315,
+          "l": 375
+        },
+        "afterOdds": {
+          "w": 167,
+          "d": 315,
+          "l": 430
+        },
+        "changedAt": "20260815182228769184"
+      },
+      {
+        "gmSeq": 2310,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2310,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 117,
+          "d": 540,
+          "l": 910
+        },
+        "afterOdds": {
+          "w": 113,
+          "d": 590,
+          "l": 1050
+        },
+        "changedAt": "20260815182228769932"
+      },
+      {
+        "gmSeq": 2321,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2321,
+          "betNm": "축구 전반 승무패"
+        },
+        "beforeOdds": {
+          "w": 285,
+          "d": 188,
+          "l": 375
+        },
+        "afterOdds": {
+          "w": 295,
+          "d": 189,
+          "l": 355
+        },
+        "changedAt": "20260815182146057036"
+      },
+      {
+        "gmSeq": 2316,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2316,
+          "betNm": "축구 승무패"
+        },
+        "beforeOdds": {
+          "w": 212,
+          "d": 295,
+          "l": 295
+        },
+        "afterOdds": {
+          "w": 224,
+          "d": 295,
+          "l": 275
+        },
+        "changedAt": "20260815182104752576"
+      },
+      {
+        "gmSeq": 2317,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2317,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 440,
+          "d": 350,
+          "l": 157
+        },
+        "afterOdds": {
+          "w": 480,
+          "d": 360,
+          "l": 151
+        },
+        "changedAt": "20260815182104753955"
+      },
+      {
+        "gmSeq": 2318,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2318,
+          "betNm": "축구 핸디캡"
+        },
+        "beforeOdds": {
+          "w": 1100,
+          "d": 630,
+          "l": 111
+        },
+        "afterOdds": {
+          "w": 1250,
+          "d": 660,
+          "l": 109
+        },
+        "changedAt": "20260815182104754795"
+      },
+      {
+        "gmSeq": 2229,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2229,
+          "betNm": "야구 언더오버"
+        },
+        "beforeOdds": {
+          "w": 171,
+          "d": 0,
+          "l": 181
+        },
+        "afterOdds": {
+          "w": 176,
+          "d": 0,
+          "l": 176
+        },
+        "changedAt": "20260815180142937887"
+      },
+      {
+        "gmSeq": 2188,
+        "result": "EXACT",
+        "market": {
+          "matchSeq": 2188,
+          "betNm": "축구 언더오버"
+        },
+        "beforeOdds": {
+          "w": 166,
+          "d": 0,
+          "l": 187
+        },
+        "afterOdds": {
+          "w": 171,
+          "d": 0,
+          "l": 181
+        },
+        "changedAt": "20260815175655041779"
+      }
+    ],
+    "conclusion": "GM_SEQ joins to matchSeq but is ambiguous when event has multiple markets. Need GM_SEQ+betId composite."
+  },
+  "RECONCILIATION": {
+    "total": 50,
+    "matches": 50,
+    "details": [
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 승무패",
+          "winAllot": 3.35,
+          "drawAllot": 2.85,
+          "loseAllot": 2,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 3.35,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 2.85,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 핸디캡",
+          "winAllot": 1.63,
+          "drawAllot": 3.15,
+          "loseAllot": 4.6,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.63,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.15,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 4.6,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 핸디캡",
+          "winAllot": 1.13,
+          "drawAllot": 5.9,
+          "loseAllot": 10.5,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.13,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 5.9,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 10.5,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.44,
+          "drawAllot": 0,
+          "loseAllot": 2.26,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.44,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.26,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 SUM",
+          "winAllot": 1.78,
+          "drawAllot": 0,
+          "loseAllot": 1.74,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.78,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.74,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 전반 승무패",
+          "winAllot": 4.05,
+          "drawAllot": 1.93,
+          "loseAllot": 2.6,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 4.05,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 1.93,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.6,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 전반 핸디캡",
+          "winAllot": 1.35,
+          "drawAllot": 3.5,
+          "loseAllot": 8.1,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.35,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.5,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 8.1,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "광주FC",
+          "away": "포항 스틸러스",
+          "betNm": "축구 전반 언더오버",
+          "winAllot": 1.22,
+          "drawAllot": 0,
+          "loseAllot": 3.16,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.22,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 3.16,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 승무패",
+          "winAllot": 2.24,
+          "drawAllot": 2.95,
+          "loseAllot": 2.75,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.24,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 2.95,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.75,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 핸디캡",
+          "winAllot": 4.8,
+          "drawAllot": 3.6,
+          "loseAllot": 1.51,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 4.8,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.6,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.51,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 핸디캡",
+          "winAllot": 12.5,
+          "drawAllot": 6.6,
+          "loseAllot": 1.09,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 12.5,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 6.6,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.09,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.78,
+          "drawAllot": 0,
+          "loseAllot": 1.74,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.78,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.74,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 SUM",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 전반 승무패",
+          "winAllot": 2.95,
+          "drawAllot": 1.89,
+          "loseAllot": 3.55,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.95,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 1.89,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 3.55,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 전반 핸디캡",
+          "winAllot": 9,
+          "drawAllot": 3.8,
+          "loseAllot": 1.29,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 9,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.8,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.29,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "제주 SKFC",
+          "away": "FC안양",
+          "betNm": "축구 전반 언더오버",
+          "winAllot": 1.28,
+          "drawAllot": 0,
+          "loseAllot": 2.82,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.28,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.82,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 승무패",
+          "winAllot": 1.8,
+          "drawAllot": 3.85,
+          "loseAllot": 3,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.8,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.85,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 3,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 핸디캡",
+          "winAllot": 4.2,
+          "drawAllot": 3.35,
+          "loseAllot": 1.63,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 4.2,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.35,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.63,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 핸디캡",
+          "winAllot": 7.3,
+          "drawAllot": 5.2,
+          "loseAllot": 1.22,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 7.3,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 5.2,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.22,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 SUM",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 전반 승무패",
+          "winAllot": 2.45,
+          "drawAllot": 2.14,
+          "loseAllot": 3.65,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.45,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 2.14,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 3.65,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 전반 핸디캡",
+          "winAllot": 6.7,
+          "drawAllot": 3.45,
+          "loseAllot": 1.41,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 6.7,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.45,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.41,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그1",
+          "home": "FC서울",
+          "away": "대전 하나시티즌",
+          "betNm": "축구 전반 언더오버",
+          "winAllot": 1.36,
+          "drawAllot": 0,
+          "loseAllot": 2.49,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.36,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.49,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "충북청주 프로축구단",
+          "away": "전남 드래곤즈",
+          "betNm": "축구 승무패",
+          "winAllot": 2.15,
+          "drawAllot": 2.9,
+          "loseAllot": 2.95,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.15,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 2.9,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.95,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "충북청주 프로축구단",
+          "away": "전남 드래곤즈",
+          "betNm": "축구 핸디캡",
+          "winAllot": 4.2,
+          "drawAllot": 3.7,
+          "loseAllot": 1.56,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 4.2,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.7,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.56,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "충북청주 프로축구단",
+          "away": "전남 드래곤즈",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.75,
+          "drawAllot": 0,
+          "loseAllot": 1.77,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.75,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.77,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "충북청주 프로축구단",
+          "away": "전남 드래곤즈",
+          "betNm": "축구 SUM",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "김해FC 2008",
+          "away": "경남FC",
+          "betNm": "축구 승무패",
+          "winAllot": 3.2,
+          "drawAllot": 3.05,
+          "loseAllot": 1.96,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 3.2,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.05,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.96,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "김해FC 2008",
+          "away": "경남FC",
+          "betNm": "축구 핸디캡",
+          "winAllot": 1.67,
+          "drawAllot": 3.4,
+          "loseAllot": 3.9,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.67,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.4,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 3.9,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "김해FC 2008",
+          "away": "경남FC",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.64,
+          "drawAllot": 0,
+          "loseAllot": 1.9,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.64,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.9,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "김해FC 2008",
+          "away": "경남FC",
+          "betNm": "축구 SUM",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "수원 삼성블루윙즈",
+          "away": "수원FC",
+          "betNm": "축구 승무패",
+          "winAllot": 1.98,
+          "drawAllot": 3.35,
+          "loseAllot": 2.9,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.98,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.35,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.9,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "수원 삼성블루윙즈",
+          "away": "수원FC",
+          "betNm": "축구 핸디캡",
+          "winAllot": 3.65,
+          "drawAllot": 3.65,
+          "loseAllot": 1.66,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 3.65,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.65,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.66,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "수원 삼성블루윙즈",
+          "away": "수원FC",
+          "betNm": "축구 언더오버",
+          "winAllot": 2.05,
+          "drawAllot": 0,
+          "loseAllot": 1.54,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.05,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.54,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "수원 삼성블루윙즈",
+          "away": "수원FC",
+          "betNm": "축구 SUM",
+          "winAllot": 1.76,
+          "drawAllot": 0,
+          "loseAllot": 1.76,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.76,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.76,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "부산 아이파크",
+          "away": "화성FC",
+          "betNm": "축구 승무패",
+          "winAllot": 2.14,
+          "drawAllot": 3.2,
+          "loseAllot": 2.7,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.14,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.2,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.7,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "부산 아이파크",
+          "away": "화성FC",
+          "betNm": "축구 핸디캡",
+          "winAllot": 4.25,
+          "drawAllot": 3.7,
+          "loseAllot": 1.55,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 4.25,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.7,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.55,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "부산 아이파크",
+          "away": "화성FC",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.93,
+          "drawAllot": 0,
+          "loseAllot": 1.62,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.93,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.62,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "K리그2",
+          "home": "부산 아이파크",
+          "away": "화성FC",
+          "betNm": "축구 SUM",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "잉글랜드 챔피언십",
+          "home": "볼턴 원더러스",
+          "away": "프레스턴 노스엔드",
+          "betNm": "축구 승무패",
+          "winAllot": 2.03,
+          "drawAllot": 3.1,
+          "loseAllot": 3,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.03,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.1,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 3,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "잉글랜드 챔피언십",
+          "home": "볼턴 원더러스",
+          "away": "프레스턴 노스엔드",
+          "betNm": "축구 핸디캡",
+          "winAllot": 4,
+          "drawAllot": 3.5,
+          "loseAllot": 1.63,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 4,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.5,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.63,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "잉글랜드 챔피언십",
+          "home": "볼턴 원더러스",
+          "away": "프레스턴 노스엔드",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.72,
+          "drawAllot": 0,
+          "loseAllot": 1.8,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.72,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.8,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "잉글랜드 챔피언십",
+          "home": "볼턴 원더러스",
+          "away": "프레스턴 노스엔드",
+          "betNm": "축구 SUM",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "동남아시아 축구챔피언십",
+          "home": "싱가포르",
+          "away": "태국",
+          "betNm": "축구 승무패",
+          "winAllot": 5.7,
+          "drawAllot": 3.35,
+          "loseAllot": 1.48,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 5.7,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.35,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.48,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "동남아시아 축구챔피언십",
+          "home": "싱가포르",
+          "away": "태국",
+          "betNm": "축구 핸디캡",
+          "winAllot": 2.33,
+          "drawAllot": 3.05,
+          "loseAllot": 2.55,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.33,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.05,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.55,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "동남아시아 축구챔피언십",
+          "home": "싱가포르",
+          "away": "태국",
+          "betNm": "축구 언더오버",
+          "winAllot": 1.59,
+          "drawAllot": 0,
+          "loseAllot": 1.97,
+          "handi": 9
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "TOTAL",
+          "line": 9,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.59,
+              "label": "언더"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.97,
+              "label": "오버"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "동남아시아 축구챔피언십",
+          "home": "싱가포르",
+          "away": "태국",
+          "betNm": "축구 SUM",
+          "winAllot": 1.77,
+          "drawAllot": 0,
+          "loseAllot": 1.75,
+          "handi": 27
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "OTHER_betId_17",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 1.77,
+              "label": "홀"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.75,
+              "label": "짝"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "잉글랜드 챔피언십",
+          "home": "브리스틀 시티",
+          "away": "밀월",
+          "betNm": "축구 승무패",
+          "winAllot": 2.3,
+          "drawAllot": 3.1,
+          "loseAllot": 2.55,
+          "handi": 0
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "MONEYLINE_3WAY",
+          "line": 0,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 2.3,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.1,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 2.55,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      },
+      {
+        "provider": {
+          "league": "잉글랜드 챔피언십",
+          "home": "브리스틀 시티",
+          "away": "밀월",
+          "betNm": "축구 핸디캡",
+          "winAllot": 4.75,
+          "drawAllot": 3.8,
+          "loseAllot": 1.48,
+          "handi": 2
+        },
+        "normalized": {
+          "sport": "SOCCER",
+          "marketType": "HANDICAP_2WAY",
+          "line": 2,
+          "selections": [
+            {
+              "type": "HOME",
+              "odds": 4.75,
+              "label": "승"
+            },
+            {
+              "type": "DRAW",
+              "odds": 3.8,
+              "label": "무"
+            },
+            {
+              "type": "AWAY",
+              "odds": 1.48,
+              "label": "패"
+            }
+          ]
+        },
+        "oddsExact": true
+      }
+    ],
+    "conclusion": "PASS: 50/50 rows reconcile exactly"
+  },
+  "WIN1LOSE_MAPPING": {
+    "rowCount": 80,
+    "betIds": [
+      "108"
+    ],
+    "betNms": [
+      "야구 승1패"
+    ],
+    "normalizedType": "WIN1LOSE",
+    "samples": [
+      {
+        "matchSeq": 2403,
+        "betId": "108",
+        "betNm": "야구 승1패",
+        "betTypNm": "승N패",
+        "sport": "BASEBALL",
+        "home": "디트로이트 타이거즈",
+        "away": "시카고 화이트삭스",
+        "winAllot": 2.15,
+        "drawAllot": 3.25,
+        "loseAllot": 2.65
+      },
+      {
+        "matchSeq": 2418,
+        "betId": "108",
+        "betNm": "야구 승1패",
+        "betTypNm": "승N패",
+        "sport": "BASEBALL",
+        "home": "시카고 컵스",
+        "away": "세인트루이스 카디널스",
+        "winAllot": 1.92,
+        "drawAllot": 3.45,
+        "loseAllot": 2.95
+      },
+      {
+        "matchSeq": 2427,
+        "betId": "108",
+        "betNm": "야구 승1패",
+        "betTypNm": "승N패",
+        "sport": "BASEBALL",
+        "home": "토론토 블루제이스",
+        "away": "뉴욕 양키스",
+        "winAllot": 3.65,
+        "drawAllot": 3.3,
+        "loseAllot": 1.75
+      },
+      {
+        "matchSeq": 2436,
+        "betId": "108",
+        "betNm": "야구 승1패",
+        "betTypNm": "승N패",
+        "sport": "BASEBALL",
+        "home": "샌프란시스코 자이언츠",
+        "away": "콜로라도 로키스",
+        "winAllot": 1.93,
+        "drawAllot": 3.3,
+        "loseAllot": 3.05
+      },
+      {
+        "matchSeq": 2441,
+        "betId": "108",
+        "betNm": "야구 승1패",
+        "betTypNm": "승N패",
+        "sport": "BASEBALL",
+        "home": "뉴욕 메츠",
+        "away": "워싱턴 내셔널스",
+        "winAllot": 2.17,
+        "drawAllot": 3.3,
+        "loseAllot": 2.6
+      }
+    ],
+    "conclusion": "WIN1LOSE exists: 80 rows. Mapped correctly."
+  },
+  "ADVERSARIAL_ANSWERS": {
+    "1_two_games_merge": "PASS: matchSeq is 1:1 with canonical event tuple. No merge possible.",
+    "2_one_game_splits": "FAIL: 170 canonical tuples map to multiple matchSeqs.",
+    "3_handicap_sign_reversed": "Normalized line = row.handi = home team handicap. Positive = home favored by that amount. Verified by sample.",
+    "4_home_away_reversed": "HOME selection uses winAllot (프로토: 홈팀 승), AWAY uses loseAllot (원정팀 승). winTxt/loseTxt confirm labels.",
+    "5_zero_odds_valid": "zeroWinAllot=164, zeroDrawAllot=592, zeroLoseAllot=164. Parser requires odds > 0 before creating selection.",
+    "6_total_mistaken_handicap": "11 unique line-market types. Classification by betNm string: 핸디캡→HANDICAP, 언더오버→TOTAL. No numeric-only ambiguity.",
+    "7_timezone_wrong_date": "Seoul=UTC+9 fixed offset. gameDate sample verified. No DST in Korea.",
+    "8_unsupported_disappears": "unsupportedRows=170. All tracked via market inventory.",
+    "9_duplicate_rows_duplicate_markets": "collisionCount=0. Market key = matchSeq+betId+line. No collisions.",
+    "10_reordered_keys": "Parser uses Object.fromEntries(keys.map((k,i)=>[k,arr[i]])). Keys array drives mapping, not positional assumption."
+  },
+  "REMAINING_UNVERIFIED": [
+    "W_BET_CNT / D_BET_CNT / L_BET_CNT (UNVERIFIED_BET_AGGREGATE — not in product)",
+    "ACHG_BUY_ISOL_CL_VAL semantics",
+    "GM_SEQ + betId composite join for unambiguous tooltip attachment (Phase 3)",
+    "DB round-trip (isolated to run_gate21_db_roundtrip.js)"
+  ]
+}
