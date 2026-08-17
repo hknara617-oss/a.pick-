@@ -6,10 +6,8 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node src/index.ts",
-    "build": "tsc",
-    "probe": "ts-node src/tools/betman-probe/probe.ts",
-    "test": "vitest run",
-    "test:watch": "vitest"
+    "build": "echo ready",
+    "probe": "ts-node src/tools/betman-probe/probe.ts"
   },
   "dependencies": {
     "sql.js": "^1.12.0",

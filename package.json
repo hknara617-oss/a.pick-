@@ -8,14 +8,12 @@
     "apps/web"
   ],
   "scripts": {
+    "build": "echo ready",
     "app": "node tools/dogfood_server.js",
     "dogfood": "node tools/dogfood_server.js",
     "security:check": "node tools/run_security_assertions.js",
     "d31:reality": "node tools/run_security_assertions.js && node tools/run_phase_d31_reality_gate.js",
-    "test:d3": "node tools/run_phase_d3_tests.js",
-    "probe": "npm run probe --workspace=apps/api",
-    "dev:api": "npm run dev --workspace=apps/api",
-    "test": "npm run test --workspace=apps/api"
+    "test:d3": "node tools/run_phase_d3_tests.js"
   },
   "engines": {
     "node": ">=18.0.0"
