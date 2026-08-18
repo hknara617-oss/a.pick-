@@ -1006,7 +1006,7 @@ function openSealFlow(candidateId) {
     };
 }
 
-async function executeDecisionSeal(cand) {
+async function executeDecisionSeal(cand, sealMeta) {
     try {
         const res = await fetch('/api/decision/seal', {
             method: 'POST',
@@ -1020,8 +1020,8 @@ async function executeDecisionSeal(cand) {
                 selectionId: cand.selectionId,
                 offeredOdds: cand.currentOdds,
                 entryThreshold: cand.entryThreshold || cand.currentOdds,
-                thesisSummary: '가격 조건 및 사전 가설 확인',
-                evidenceChips: ['가격 조건 충족'],
+                thesisSummary: sealMeta?.primaryDriver || '가격 조건 및 사전 가설 확인',
+                evidenceChips: sealMeta?.selectedReasonCodes || ['가격 조건 충족'],
                 breakConditions: [
                     { code: 'ODDS_BELOW_MINIMUM', threshold: cand.entryThreshold || cand.currentOdds, action: 'INVALIDATE' },
                     { code: 'STARTER_SCRATCHED', action: 'INVALIDATE' }
@@ -1032,35 +1032,154 @@ async function executeDecisionSeal(cand) {
         state.lastSealedDecisionId = result.contract?.id;
     } catch (_) {}
 
-    showToast('판단 봉인 완료', 'A.PICK이 감시를 위임받았습니다. 변화가 없으면 알리지 않으니 이제 앱을 닫으셔도 됩니다.');
+    showToast('판단 저장 완료', '판단을 저장했습니다. A.PICK이 지금부터 가격과 주요 변화를 확인합니다.');
 
     const execModal = document.getElementById('execution-sheet-modal');
-    if (execModal) {
-        execModal.style.display = 'flex';
-        document.getElementById('close-execution-sheet-btn').onclick = () => execModal.style.display = 'none';
-        
-        document.getElementById('record-entered-btn').onclick = async () => {
-            await recordExecution(state.lastSealedDecisionId, 'ENTERED', cand.currentOdds);
-            execModal.style.display = 'none';
-            switchTab('watch');
-            loadWatchTab();
-        };
-        document.getElementById('record-not-yet-btn').onclick = async () => {
-            await recordExecution(state.lastSealedDecisionId, 'NOT_YET', null);
-            execModal.style.display = 'none';
-            switchTab('watch');
-            loadWatchTab();
-        };
-        document.getElementById('record-skip-btn').onclick = async () => {
-            await recordExecution(state.lastSealedDecisionId, 'NO_ENTRY', null);
-            execModal.style.display = 'none';
-            switchTab('watch');
-            loadWatchTab();
-        };
+    const content = document.getElementById('execution-sheet-content');
+    if (!execModal || !content) return;
+
+    const gameNumber = cand.gameNo || (cand.eventId ? cand.eventId.replace(/\D/g, '').slice(0, 3) : '162');
+
+    // Threshold warning check
+    const isPriceViolated = cand.entryThreshold && (cand.currentOdds < cand.entryThreshold);
+
+    if (isPriceViolated) {
+        content.innerHTML = `
+            <div style="background:rgba(210,153,34,0.12);border:1px solid var(--accent-amber);border-radius:12px;padding:14px;margin-bottom:14px;">
+                <div style="font-size:13px;font-weight:800;color:var(--accent-amber);margin-bottom:4px;">⚠️ 가격 조건이 바뀌었습니다</div>
+                <div style="font-size:12px;color:var(--text-primary);margin-bottom:2px;">
+                    현재 배당 <strong>@${cand.currentOdds}</strong> / 내 진입 기준 <strong>@${cand.entryThreshold}</strong>
+                </div>
+                <div style="font-size:11px;color:var(--text-muted);">
+                    배당이 기준선 이하로 하락하여 진입을 권장하지 않습니다.
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="document.getElementById('execution-sheet-modal').style.display='none'; openSealFlow('${cand.candidateId}');" style="width:100%;padding:12px;font-size:13px;">
+                🔄 다시 판단하기
+            </button>
+        `;
     } else {
+        // Normal Post-Seal Screen
+        content.innerHTML = `
+            <div style="display:flex;flex-direction:column;gap:12px;">
+                <!-- Post-Seal Summary Card -->
+                <div style="background:var(--bg-surface-elevated);border:1px solid var(--border-subtle);border-radius:12px;padding:14px;">
+                    <div style="font-size:11px;color:var(--accent-blue);font-weight:700;margin-bottom:4px;">✓ 판단을 저장했습니다.</div>
+                    <div style="font-size:15px;font-weight:800;color:var(--text-primary);margin-bottom:4px;">
+                        [${gameNumber}번] ${cand.eventName}
+                    </div>
+                    <div style="font-size:13px;font-weight:700;color:var(--accent-green);margin-bottom:6px;">
+                        선택: ${cand.selectionName} (현재 @${cand.currentOdds} / 내 기준 @${cand.entryThreshold || cand.currentOdds})
+                    </div>
+                    <div style="font-size:11px;color:var(--text-muted);">
+                        A.PICK이 지금부터 가격과 주요 변화를 확인합니다.
+                    </div>
+                </div>
+
+                <!-- Primary External CTA -->
+                <button class="btn btn-primary" id="handoff-open-betman-btn" style="width:100%;padding:14px;font-size:14px;font-weight:800;border-radius:10px;">
+                    배트맨 열기
+                </button>
+
+                <!-- Secondary CTA -->
+                <button class="btn btn-secondary" id="handoff-close-app-btn" style="width:100%;padding:11px;font-size:12px;border-radius:10px;">
+                    ✕ 앱 닫기
+                </button>
+
+                <!-- Tertiary Utility Action -->
+                <div style="text-align:center;margin-top:2px;">
+                    <button id="handoff-copy-number-btn" style="background:none;border:none;color:var(--text-muted);font-size:11px;cursor:pointer;text-decoration:underline;">
+                        📋 ${gameNumber}번 ${cand.selectionName} 복사
+                    </button>
+                </div>
+            </div>
+        `;
+
+        // Betman Handoff button click
+        document.getElementById('handoff-open-betman-btn').onclick = () => {
+            window.open('https://www.betman.co.kr', '_blank');
+            renderReturnPrompt(cand, gameNumber);
+        };
+
+        document.getElementById('handoff-close-app-btn').onclick = () => {
+            execModal.style.display = 'none';
+            switchTab('watch');
+            loadWatchTab();
+        };
+
+        document.getElementById('handoff-copy-number-btn').onclick = async () => {
+            await navigator.clipboard.writeText(`${gameNumber}번 ${cand.selectionName}`);
+            showToast('경기 번호 복사', `${gameNumber}번 ${cand.selectionName}이 복사되었습니다.`);
+        };
+    }
+
+    execModal.style.display = 'flex';
+    document.getElementById('close-execution-sheet-btn').onclick = () => execModal.style.display = 'none';
+}
+
+function renderReturnPrompt(cand, gameNumber) {
+    const content = document.getElementById('execution-sheet-content');
+    if (!content) return;
+
+    content.innerHTML = `
+        <div style="text-align:center;padding:8px 0;display:flex;flex-direction:column;gap:12px;">
+            <div style="font-size:15px;font-weight:800;color:var(--text-primary);">실제로 진입하셨나요?</div>
+            <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0 auto;max-width:300px;">
+                실제 구매하신 경우 캡처를 붙여넣거나 직접 기록하여 WATCH로 연결할 수 있습니다.
+            </p>
+
+            <button class="btn btn-primary" id="return-capture-btn" style="padding:13px;font-size:13px;font-weight:800;border-radius:10px;">
+                📸 캡처로 실제 진입 연결 (Ctrl+V / 사진)
+            </button>
+
+            <button class="btn btn-secondary" id="return-manual-btn" style="padding:11px;font-size:12px;border-radius:10px;">
+                ✍️ 직접 기록 (현재 @${cand.currentOdds})
+            </button>
+
+            <button style="background:none;border:none;color:var(--text-muted);font-size:11.5px;cursor:pointer;padding:6px;" id="return-no-entry-btn">
+                진입하지 않았어요
+            </button>
+        </div>
+    `;
+
+    document.getElementById('return-capture-btn').onclick = () => {
+        document.getElementById('execution-sheet-modal').style.display = 'none';
+        openScreenshotImportFlow();
+    };
+
+    document.getElementById('return-manual-btn').onclick = async () => {
+        await recordExecution(state.lastSealedDecisionId, 'ENTERED', cand.currentOdds);
+        renderAttentionFirewallClosure();
+    };
+
+    document.getElementById('return-no-entry-btn').onclick = async () => {
+        await recordExecution(state.lastSealedDecisionId, 'NO_ENTRY', null);
+        document.getElementById('execution-sheet-modal').style.display = 'none';
         switchTab('watch');
         loadWatchTab();
-    }
+    };
+}
+
+function renderAttentionFirewallClosure() {
+    const content = document.getElementById('execution-sheet-content');
+    if (!content) return;
+
+    content.innerHTML = `
+        <div style="text-align:center;padding:12px 4px;display:flex;flex-direction:column;gap:12px;">
+            <div style="font-size:24px;">🛡️</div>
+            <div style="font-size:15px;font-weight:800;color:var(--accent-green);">진입 기록 완료</div>
+            <p style="font-size:12px;color:var(--text-secondary);line-height:1.6;margin:0 auto;max-width:320px;">
+                이제 필요한 변화만 A.PICK이 확인합니다.<br>
+                <span style="color:var(--text-muted);font-size:11px;">
+                    ✓ 배당 변화 &nbsp;|&nbsp; ✓ 선발/라인업 &nbsp;|&nbsp; ✓ 내가 정한 파기 조건
+                </span><br>
+                변화가 없으면 알리지 않습니다.
+            </p>
+            <button class="btn btn-primary" onclick="document.getElementById('execution-sheet-modal').style.display='none'; switchTab('watch'); loadWatchTab();" style="padding:13px;font-size:13px;font-weight:800;border-radius:10px;margin-top:4px;">
+                ✕ 앱 닫고 일상에 집중하기
+            </button>
+        </div>
+    `;
 }
 
 async function recordExecution(decisionId, status, entryOdds) {
@@ -1283,20 +1402,28 @@ function renderImportParsedConfirmation(parseResult) {
         `;
     }).join('');
 
+    const hasSealedMatch = state.lastSealedDecisionId != null;
+    const matchBanner = hasSealedMatch ? `
+        <div style="background:rgba(46,160,67,0.12);border:1px solid var(--accent-green);padding:10px 12px;border-radius:8px;font-size:12px;color:var(--accent-green);margin-bottom:10px;">
+            ✓ <strong>판단한 선택과 일치합니다!</strong> (A.PICK에서 만든 판단에 실제 진입 증빙으로 연결)
+        </div>
+    ` : '';
+
     preview.innerHTML = `
         <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <span style="font-size: 14px; font-weight: 800; color: var(--accent-green);">
-                    ✓ 배트맨 5경기 다폴더 티켓 인식 완료 (총 24.1배)
+                    ✓ 배트맨 ${parseResult.selections.length}개 경기 티켓 인식 완료
                 </span>
-                <span style="font-size: 11px; color: var(--text-muted);">총 5개 경기</span>
+                <span style="font-size: 11px; color: var(--text-muted);">총 ${parseResult.selections.length}개 픽</span>
             </div>
 
+            ${matchBanner}
             ${legsHtml}
 
-            <!-- 10-Second Fast Activation (No Friction) -->
+            <!-- Execution Confirmation Action -->
             <button class="btn btn-primary" id="confirm-import-watch-btn" style="padding: 14px; font-weight: 800; font-size: 14px; border-radius: 10px; margin-top: 4px;">
-                ⚡ 5개 경기 통합 추적 시작 (A.PICK에 감시 위임)
+                ${hasSealedMatch ? '✓ 실제 진입으로 기록하고 감시 계속' : '⚡ 캡처 픽 통합 추적 시작 (A.PICK에 감시 위임)'}
             </button>
         </div>
     `;
@@ -1310,12 +1437,17 @@ function renderImportParsedConfirmation(parseResult) {
                     importSessionId: parseResult.importSessionId,
                     selectedLegs: parseResult.selections,
                     userExecuted: true,
-                    userThesis: '' // Lightweight first activation
+                    matchedDecisionId: state.lastSealedDecisionId,
+                    userThesis: ''
                 })
             });
 
+            if (state.lastSealedDecisionId) {
+                await recordExecution(state.lastSealedDecisionId, 'ENTERED', parseResult.selections[0]?.parsedOdds);
+            }
+
             document.getElementById('screenshot-import-modal').style.display = 'none';
-            showToast('추적 등록 완료', `${parseResult.selections.length}개 픽의 감시를 위임받았습니다. 변화가 없으면 알리지 않습니다.`);
+            showToast('진입 기록 완료', '판단과 캡처가 연결되었습니다. 이제 필요한 변화만 A.PICK이 감시합니다.');
             switchTab('watch');
             loadWatchTab();
         } catch (err) {
