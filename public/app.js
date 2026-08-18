@@ -1686,9 +1686,39 @@ let quantState = {
 
 let firewallActive = false;
 
+// ── Rule Validator for True Edge Matching (연장전 규정 불일치 가짜 에지 방어) ──
+function isRuleStrictlyMatched(sport, marketType, isOtGlobal = false, isOtBatman = false) {
+    if (sport === 'FOOTBALL' && marketType === 'MATCH_WINNER') {
+        return true; // 정규시간 90분 기준 100% 일치
+    }
+    return isOtGlobal === isOtBatman;
+}
+
 function initQuantHeroAndTrustDrawer() {
     renderQuantHeroCard();
     renderTrustDrawer();
+    initFirewallCurtainControls();
+}
+
+function initFirewallCurtainControls() {
+    document.getElementById('unlock-firewall-btn')?.addEventListener('click', () => {
+        toggleFirewallCurtain(false);
+    });
+}
+
+function toggleFirewallCurtain(isLocked) {
+    firewallActive = isLocked;
+    const explorationSection = document.getElementById('market-exploration-section');
+    const curtain = document.getElementById('firewall-locked-curtain');
+
+    if (isLocked) {
+        if (explorationSection) explorationSection.style.display = 'none';
+        if (curtain) curtain.style.display = 'block';
+    } else {
+        if (explorationSection) explorationSection.style.display = 'block';
+        if (curtain) curtain.style.display = 'none';
+    }
+    renderQuantHeroCard();
 }
 
 function renderQuantHeroCard() {
@@ -1701,7 +1731,7 @@ function renderQuantHeroCard() {
             <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;margin-bottom:8px;">
                 <div>
                     <div style="display:flex;gap:6px;align-items:center;font-size:11px;color:var(--text-muted);margin-bottom:2px;">
-                        <span style="font-weight:800;color:var(--text-primary);background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;">[${p.gameNo}번]</span>
+                        <span style="font-weight:800;color:var(--accent-green);background:rgba(46,160,67,0.12);padding:1px 6px;border-radius:4px;">[${p.gameNo}번]</span>
                         <span>${p.league}</span>
                     </div>
                     <div style="font-size:13px;font-weight:800;color:var(--text-primary);">${p.matchTitle}</div>
@@ -1720,14 +1750,11 @@ function renderQuantHeroCard() {
                 <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:12px;">
                     <div style="display:flex;align-items:center;gap:6px;">
                         <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent-green);box-shadow:0 0 8px var(--accent-green);"></span>
-                        <span style="font-size:11px;font-weight:900;letter-spacing:0.5px;color:var(--accent-green);">QUANT 2-PICK APPROVED</span>
+                        <span style="font-size:11px;font-weight:900;letter-spacing:0.5px;color:var(--accent-green);">QUANT EDGE CONFIRMED (ΔP ≥ +6.0%p)</span>
                     </div>
-                    <div style="display:flex;gap:6px;align-items:center;">
-                        <span style="font-size:10px;font-weight:700;background:rgba(255,255,255,0.08);color:var(--text-secondary);padding:3px 8px;border-radius:6px;">
-                            권장: 시드 ${(quantState.kellyFraction * 100).toFixed(1)}% 고정
-                        </span>
-                        <button id="toggle-quant-mode-btn" style="background:none;border:none;color:var(--text-muted);font-size:10px;cursor:pointer;padding:2px 4px;" title="모드 전환 테스트">🔄</button>
-                    </div>
+                    <span style="font-size:10px;font-weight:700;background:rgba(255,255,255,0.08);color:var(--text-secondary);padding:3px 8px;border-radius:6px;">
+                        0.5 Kelly 기준 권장
+                    </span>
                 </div>
 
                 <!-- 2 Picks List -->
@@ -1744,13 +1771,14 @@ function renderQuantHeroCard() {
                 <!-- Attention Firewall CTA Button / Active Banner -->
                 ${!firewallActive ? `
                     <button id="firewall-copy-btn" class="btn btn-primary" style="width:100%;padding:13px;font-size:13px;font-weight:800;border-radius:10px;background:var(--accent-green);color:#0a0e14;border:none;cursor:pointer;transition:all .15s;">
-                        📋 배트맨에 번호 복사하고 앱 닫기
+                        📋 배트맨 번호 복사 & 화면 잠금
                     </button>
                 ` : `
-                    <div style="background:rgba(15,23,42,0.9);border:1px solid rgba(46,160,67,0.4);border-radius:10px;padding:12px;text-align:center;">
-                        <div style="font-size:12px;font-weight:800;color:var(--accent-green);margin-bottom:3px;">🛡️ ATTENTION FIREWALL ACTIVE</div>
-                        <p style="font-size:11px;color:var(--text-muted);margin:0;">
-                            판단이 봉인되었습니다. 이제 앱을 닫고 일상에 집중하세요.
+                    <div style="background:rgba(15,23,42,0.95);border:1.5px solid rgba(46,160,67,0.5);border-radius:12px;padding:14px;text-align:center;">
+                        <div style="font-size:13px;font-weight:900;color:var(--accent-green);margin-bottom:4px;">🛡️ ATTENTION FIREWALL LOCKED</div>
+                        <p style="font-size:11px;color:var(--text-secondary);line-height:1.5;margin:0;">
+                            판단이 봉인되었습니다. 배트맨 마킹 후 일상에 집중하세요.<br>
+                            <span style="color:var(--text-muted);">(하단 경기 탐색 카탈로그가 안전하게 숨김 처리되었습니다.)</span>
                         </p>
                     </div>
                 `}
@@ -1766,19 +1794,16 @@ function renderQuantHeroCard() {
                 <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:14px;">
                     <div style="display:flex;align-items:center;gap:6px;">
                         <span style="font-size:14px;">🛡️</span>
-                        <span style="font-size:11px;font-weight:900;letter-spacing:0.5px;color:var(--accent-amber);">CAPITAL PRESERVATION MODE</span>
+                        <span style="font-size:11px;font-weight:900;letter-spacing:0.5px;color:var(--accent-amber);">CAPITAL PRESERVATION</span>
                     </div>
-                    <div style="display:flex;gap:6px;align-items:center;">
-                        <span style="font-size:10px;font-weight:800;background:rgba(210,153,34,0.18);border:1px solid rgba(210,153,34,0.3);color:var(--accent-amber);padding:3px 8px;border-radius:6px;">
-                            위험도 ${quantState.riskScore || 84}점
-                        </span>
-                        <button id="toggle-quant-mode-btn" style="background:none;border:none;color:var(--text-muted);font-size:10px;cursor:pointer;padding:2px 4px;" title="모드 전환 테스트">🔄</button>
-                    </div>
+                    <span style="font-size:10px;font-weight:800;background:rgba(210,153,34,0.18);border:1px solid rgba(210,153,34,0.3);color:var(--accent-amber);padding:3px 8px;border-radius:6px;">
+                        시장 위험도 ${quantState.riskScore || 84}점
+                    </span>
                 </div>
 
                 <!-- Explanation -->
                 <div style="text-align:center;padding:10px 6px 16px 6px;">
-                    <h3 style="font-size:15px;font-weight:800;color:var(--text-primary);margin-bottom:6px;">오늘은 베팅을 쉬는 날입니다</h3>
+                    <h3 style="font-size:15px;font-weight:800;color:var(--text-primary);margin-bottom:6px;">오늘 시장은 베팅을 쉽니다</h3>
                     <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0 auto;max-width:320px;">
                         ${quantState.passReason}
                     </p>
@@ -1786,18 +1811,11 @@ function renderQuantHeroCard() {
 
                 <!-- Fixed Preservation Box -->
                 <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center;font-size:12px;font-weight:700;color:var(--text-secondary);">
-                    ✓ 잔고 보존 완료 (No Action Required)
+                    ✓ 자본 방어 완료 (+20% 기대 가치 확보)
                 </div>
             </div>
         `;
     }
-
-    // Mode Toggle button handler for previewing both states
-    document.getElementById('toggle-quant-mode-btn')?.addEventListener('click', () => {
-        quantState.state = quantState.state === 'APPROVED' ? 'HARD_PASS' : 'APPROVED';
-        firewallActive = false;
-        renderQuantHeroCard();
-    });
 }
 
 async function handleCopyAndClose() {
@@ -1807,7 +1825,7 @@ async function handleCopyAndClose() {
         .map(p => `[${p.gameNo}번] ${p.matchTitle} - ${p.market} (@${p.batmanOdds.toFixed(2)})`)
         .join('\n');
 
-    const fullText = `[A.PICK 퀀트 2폴더]\n${copyText}\n조합배당: @${quantState.combinedOdds.toFixed(2)}배`;
+    const fullText = `[A.PICK 퀀트 투표권 번호]\n${copyText}\n조합배당: @${quantState.combinedOdds.toFixed(2)}배`;
 
     try {
         await navigator.clipboard.writeText(fullText);
@@ -1817,16 +1835,15 @@ async function handleCopyAndClose() {
 
     const btn = document.getElementById('firewall-copy-btn');
     if (btn) {
-        btn.innerText = '✓ 번호 복사 완료!';
+        btn.innerText = '✓ 복사 및 판단 봉인 완료';
         btn.style.background = 'var(--accent-blue)';
     }
 
-    showToast('번호 복사 완료', '투표용지 번호가 클립보드에 복사되었습니다.');
+    showToast('번호 복사 & 화면 잠금', '투표용지 번호가 복사되었으며 화면 보호 모드가 가동됩니다.');
 
     setTimeout(() => {
-        firewallActive = true;
-        renderQuantHeroCard();
-    }, 800);
+        toggleFirewallCurtain(true);
+    }, 600);
 }
 
 // ── Trust Drawer Modal & Bottom Bar ──

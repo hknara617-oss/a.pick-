@@ -102,21 +102,42 @@
                     <!-- 2-STATE QUANT HERO CARD CONTAINER (진입 vs 자본보존) -->
                     <div id="quant-hero-container" style="margin-bottom: 20px;"></div>
 
-                    <!-- Quick Sports Filter Chips -->
-                    <div style="display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px;">
-                        <button type="button" class="btn btn-primary sport-filter-btn" data-sport="TOP3" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 16px; background: var(--accent-blue);">🔥 오늘 픽드랍 (TOP 3)</button>
-                        <button type="button" class="btn btn-secondary sport-filter-btn" data-sport="ALL" style="padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 16px;">📋 전체 게임</button>
-                        <button type="button" class="btn btn-secondary sport-filter-btn" data-sport="BASEBALL" style="padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 16px;">⚾ 야구 (KBO/NPB/MLB)</button>
-                        <button type="button" class="btn btn-secondary sport-filter-btn" data-sport="SOCCER" style="padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 16px;">⚽ 축구 (FA컵/유럽)</button>
+                    <!-- Market Exploration Section (Firewall 작동 시 격리 숨김) -->
+                    <div id="market-exploration-section">
+                        <!-- Quick Sports Filter Chips -->
+                        <div style="display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px;">
+                            <button type="button" class="btn btn-primary sport-filter-btn" data-sport="TOP3" style="padding: 6px 14px; font-size: 12px; font-weight: 800; border-radius: 16px; background: var(--accent-blue);">🔥 오늘 픽드랍 (TOP 3)</button>
+                            <button type="button" class="btn btn-secondary sport-filter-btn" data-sport="ALL" style="padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 16px;">📋 전체 게임</button>
+                            <button type="button" class="btn btn-secondary sport-filter-btn" data-sport="BASEBALL" style="padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 16px;">⚾ 야구 (KBO/NPB/MLB)</button>
+                            <button type="button" class="btn btn-secondary sport-filter-btn" data-sport="SOCCER" style="padding: 6px 12px; font-size: 12px; font-weight: 700; border-radius: 16px;">⚽ 축구 (FA컵/유럽)</button>
+                        </div>
+
+                        <!-- Search Input for Full Market Exploration -->
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="market-search-input" placeholder="내가 보는 경기 검색 (예: LG, 한화, KIA, 요미우리, 다저스, 강원)..." style="flex: 1; background: var(--bg-surface-elevated); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 10px 14px; border-radius: var(--radius-md); font-size: 13px; font-family: inherit;">
+                        </div>
+
+                        <div id="today-candidates-list" class="cards-list" style="margin-top: 14px;">
+                            <!-- 2-3 Decision Setup Cards -->
+                        </div>
                     </div>
 
-                    <!-- Search Input for Full Market Exploration -->
-                    <div style="display: flex; gap: 8px;">
-                        <input type="text" id="market-search-input" placeholder="내가 보는 경기 검색 (예: LG, 한화, KIA, 요미우리, 다저스, 강원)..." style="flex: 1; background: var(--bg-surface-elevated); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 10px 14px; border-radius: var(--radius-md); font-size: 13px; font-family: inherit;">
+                    <!-- Firewall Locked Curtain (화면 보호 모드) -->
+                    <div id="firewall-locked-curtain" style="display: none; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(46, 160, 67, 0.3); border-radius: 20px; padding: 32px 20px; text-align: center; margin-top: 16px;">
+                        <div style="font-size: 32px; margin-bottom: 8px;">🔒</div>
+                        <div style="font-size: 14px; font-weight: 800; color: var(--accent-green); margin-bottom: 6px;">화면 보호 모드 (Iron Curtain) 실행 중</div>
+                        <p style="font-size: 12px; color: var(--text-secondary); line-height: 1.6; margin: 0 auto 16px auto; max-width: 320px;">
+                            불필요한 시장 탐색과 충동 베팅을 방지하기 위해 상세 마켓 목록이 숨김 처리되었습니다. 이제 앱을 닫고 일상에 집중하세요.
+                        </p>
+                        <button id="unlock-firewall-btn" style="background: none; border: 1px solid var(--border-subtle); color: var(--text-muted); padding: 6px 14px; font-size: 11px; border-radius: 14px; cursor: pointer;">
+                            🔓 마켓 탐색 잠금 해제
+                        </button>
                     </div>
-                </div>
-                <div id="today-candidates-list" class="cards-list">
-                    <!-- 2-3 Decision Setup Cards -->
+
+                    <!-- Legal & Responsible Gaming Footer -->
+                    <footer style="padding: 24px 12px 10px 12px; border-top: 1px solid rgba(255,255,255,0.06); margin-top: 32px; text-align: center; font-size: 10.5px; color: var(--text-muted); line-height: 1.6;">
+                        A.PICK은 통계 분석 및 룰 기반 의사결정 보조 도구이며, 투표권 대리 구매나 확정 수익을 보장하지 않습니다. 과도한 몰입을 지양하고 건전한 베팅 환경을 준수하세요.
+                    </footer>
                 </div>
             </section>
 
