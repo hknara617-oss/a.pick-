@@ -1029,6 +1029,9 @@ async function executeDecisionSeal(cand, sealMeta) {
             })
         });
         const result = await res.json();
+        state.lastSealedDecisionId = result.contract?.id;
+    } catch (_) {}
+
     // Instantly add to state.watchList for seamless WATCH tab sync
     if (!state.watchList) state.watchList = [];
     const existingIdx = state.watchList.findIndex(w => w.eventName === cand.eventName && w.selectionName === cand.selectionName);
