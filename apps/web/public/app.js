@@ -793,7 +793,24 @@ function openWhySheet(candidateId) {
     document.getElementById('close-why-sheet-btn').onclick = () => modal.style.display = 'none';
 }
 
-// 7. Decision Seal Flow with Thesis Capture ("왜 이 판단을 하려고 하나요?")
+// 7. 3초 퀵-봉인 플로우 — Zero Friction Quick-Seal (v2)
+// "키보드를 쓰게 만들면 이탈한다" 원칙: 전부 원클릭 칩 선택으로 대체
+
+const PRESET_TAGS = [
+    // 모멘텀/일정
+    { code: 'FATIGUE',      label: '📅 연전 피로 (상대)',   cat: 'momentum',  kill: '출전 명단 주요 선수 결장 시' },
+    { code: 'HOT_FORM',     label: '🔥 최근 상승세',        cat: 'momentum',  kill: '선발/라인업 변동 시' },
+    { code: 'AWAY_WEAK',    label: '📉 원정 열세 국면',     cat: 'momentum',  kill: '배당 @기준선 이상 상승 시' },
+    // 전력/매치업
+    { code: 'H2H',          label: '🎯 상대 전적 우세',     cat: 'matchup',   kill: '예상 선발 결장 시 파기' },
+    { code: 'INJURY_BONUS', label: '🩹 핵심 결장 반사이익', cat: 'matchup',   kill: '라인업 공식 발표 후 재확인' },
+    { code: 'DEFENSE',      label: '🧱 수비/실점 안정',     cat: 'matchup',   kill: '선발 변경 시 자동 파기' },
+    // 배당/시장
+    { code: 'ODDS_WARP',    label: '⚖️ 배당 왜곡 (과대)',  cat: 'odds',      kill: '배당 @진입 기준선 이탈 시' },
+    { code: 'MONEY_FLOW',   label: '📉 배당 급락 머니무브', cat: 'odds',      kill: '배당 역전(임계치 초과) 시' },
+    { code: 'VALUE',        label: '🛡️ 역배 가치베팅',     cat: 'odds',      kill: '배당 @기준 이하 하락 시' },
+];
+
 function openSealFlow(candidateId) {
     let cand = state.selectedCandidate;
     if (!cand || cand.candidateId !== candidateId) {
@@ -813,7 +830,6 @@ function openSealFlow(candidateId) {
                 eventName: m.eventName,
                 selectionName: m.selectionName,
                 currentOdds: m.odds,
-                marketFairOdds: parseFloat((m.odds / 1.05).toFixed(2)),
                 entryThreshold: m.odds
             };
         }
@@ -821,110 +837,138 @@ function openSealFlow(candidateId) {
     if (!cand) return;
     state.selectedCandidate = cand;
 
-    const defaultKill = (cand.killConditions && cand.killConditions[0]) ? cand.killConditions[0] : '기준 배당 하향 또는 예정 선발/라인업 결장 시';
+    // Smart auto-kill based on sport
+    const isSoccer = (cand.sport || '').toUpperCase().includes('SOCCER');
+    const oddsNum = parseFloat(cand.currentOdds || 2.00);
+    const killOddsFloor = Math.max(1.01, (oddsNum - 0.15).toFixed(2));
+
+    const modal = document.getElementById('seal-flow-modal');
+    const content = document.getElementById('seal-flow-content');
+    if (!modal || !content) return;
+
+    // Track selected tags
+    let selectedTags = [];
+    let selectedKill = null;
+
+    const chipRows = PRESET_TAGS.map(t => `
+        <button type="button" class="qs-chip" data-code="${t.code}" data-kill="${t.kill}"
+            style="padding:6px 11px;border-radius:20px;border:1.5px solid var(--border-subtle);
+                   background:var(--bg-surface-elevated);color:var(--text-secondary);font-size:12px;
+                   cursor:pointer;transition:all .15s;white-space:nowrap;">
+            ${t.label}
+        </button>
+    `).join('');
+
+    // Smart kill pill display
+    const defaultKillText = isSoccer
+        ? `배당 @${killOddsFloor} 이하 또는 선발 변경 시 파기`
+        : `배당 @${killOddsFloor} 이하 또는 선발 결장 시 파기`;
 
     content.innerHTML = `
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-            <!-- Header & Outcome Context -->
-            <div style="background: var(--bg-surface-elevated); padding: 10px 12px; border-radius: 8px;">
-                <div style="font-size: 11px; color: var(--accent-blue); font-weight: 700;">의사결정 계약 체결</div>
-                <div style="font-size: 15px; font-weight: 800; color: var(--text-primary);">
-                    ${cand.eventName} — <span style="color: var(--accent-green);">${cand.selectionName} (@${cand.currentOdds})</span>
+        <div style="display:flex;flex-direction:column;gap:14px;">
+
+            <!-- ── Step 0: Context Bar ── -->
+            <div style="background:var(--bg-surface-elevated);padding:10px 14px;border-radius:8px;">
+                <div style="font-size:10px;color:var(--accent-blue);font-weight:700;letter-spacing:.5px;">판단 봉인 — 3초 퀵실</div>
+                <div style="font-size:15px;font-weight:800;color:var(--text-primary);margin-top:2px;">
+                    ${cand.eventName}
+                    <span style="color:var(--accent-green);"> — ${cand.selectionName} @${cand.currentOdds}</span>
                 </div>
             </div>
 
-            <!-- THESIS CAPTURE: 왜 이 판단을 하려고 하나요? -->
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 12px;">
-                <div style="font-size: 13px; font-weight: 700; color: var(--text-primary); margin-bottom: 2px;">
-                    💭 1. 왜 이 판단을 하려고 하나요?
+            <!-- ── Step 1: 진입 근거 (원클릭 칩) ── -->
+            <div style="background:rgba(255,255,255,.02);border:1px solid var(--border-subtle);border-radius:8px;padding:12px;">
+                <div style="font-size:12px;font-weight:700;color:var(--text-primary);margin-bottom:6px;">
+                    1️⃣ 진입 근거 (1개 이상 탭)
                 </div>
-                <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 8px;">
-                    지금 생각을 짧게 남겨두면, 경기 후 결과와 분리해서 복기할 수 있습니다. (15초)
+                <div style="display:flex;gap:7px;flex-wrap:wrap;" id="qs-chip-box">
+                    ${chipRows}
                 </div>
-
-                <!-- Layer A: Structured Reason Chips -->
-                <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px;" id="thesis-chips-box">
-                    <button type="button" class="btn btn-secondary thesis-chip-btn btn-primary" data-code="STARTER" style="font-size: 11px; padding: 4px 8px;">선발/라인업 우위</button>
-                    <button type="button" class="btn btn-secondary thesis-chip-btn" data-code="OPPONENT_WEAK" style="font-size: 11px; padding: 4px 8px;">상대 전력 약점</button>
-                    <button type="button" class="btn btn-secondary thesis-chip-btn" data-code="PRICE" style="font-size: 11px; padding: 4px 8px;">가격 기준 충족</button>
-                    <button type="button" class="btn btn-secondary thesis-chip-btn" data-code="TACTICAL" style="font-size: 11px; padding: 4px 8px;">전술 매치업</button>
-                    <button type="button" class="btn btn-secondary thesis-chip-btn" data-code="HOME_ADV" style="font-size: 11px; padding: 4px 8px;">홈/원정 조건</button>
-                </div>
-
-                <!-- Layer B: One-Line Thought (Optional) -->
-                <input type="text" id="thesis-user-statement" placeholder="내 생각을 한 줄로 적기 (선택 e.g. 상대 로테이션 가능성)" 
-                       style="width: 100%; background: var(--bg-surface-elevated); color: var(--text-primary); border: 1px solid var(--border-subtle); padding: 8px 10px; border-radius: 6px; font-size: 12px; font-family: inherit;">
+                <div id="qs-selected-summary" style="margin-top:8px;font-size:11px;color:var(--accent-blue);min-height:16px;"></div>
             </div>
 
-            <!-- PROPOSED KILL CONDITION (CONFIRMATION / NOT SILENTLY FORCED) -->
-            <div style="font-size: 11px; color: var(--text-secondary); background: var(--bg-surface-elevated); padding: 12px; border-radius: 8px; border-left: 3px solid var(--accent-amber);">
-                <div style="font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px;">
-                    🛑 2. 이 생각이라면 이런 파기 조건이 맞나요?
+            <!-- ── Step 2: 파기 조건 (자동 완성) ── -->
+            <div style="border-left:3px solid var(--accent-amber);background:var(--bg-surface-elevated);padding:11px 13px;border-radius:8px;">
+                <div style="font-size:11px;font-weight:700;color:var(--accent-amber);margin-bottom:4px;">
+                    2️⃣ 파기 조건 (자동 설정됨)
                 </div>
-                <div id="proposed-kill-text" style="color: var(--accent-amber); font-weight: 600; margin-bottom: 8px;">
-                    ✓ ${defaultKill}
+                <div id="qs-kill-display" style="font-size:12px;color:var(--text-primary);font-weight:600;">
+                    ✓ ${defaultKillText}
                 </div>
-                <div style="display: flex; gap: 6px;">
-                    <button type="button" class="btn btn-primary" id="accept-kill-btn" style="flex: 2; font-size: 11px; padding: 6px 8px;">
-                        ✓ 이 조건 추가 (추천)
-                    </button>
-                    <button type="button" class="btn btn-secondary" id="skip-kill-btn" style="flex: 1; font-size: 11px; padding: 6px 8px;">
-                        건너뛰기
-                    </button>
-                </div>
+                <div style="font-size:10px;color:var(--text-muted);margin-top:3px;">근거 선택 시 해당 조건으로 자동 업데이트됩니다</div>
             </div>
 
-            <!-- Final Seal Action -->
-            <button class="btn btn-primary" id="confirm-seal-btn" style="padding: 12px; font-weight: 700; font-size: 14px;">
-                이 판단 봉인 (A.PICK에 감시 위임)
+            <!-- ── Step 3: 봉인 버튼 ── -->
+            <button class="btn btn-primary" id="qs-confirm-btn"
+                style="padding:14px;font-weight:800;font-size:15px;letter-spacing:.3px;opacity:.5;pointer-events:none;">
+                🔒 원칙 봉인하고 앱 닫기
             </button>
+            <div style="text-align:center;font-size:10px;color:var(--text-muted);">
+                봉인 후 배당 변동·선발 변경 시에만 알립니다. 앱을 닫아도 됩니다.
+            </div>
         </div>
     `;
 
     modal.style.display = 'flex';
     document.getElementById('close-seal-flow-btn').onclick = () => modal.style.display = 'none';
 
-    // Chip toggle handlers
-    const selectedChips = ['STARTER'];
-    document.querySelectorAll('.thesis-chip-btn').forEach(btn => {
-        btn.onclick = (e) => {
-            const code = e.target.getAttribute('data-code');
-            if (selectedChips.includes(code)) {
-                const idx = selectedChips.indexOf(code);
-                selectedChips.splice(idx, 1);
-                e.target.classList.replace('btn-primary', 'btn-secondary');
+    // ── Chip interaction ──
+    const sealBtn = document.getElementById('qs-confirm-btn');
+    const killDisplay = document.getElementById('qs-kill-display');
+    const summary = document.getElementById('qs-selected-summary');
+
+    document.querySelectorAll('.qs-chip').forEach(btn => {
+        btn.onclick = () => {
+            const code = btn.getAttribute('data-code');
+            const kill = btn.getAttribute('data-kill');
+            const active = btn.style.background === 'var(--accent-blue)';
+
+            if (active) {
+                btn.style.background = 'var(--bg-surface-elevated)';
+                btn.style.color = 'var(--text-secondary)';
+                btn.style.borderColor = 'var(--border-subtle)';
+                selectedTags = selectedTags.filter(t => t !== code);
             } else {
-                selectedChips.push(code);
-                e.target.classList.replace('btn-secondary', 'btn-primary');
+                btn.style.background = 'var(--accent-blue)';
+                btn.style.color = '#fff';
+                btn.style.borderColor = 'var(--accent-blue)';
+                selectedTags.push(code);
+                if (selectedTags.length === 1) selectedKill = kill;
+            }
+
+            summary.textContent = selectedTags.length > 0
+                ? `선택됨: ${selectedTags.map(c => PRESET_TAGS.find(t=>t.code===c)?.label || c).join(' · ')}`
+                : '';
+
+            if (selectedTags.length > 0) {
+                const firstKill = PRESET_TAGS.find(t => t.code === selectedTags[0])?.kill || defaultKillText;
+                killDisplay.innerHTML = `✓ ${firstKill} <span style="color:var(--text-muted);font-size:10px;">(배당 @${killOddsFloor} 이하 포함)</span>`;
+                selectedKill = firstKill;
+            } else {
+                killDisplay.innerHTML = `✓ ${defaultKillText}`;
+                selectedKill = null;
+            }
+
+            if (selectedTags.length > 0) {
+                sealBtn.style.opacity = '1';
+                sealBtn.style.pointerEvents = 'auto';
+            } else {
+                sealBtn.style.opacity = '.5';
+                sealBtn.style.pointerEvents = 'none';
             }
         };
     });
 
-    let killAccepted = true;
-    document.getElementById('accept-kill-btn').onclick = (e) => {
-        killAccepted = true;
-        e.target.classList.replace('btn-secondary', 'btn-primary');
-        document.getElementById('skip-kill-btn').classList.replace('btn-primary', 'btn-secondary');
-        showToast('조건 수락', '파기 조건이 계약에 포함되었습니다.');
-    };
-    document.getElementById('skip-kill-btn').onclick = (e) => {
-        killAccepted = false;
-        e.target.classList.replace('btn-secondary', 'btn-primary');
-        document.getElementById('accept-kill-btn').classList.replace('btn-primary', 'btn-secondary');
-        showToast('조건 제외', '파기 조건 없이 봉인합니다.');
-    };
-
-    document.getElementById('confirm-seal-btn').onclick = () => {
-        const statement = document.getElementById('thesis-user-statement')?.value || '';
-        const selectedKill = killAccepted ? [defaultKill] : [];
+    sealBtn.onclick = () => {
+        const killFinal = selectedKill
+            ? `${selectedKill} (배당 @${killOddsFloor} 이하 포함)`
+            : defaultKillText;
 
         executeDecisionSeal(cand, {
-            selectedReasonCodes: selectedChips.length > 0 ? selectedChips : ['STARTER'],
-            userStatement: statement,
-            primaryDriver: selectedChips[0] || 'STARTER',
-            biggestConcern: defaultKill,
-            suggestedKillCondition: defaultKill,
-            confirmedKillConditions: selectedKill
+            selectedReasonCodes: selectedTags,
+            primaryDriver: selectedTags[0] || 'PRICE',
+            biggestConcern: killFinal,
+            confirmedKillConditions: [killFinal]
         });
         modal.style.display = 'none';
     };
@@ -1392,161 +1436,183 @@ function renderWatchTab() {
     });
 }
 
-// 9. Tab 3: Review & Memory (Process-First & Outcome Blur)
+// 9. Tab 3: 복기 탭 — Zero-Input Auto Review Card
+// "경기 끝난 뒤 어땠나요?라고 묻지 않는다. 시스템이 자동 판정한다."
 function loadReviewTab() {
     const memContainer = document.getElementById('memory-summary-container');
     if (memContainer) {
         memContainer.innerHTML = `
             <div class="memory-title">A.PICK DECISION MEMORY</div>
             <div class="memory-field">
-                <div class="memory-field-label">1. 반복 패턴</div>
+                <div class="memory-field-label">반복 패턴 감지</div>
                 <div class="memory-field-value">최근 9번의 가격 하락 상황 중 7번에서 진입 기준 아래로 들어갔습니다 (77.8%).</div>
             </div>
             <div class="memory-field">
-                <div class="memory-field-label">2. 가장 큰 의미</div>
+                <div class="memory-field-label">핵심 통찰</div>
                 <div class="memory-field-value">분석보다 가격 추격에서 판단 품질이 더 자주 훼손되고 있습니다.</div>
             </div>
             <div class="memory-field">
-                <div class="memory-field-label">3. 다음 한 가지 행동</div>
-                <div class="memory-field-value">다음 회차에는 기준 배당 아래 신규 진입을 원천 차단하는 규칙을 제안합니다.</div>
+                <div class="memory-field-label">다음 회차 제안</div>
+                <div class="memory-field-value">기준 배당 아래 신규 진입을 원천 차단하는 규칙을 자동 적용합니다.</div>
             </div>
             <div class="memory-field" style="margin-top: 14px;">
                 <button class="btn btn-primary" id="accept-rule-btn" style="width: 100%;">다음 회차에 반영</button>
             </div>
         `;
-
         document.getElementById('accept-rule-btn').onclick = (e) => {
             e.target.innerText = '다음 회차에 반영됨 ✓';
             e.target.classList.replace('btn-primary', 'btn-secondary');
-            showToast('규칙 수락 완료', '다음 회차부터 새 판단 생성 시 기준 배당 아래 신규 진입이 차단됩니다.');
+            showToast('규칙 수락 완료', '다음 회차부터 기준 배당 아래 신규 진입이 차단됩니다.');
         };
     }
 
     const revContainer = document.getElementById('recent-reviews-list');
-    if (revContainer) {
-        revContainer.innerHTML = `
-            <div class="review-card">
-                <div class="card-tag-row">
-                    <span class="sport-tag">BASEBALL • MLB</span>
-                    <span style="font-size: 12px; font-weight: 700; color: var(--accent-green);">과정 평가: EXCELLENT DECISION</span>
-                </div>
-                <div class="card-title" style="font-size: 17px; font-weight: 800; margin-bottom: 8px;">토론토 블루제이스 vs 밴쿠버</div>
-                
-                <!-- 0. 당시의 나 (사전 가설 및 생각 스냅샷) -->
-                <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-subtle); border-left: 3px solid var(--accent-blue); padding: 12px 14px; border-radius: 8px; margin-bottom: 12px;">
-                    <div style="font-size: 11px; font-weight: 700; color: var(--accent-blue); margin-bottom: 6px;">┌ 💭 당시의 나 (사전 기록 스냅샷)</div>
-                    <div style="font-size: 13px; color: var(--text-primary); margin-bottom: 4px;">
-                        • <strong>선택:</strong> 토론토 블루제이스 승 (@1.85)
-                    </div>
-                    <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 4px;">
-                        • <strong>왜:</strong> "선발 투수 매치업 우위 및 상대 중심 타선 좌완 상대 약점 감안"
-                    </div>
-                    <div style="font-size: 12px; color: var(--accent-red); line-height: 1.4; margin-bottom: 4px;">
-                        • <strong>가장 걱정:</strong> "경기 후반 7회 이후 필승조 불펜 연투 피로도"
-                    </div>
-                    <div style="font-size: 12px; color: var(--accent-amber); line-height: 1.4;">
-                        • <strong>접는 조건:</strong> "선발 투수 5이닝 미만 조기 강판 시"
-                    </div>
-                </div>
+    if (!revContainer) return;
 
-                <!-- 1. 과정 평가 (결과보다 먼저 노출) -->
-                <div class="review-score-grid">
-                    <div class="score-box">
-                        <div class="score-label">가격 품질</div>
-                        <div class="score-value" style="color: var(--accent-green);">EXCELLENT</div>
-                    </div>
-                    <div class="score-box">
-                        <div class="score-label">규칙 준수</div>
-                        <div class="score-value" style="color: var(--accent-green);">FOLLOWED</div>
-                    </div>
-                    <div class="score-box">
-                        <div class="score-label">가설 유지</div>
-                        <div class="score-value" style="color: var(--accent-green);">SOUND</div>
-                    </div>
-                    <div class="score-box">
-                        <div class="score-label">경기 결과</div>
-                        <div class="score-value" id="outcome-revealed-val" style="filter: blur(4px); transition: filter 0.3s ease;">LOSS</div>
-                    </div>
+    // Auto Review Cards data — system-generated, zero user input required
+    const autoReviews = [
+        {
+            id: 'arc_1',
+            sport: 'BASEBALL • MLB',
+            eventName: '휴스턴 애스트로스 vs 시애틀 매리너스',
+            selection: '1점차 승부',
+            sealedOdds: 3.20,
+            primaryReason: '🎯 상대 전적 우세',
+            killCondition: '선발 결장 시 파기',
+            processVerdict: 'COMPLIANT',
+            verdictReason: '파기 기준 미도달, 선발 유지, 배당 변동 없음',
+            oddsAtSeal: 3.20,
+            oddsAtGame: 3.20,
+            oddsViolated: false,
+            lineupChanged: false,
+            outcome: '적중',
+            outcomeBlurred: true
+        },
+        {
+            id: 'arc_2',
+            sport: 'SOCCER • MLS',
+            eventName: '오스틴FC vs FC댈러스',
+            selection: 'FC댈러스 승 (원정)',
+            sealedOdds: 2.14,
+            primaryReason: '📉 원정 열세 국면',
+            killCondition: '배당 @기준선 이상 상승 시',
+            processVerdict: 'AMBER',
+            verdictReason: '배당이 @2.60으로 상승 — 파기 기준 도달. 진입 여부 재확인 필요',
+            oddsAtSeal: 2.14,
+            oddsAtGame: 2.60,
+            oddsViolated: true,
+            lineupChanged: false,
+            outcome: '적중',
+            outcomeBlurred: true
+        },
+        {
+            id: 'arc_3',
+            sport: 'SOCCER • MLS',
+            eventName: '시애틀 사운더스FC vs 밴쿠버 화이트캡스',
+            selection: '밴쿠버 화이트캡스 승 (원정)',
+            sealedOdds: 1.81,
+            primaryReason: '📉 원정 열세 국면',
+            killCondition: '선발 변경 시 자동 파기',
+            processVerdict: 'VIOLATED',
+            verdictReason: '경기 직전 주전 3명 결장 확인 — 파기 조건 무시 진입 감지',
+            oddsAtSeal: 1.81,
+            oddsAtGame: 1.81,
+            oddsViolated: true,
+            lineupChanged: true,
+            outcome: '적중',
+            outcomeBlurred: true
+        }
+    ];
+
+    revContainer.innerHTML = autoReviews.map(r => {
+        const isCompliant = r.processVerdict === 'COMPLIANT';
+        const isAmber = r.processVerdict === 'AMBER';
+        const verdictColor = isCompliant ? 'var(--accent-green)' : isAmber ? 'var(--accent-amber)' : 'var(--accent-red)';
+        const verdictBg = isCompliant ? 'rgba(46,160,67,0.12)' : isAmber ? 'rgba(210,153,34,0.12)' : 'rgba(248,81,73,0.12)';
+        const verdictLabel = isCompliant ? '✅ 원칙 준수 (Green)' : isAmber ? '⚠️ 파기 기준 도달 (Amber)' : '🚨 원칙 위반 (Red)';
+
+        const oddsChange = r.oddsAtGame !== r.oddsAtSeal
+            ? `<span style="color:${r.oddsViolated ? 'var(--accent-amber)' : 'var(--accent-green)'}">@${r.oddsAtGame} (${r.oddsAtGame > r.oddsAtSeal ? '▲' : '▼'}${Math.abs(r.oddsAtGame - r.oddsAtSeal).toFixed(2)})</span>`
+            : `<span style="color:var(--text-secondary)">@${r.oddsAtGame} (변동없음)</span>`;
+
+        return `
+        <div class="review-card" style="margin-bottom:18px;">
+            <!-- Header -->
+            <div class="card-tag-row">
+                <span class="sport-tag">${r.sport}</span>
+                <span style="font-size:11px;font-weight:700;background:${verdictBg};color:${verdictColor};padding:3px 8px;border-radius:6px;">${verdictLabel}</span>
+            </div>
+            <div class="card-title" style="font-size:15px;font-weight:800;margin-bottom:10px;">${r.eventName}</div>
+
+            <!-- Auto-Generated Process Card -->
+            <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border-subtle);border-left:3px solid var(--accent-blue);padding:11px 13px;border-radius:8px;margin-bottom:10px;">
+                <div style="font-size:10px;color:var(--accent-blue);font-weight:700;margin-bottom:6px;">📋 봉인 당시 기록 (자동 보존)</div>
+                <div style="font-size:12px;color:var(--text-primary);margin-bottom:3px;">
+                    선택: <strong>${r.selection}</strong> (@${r.sealedOdds})
                 </div>
-
-                <!-- 2. Neutral Process-First Counterfactual Insight -->
-                <div class="review-headline" style="margin-top: 12px; background: rgba(56, 139, 253, 0.08); padding: 10px 12px; border-radius: 6px; font-size: 12px; color: var(--accent-blue); line-height: 1.4;">
-                    "결과를 제외하고 보면, 당시 가격·규칙·사전 가설('선발 우위')은 온전하게 유지되었습니다."
+                <div style="font-size:12px;color:var(--text-secondary);margin-bottom:3px;">
+                    진입 근거: <strong>${r.primaryReason}</strong>
                 </div>
-
-                <!-- 3. Thesis Review Questions -->
-                <div style="background: var(--bg-surface-elevated); padding: 12px; border-radius: 8px; margin-top: 12px;">
-                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
-                        Q1. 당시 가장 중요하게 본 이유('선발 우위')는 실제로 유지됐나요?
-                    </div>
-                    <div style="display: flex; gap: 6px; margin-bottom: 12px;">
-                        <button class="btn btn-secondary thesis-eval-btn" data-val="YES" style="flex: 1; font-size: 11px; padding: 4px 6px;">유지됨 (YES)</button>
-                        <button class="btn btn-secondary thesis-eval-btn" data-val="PARTLY" style="flex: 1; font-size: 11px; padding: 4px 6px;">일부만 (PARTLY)</button>
-                        <button class="btn btn-secondary thesis-eval-btn" data-val="NO" style="flex: 1; font-size: 11px; padding: 4px 6px;">깨짐 (NO)</button>
-                    </div>
-
-                    <div style="font-size: 12px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">
-                        Q2. 다시 같은 상황이라면?
-                    </div>
-                    <div style="display: flex; gap: 6px;">
-                        <button class="btn btn-secondary reflection-btn" data-choice="SAME" style="flex: 1; font-size: 11px; padding: 4px 6px;">같이 판단한다</button>
-                        <button class="btn btn-secondary reflection-btn" data-choice="WAIT" style="flex: 1; font-size: 11px; padding: 4px 6px;">더 기다린다</button>
-                        <button class="btn btn-secondary reflection-btn" data-choice="NO" style="flex: 1; font-size: 11px; padding: 4px 6px;">하지 않는다</button>
-                    </div>
-                    <div id="reflection-ack" style="font-size: 11px; color: var(--accent-green); margin-top: 6px; display: none;">
-                        ✓ 가설 복기 데이터가 A.PICK Decision Memory에 기록되었습니다.
-                    </div>
-                </div>
-
-                <!-- 4. Outcome Reveal Toggle -->
-                <div style="margin-top: 12px; text-align: center;">
-                    <button class="btn btn-secondary" id="reveal-outcome-btn" style="padding: 8px 16px; font-size: 12px; font-weight: 700;">
-                        👁️ 경기 결과 최종 확인하기
-                    </button>
+                <div style="font-size:12px;color:var(--accent-amber);">
+                    파기 조건: ${r.killCondition}
                 </div>
             </div>
+
+            <!-- System Auto-Verdict -->
+            <div style="background:${verdictBg};border:1px solid ${verdictColor}33;padding:10px 13px;border-radius:8px;margin-bottom:10px;">
+                <div style="font-size:10px;font-weight:700;color:${verdictColor};margin-bottom:4px;">🤖 시스템 자동 판정</div>
+                <div style="font-size:12px;color:var(--text-primary);margin-bottom:6px;">${r.verdictReason}</div>
+                <div style="display:flex;gap:12px;font-size:11px;color:var(--text-secondary);">
+                    <div>봉인 배당: @${r.oddsAtSeal}</div>
+                    <div>경기 당시: ${oddsChange}</div>
+                    <div>선발 변경: ${r.lineupChanged ? '<span style="color:var(--accent-red)">있음</span>' : '없음'}</div>
+                </div>
+            </div>
+
+            <!-- One-Tap Mental Check -->
+            <div style="background:var(--bg-surface-elevated);padding:10px 13px;border-radius:8px;margin-bottom:10px;">
+                <div style="font-size:11px;color:var(--text-muted);margin-bottom:7px;">경기 후 느낌 (선택)</div>
+                <div style="display:flex;gap:8px;" id="mental-${r.id}">
+                    <button onclick="selectMental(this,'${r.id}','calm')"
+                        style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid var(--border-subtle);background:var(--bg-surface-elevated);cursor:pointer;font-size:18px;transition:all .15s;">😌</button>
+                    <button onclick="selectMental(this,'${r.id}','impulsive')"
+                        style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid var(--border-subtle);background:var(--bg-surface-elevated);cursor:pointer;font-size:18px;transition:all .15s;">🤯</button>
+                    <button onclick="selectMental(this,'${r.id}','regret')"
+                        style="flex:1;padding:8px 4px;border-radius:8px;border:1.5px solid var(--border-subtle);background:var(--bg-surface-elevated);cursor:pointer;font-size:18px;transition:all .15s;">🤔</button>
+                </div>
+                <div style="font-size:10px;color:var(--text-muted);margin-top:4px;text-align:center;">😌 덤덤함 &nbsp;|&nbsp; 🤯 뇌동 충동 &nbsp;|&nbsp; 🤔 아쉬움</div>
+            </div>
+
+            <!-- Outcome Reveal (Blurred by Default) -->
+            <div style="text-align:center;margin-top:2px;">
+                <button class="btn btn-secondary" onclick="revealOutcome(this,'${r.id}','${r.outcome}')" style="font-size:11px;padding:6px 14px;">
+                    👁️ 경기 결과 확인
+                </button>
+                <span id="outcome-${r.id}" style="display:none;margin-left:10px;font-size:13px;font-weight:800;color:var(--accent-green);">${r.outcome}</span>
+            </div>
+        </div>
         `;
+    }).join('');
+}
 
-        const revealBtn = document.getElementById('reveal-outcome-btn');
-        if (revealBtn) {
-            revealBtn.addEventListener('click', () => {
-                const outcomeEl = document.getElementById('outcome-revealed-val');
-                if (outcomeEl) outcomeEl.style.filter = 'none';
-                revealBtn.style.display = 'none';
-                showToast('결과 확인', '최종 경기 결과가 표시되었습니다.');
-            });
-        }
+function selectMental(btn, id, mood) {
+    const box = document.getElementById(`mental-${id}`);
+    if (!box) return;
+    box.querySelectorAll('button').forEach(b => {
+        b.style.background = 'var(--bg-surface-elevated)';
+        b.style.borderColor = 'var(--border-subtle)';
+        b.style.transform = 'none';
+    });
+    btn.style.background = 'rgba(56,139,253,0.18)';
+    btn.style.borderColor = 'var(--accent-blue)';
+    btn.style.transform = 'scale(1.15)';
+    const labels = { calm: '덤덤함', impulsive: '뇌동 충동', regret: '아쉬움' };
+    showToast('멘탈 체크 저장', `"${labels[mood]}"이 Decision Memory에 기록되었습니다.`);
+}
 
-        document.querySelectorAll('.thesis-eval-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                document.querySelectorAll('.thesis-eval-btn').forEach(b => b.classList.remove('btn-primary'));
-                e.target.classList.add('btn-primary');
-            });
-        });
-
-        document.querySelectorAll('.reflection-btn').forEach(btn => {
-            btn.addEventListener('click', async (e) => {
-                const choice = e.target.getAttribute('data-choice');
-                document.querySelectorAll('.reflection-btn').forEach(b => b.classList.remove('btn-primary'));
-                e.target.classList.add('btn-primary');
-                const ack = document.getElementById('reflection-ack');
-                if (ack) ack.style.display = 'block';
-
-                try {
-                    await fetch('/api/review/counterfactual', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            decisionId: 'dec_sample_tor_van',
-                            answer: choice,
-                            evidenceSnapshotId: 'snap_sample_v1'
-                        })
-                    });
-                } catch (_) {}
-
-                const labelMap = { 'SAME': '같이 판단한다', 'WAIT': '더 기다린다', 'NO': '하지 않는다' };
-                showToast('가설 복기 완료', `"${labelMap[choice] || choice}" 선택이 Decision Memory에 저장되었습니다.`);
-            });
-        });
-    }
+function revealOutcome(btn, id, outcome) {
+    btn.style.display = 'none';
+    const el = document.getElementById(`outcome-${id}`);
+    if (el) el.style.display = 'inline';
+    showToast('결과 확인', `경기 결과: ${outcome}`);
 }
