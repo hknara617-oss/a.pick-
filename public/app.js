@@ -459,20 +459,45 @@ function renderTodayCandidates(candidates) {
             <div class="candidate-card" style="text-align: center; padding: 32px 20px;">
                 <div style="font-size: 16px; font-weight: 700; margin-bottom: 8px;">현재 일치하는 시장이 없습니다.</div>
                 <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
-                    [전체 보기]를 눌러 142개 전체 배트맨 경기를 탐색해 보세요.
+                    필터를 [전체]로 변경하거나 검색어를 지워보세요.
                 </div>
-                <button class="btn btn-secondary" onclick="openMarketBrowser()" style="width: auto; margin: 0 auto;">
-                    🔍 배트맨 전체 시장 둘러보기
-                </button>
             </div>
         `;
         return;
     }
 
+    // Top 3 Focus Section Header
+    const topHeader = document.createElement('div');
+    topHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin: 16px 0 10px 0; padding: 0 4px;';
+    topHeader.innerHTML = `
+        <div style="font-size: 15px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+            <span>🔥</span> 오늘 집중 분석 픽드랍 <span style="font-size: 11px; background: rgba(56,139,253,0.15); color: var(--accent-blue); padding: 2px 8px; border-radius: 12px; font-weight: 700;">TOP 3 엄선</span>
+        </div>
+        <div style="font-size: 11px; color: var(--text-muted);">실시간 데이터 & 룰 기반</div>
+    `;
+    container.appendChild(topHeader);
+
     candidates.forEach((cand, cIdx) => {
+        // Divider after TOP 3
+        if (cIdx === 3) {
+            const allHeader = document.createElement('div');
+            allHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin: 28px 0 12px 0; padding: 0 4px; border-top: 1px solid var(--border-subtle); padding-top: 20px;';
+            allHeader.innerHTML = `
+                <div style="font-size: 14px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+                    <span>📋</span> 배트맨 실시간 시장 전체 둘러보기 <span style="font-size: 11px; background: rgba(255,255,255,0.08); color: var(--text-secondary); padding: 2px 8px; border-radius: 12px; font-weight: 700;">총 ${candidates.length}개 경기</span>
+                </div>
+                <div style="font-size: 11px; color: var(--text-muted);">마감 임박순 정렬</div>
+            `;
+            container.appendChild(allHeader);
+        }
+
         const card = document.createElement('div');
         card.className = 'candidate-card';
         card.setAttribute('data-cand-idx', cIdx);
+        if (cIdx < 3) {
+            card.style.border = '1px solid rgba(56, 139, 253, 0.4)';
+            card.style.background = 'linear-gradient(180deg, rgba(56, 139, 253, 0.04) 0%, rgba(20, 24, 33, 0.95) 100%)';
+        }
 
         // Render Selection Pills for Event-First Discovery
         const selectionsHtml = (cand.selections || []).map((sel, sIdx) => `
