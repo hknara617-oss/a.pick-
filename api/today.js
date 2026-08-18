@@ -74,7 +74,7 @@ function parseMarkets(json) {
             marketId: `${row.gmId}_${row.gmRound}_${row.sportsGameId || row.gameId || Math.random()}`,
             roundId: row.gmRound || roundId,
             sport: row.itemCode === 'BS' ? 'BASEBALL' : row.itemCode === 'SC' ? 'SOCCER' : row.itemCode,
-            league: row.itemCode === 'BS' ? 'MLB' : (row.leagueName || '축구'),
+            league: row.leagueName || (row.itemCode === 'BS' ? 'KBO' : '축구'),
             marketName: row.betNm || '승무패',
             homeName: row.homeName || '홈팀',
             awayName: row.awayName || '원정팀',
