@@ -102,6 +102,8 @@ function initDogfoodControls() {
         closeBrowserBtn.addEventListener('click', () => browserModal.style.display = 'none');
     }
 
+    document.getElementById('today-capture-cta-btn')?.addEventListener('click', openScreenshotImportFlow);
+
     const fbBtn = document.getElementById('floating-feedback-btn');
     const fbModal = document.getElementById('feedback-sheet-modal');
     const closeFbBtn = document.getElementById('close-feedback-btn');
@@ -1505,10 +1507,24 @@ function renderWatchTab() {
 
     if (state.watchList.length === 0) {
         stableList.innerHTML = `
-            <div style="text-align: center; padding: 32px 16px; color: var(--text-muted); font-size: 13px;">
-                현재 추적 중인 판단이 없습니다.<br>[+ 판단 추가] 버튼을 눌러 새 판단을 만들거나 캡처 사진을 등록해 보세요.
+            <div style="text-align: center; padding: 36px 16px; display: flex; flex-direction: column; align-items: center; gap: 14px;">
+                <div style="font-size: 32px;">⏱️</div>
+                <div>
+                    <div style="font-size: 15px; font-weight: 800; color: var(--text-primary); margin-bottom: 4px;">아직 맡긴 픽이 없어요</div>
+                    <div style="font-size: 12px; color: var(--text-secondary); line-height: 1.5;">이미 구매한 티켓 캡처를 올리거나, 오늘 볼 경기에서 골라보세요.</div>
+                </div>
+                <div style="display: flex; gap: 10px; width: 100%; max-width: 320px; margin-top: 4px;">
+                    <button class="btn btn-primary" id="empty-watch-capture-btn" style="flex: 1.2; padding: 12px; font-size: 13px; font-weight: 800; border-radius: 10px;">
+                        📷 캡처로 맡기기
+                    </button>
+                    <button class="btn btn-secondary" id="empty-watch-today-btn" style="flex: 1; padding: 12px; font-size: 12px; border-radius: 10px;">
+                        🏛️ 경기에서 고르기
+                    </button>
+                </div>
             </div>
         `;
+        document.getElementById('empty-watch-capture-btn')?.addEventListener('click', openScreenshotImportFlow);
+        document.getElementById('empty-watch-today-btn')?.addEventListener('click', () => switchTab('today'));
         return;
     }
 
