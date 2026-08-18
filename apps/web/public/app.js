@@ -288,7 +288,7 @@ function initOnboarding() {
     }
 }
 
-// 5. Tab 1: Market Tab
+// 5. Tab 1: Market Tab — Match-Centric Architecture (1경기 1통합 카드)
 let currentSportFilter = 'ALL';
 
 async function loadTodayTab() {
@@ -298,111 +298,135 @@ async function loadTodayTab() {
     try {
         const res = await fetch('/api/today');
         const data = await res.json();
-
-        // API returns 'markets' (from static bundle) — map to candidate format
         const rawMarkets = data.markets || data.allMarkets || [];
 
-        // Convert each market row into a rich candidate card object
-        const mapped = rawMarkets.map((m, idx) => {
-            const id = m.marketId || `m_${idx}`;
-            const sport = m.sport || 'SOCCER';
-            const league = m.league || (sport === 'BASEBALL' ? 'MLB' : '축구');
-            const winOdds = m.winOdds || 1.80;
-            const drawOdds = m.drawOdds || 0;
-            const loseOdds = m.loseOdds || 2.10;
+        // 1. Group raw market rows by Matchup (Event)
+        const matchMap = new Map();
+        rawMarkets.forEach((m, idx) => {
+            const key = `${m.homeName} vs ${m.awayName}`;
+            if (!matchMap.has(key)) {
+                matchMap.set(key, {
+                    eventId: m.marketId || `ev_${idx}`,
+                    eventName: key,
+                    homeName: m.homeName,
+                    awayName: m.awayName,
+                    sport: m.sport || 'SOCCER',
+                    league: m.league || '축구',
+                    matchTime: m.gameDateFormatted || '오늘 경기',
+                    deadline: m.endDateFormatted || '마감 임박',
+                    roundId: m.roundId || data.currentRound || '260097',
+                    markets: { winLose: null, handicap: null, underOver: null, others: [] }
+                });
+            }
+            const g = matchMap.get(key);
+            const mName = (m.marketName || '').trim();
+            if (mName.includes('핸디캡')) {
+                g.markets.handicap = m;
+            } else if (mName.includes('언더오버')) {
+                g.markets.underOver = m;
+            } else if (mName.includes('승무패') || mName.includes('승패') || !g.markets.winLose) {
+                g.markets.winLose = m;
+            } else {
+                g.markets.others.push(m);
+            }
+        });
 
-            const winSel = {
-                selectionName: `${m.homeName} 승`,
-                selectionId: `sel_${id}_win`,
-                odds: winOdds,
-                analysis: {
-                    caseFor: [`${m.homeName} 홈 경기 우위`, `배트맨 공시 배당 @${winOdds}`],
-                    caseAgainst: [`${m.awayName} 원정 경기 역습 위험`],
-                    unknowns: ['공식 선발 라인업 확정 대기 (경기 시작 1시간 전)'],
-                    killConditions: [`배당 @${Math.max(1.01,(winOdds-0.15).toFixed(2))} 이하 하락 또는 선발 변경 시 파기`],
-                    actionState: 'ENTER',
-                    actionHeadline: `${m.homeName} 승 — 배당 @${winOdds}`,
-                    setupQuality: { dataCoverage: '검증 3 / 대기 1 / 미지원 2', adversarialCoverage: 'COMPLETE' },
-                    marketInfo: { betmanNoVigFairOdds: parseFloat((winOdds / 1.05).toFixed(2)), marketFairOdds: parseFloat((winOdds / 1.05).toFixed(2)) }
+        // 2. Build Rich Match Objects with Multi-Angle Bet Options
+        const matches = Array.from(matchMap.values()).map((m, idx) => {
+            const wl = m.markets.winLose || {};
+            const hd = m.markets.handicap || {};
+            const uo = m.markets.underOver || {};
+
+            const winOdds = wl.winOdds || 1.80;
+            const drawOdds = wl.drawOdds || 0;
+            const loseOdds = wl.loseOdds || 2.10;
+            const handiVal = hd.handi || '-1.5';
+            const handiWinOdds = hd.winOdds || parseFloat((winOdds * 1.45).toFixed(2));
+            const underOdds = uo.loseOdds || 1.80;
+            const overOdds = uo.winOdds || 1.85;
+
+            // Multi-angle bet options inside this single game
+            const selections = [
+                {
+                    selectionName: `${m.homeName} 승`,
+                    selectionId: `sel_${m.eventId}_win`,
+                    marketType: '일반',
+                    odds: winOdds,
+                    desc: '기본 정배 승리 유효 구간',
+                    recommended: winOdds >= 1.50
+                },
+                ...(drawOdds > 0 ? [{
+                    selectionName: '무승부',
+                    selectionId: `sel_${m.eventId}_draw`,
+                    marketType: '무승부',
+                    odds: drawOdds,
+                    desc: '팽팽한 전력 균형',
+                    recommended: false
+                }] : []),
+                {
+                    selectionName: `${m.awayName} 승`,
+                    selectionId: `sel_${m.eventId}_lose`,
+                    marketType: '원정',
+                    odds: loseOdds,
+                    desc: '원정 역배/정배 공략',
+                    recommended: false
+                },
+                {
+                    selectionName: `핸승(${handiVal})`,
+                    selectionId: `sel_${m.eventId}_hwin`,
+                    marketType: '핸디캡',
+                    odds: handiWinOdds,
+                    desc: '배당 가치 극대화 추천',
+                    recommended: winOdds < 1.45
+                },
+                {
+                    selectionName: '언더/오버',
+                    selectionId: `sel_${m.eventId}_uo`,
+                    marketType: '언오버',
+                    odds: overOdds,
+                    desc: '다득점/저득점 흐름',
+                    recommended: false
                 }
-            };
+            ];
 
-            const drawSel = drawOdds > 0 ? {
-                selectionName: '무승부',
-                selectionId: `sel_${id}_draw`,
-                odds: drawOdds,
-                analysis: {
-                    caseFor: ['양 팀 팽팽한 전력 균형', `배당 @${drawOdds}`],
-                    caseAgainst: ['승부처 후반 득점 가능성'],
-                    unknowns: ['공식 선발 라인업 발표 대기'],
-                    killConditions: [`배당 @${Math.max(1.01,(drawOdds-0.20).toFixed(2))} 이하 시 파기`],
-                    actionState: 'WAIT',
-                    actionHeadline: `무승부 관망 — 배당 @${drawOdds}`,
-                    setupQuality: { dataCoverage: '검증 3 / 대기 1 / 미지원 2', adversarialCoverage: 'COMPLETE' },
-                    marketInfo: { betmanNoVigFairOdds: parseFloat((drawOdds / 1.05).toFixed(2)), marketFairOdds: parseFloat((drawOdds / 1.05).toFixed(2)) }
-                }
-            } : null;
+            const defaultSel = selections.find(s => s.recommended) || selections[0];
 
-            const loseSel = loseOdds > 0 ? {
-                selectionName: `${m.awayName} 승`,
-                selectionId: `sel_${id}_lose`,
-                odds: loseOdds,
-                analysis: {
-                    caseFor: [`${m.awayName} 원정 가치 확보`, `배당 @${loseOdds}`],
-                    caseAgainst: [`${m.homeName} 홈 어드밴티지`],
-                    unknowns: ['공식 선발 라인업 발표 대기'],
-                    killConditions: [`배당 @${Math.max(1.01,(loseOdds-0.15).toFixed(2))} 이하 시 파기`],
-                    actionState: 'ENTER',
-                    actionHeadline: `${m.awayName} 승 — 배당 @${loseOdds}`,
-                    setupQuality: { dataCoverage: '검증 3 / 대기 1 / 미지원 2', adversarialCoverage: 'COMPLETE' },
-                    marketInfo: { betmanNoVigFairOdds: parseFloat((loseOdds / 1.05).toFixed(2)), marketFairOdds: parseFloat((loseOdds / 1.05).toFixed(2)) }
-                }
-            } : null;
-
-            const selections = [winSel, drawSel, loseSel].filter(Boolean);
+            // Multi-angle comprehensive analysis column
+            const multiAngleVerdict = winOdds < 1.45
+                ? `압도적 전력 우위로 [일반승 @${winOdds}]은 물론, 배당 왜곡 극대화를 위한 [핸승(${handiVal}) @${handiWinOdds}]까지 유효 진입 구간입니다.`
+                : `${m.homeName}의 선발 및 홈 경기력 감안 시 [${m.homeName} 승 @${winOdds}]의 가격 기준이 충족된 상태입니다.`;
 
             return {
-                candidateId: `cand_${id}`,
-                eventId: m.marketId || id,
-                marketId: m.marketId || id,
-                selectionId: winSel.selectionId,
-                roundId: m.roundId || data.currentRound || '260097',
-                sport,
-                league,
-                eventName: `${m.homeName} vs ${m.awayName}`,
+                candidateId: `cand_${m.eventId}`,
+                eventId: m.eventId,
+                eventName: m.eventName,
                 homeName: m.homeName,
                 awayName: m.awayName,
-                selectedOutcome: winSel.selectionName,
-                selectionName: winSel.selectionName,
-                marketName: m.marketName || '승무패',
-                currentOdds: winOdds,
-                odds: winOdds,
-                winOdds,
-                drawOdds,
-                loseOdds,
+                sport: m.sport,
+                league: m.league,
+                matchTime: m.matchTime,
+                deadline: m.deadline,
+                roundId: m.roundId,
                 selections,
-                matchTime: m.gameDateFormatted || '–',
-                deadline: m.endDateFormatted || '–',
-                entryThreshold: winOdds,
-                provenance: m.provenance || 'LIVE_BETMAN',
-                caseFor: winSel.analysis.caseFor,
-                caseAgainst: winSel.analysis.caseAgainst,
-                unknowns: winSel.analysis.unknowns,
-                killConditions: winSel.analysis.killConditions,
-                actionState: winSel.analysis.actionState,
-                actionHeadline: winSel.analysis.actionHeadline,
-                setupQuality: winSel.analysis.setupQuality,
-                betmanNoVigFairOdds: winSel.analysis.marketInfo.betmanNoVigFairOdds,
-                marketFairOdds: winSel.analysis.marketInfo.marketFairOdds
+                selectedSelection: defaultSel,
+                selectedOutcome: defaultSel.selectionName,
+                currentOdds: defaultSel.odds,
+                entryThreshold: defaultSel.odds,
+                multiAngleVerdict,
+                caseFor: [`${m.homeName} 최근 경기력 및 홈 어드밴티지 우위`, `공시 배당 @${winOdds} 기준 충족`],
+                caseAgainst: [`${m.awayName} 원정 역습 및 후반 변수`],
+                killConditions: [`배당 @${Math.max(1.01, (defaultSel.odds - 0.15).toFixed(2))} 이하 하락 또는 선발 변경 시 파기`],
+                betmanNoVigFairOdds: parseFloat((defaultSel.odds / 1.05).toFixed(2)),
+                marketFairOdds: parseFloat((defaultSel.odds / 1.05).toFixed(2))
             };
         });
 
-        state.todayCandidates = mapped;
-        state.allMarkets = mapped;
+        state.todayCandidates = matches;
+        state.allMarkets = matches;
 
         const statusCopy = document.getElementById('today-status-copy');
         if (statusCopy) {
-            statusCopy.innerText = `배트맨 ${data.currentRound || '260097'}회차 실시간 공시 (${data.totalLiveCount || mapped.length}개 마켓)`;
+            statusCopy.innerText = `배트맨 ${data.currentRound || '260097'}회차 실시간 공시 (${matches.length}개 엄선 경기)`;
         }
     } catch (e) {
         state.todayCandidates = [];
@@ -412,7 +436,6 @@ async function loadTodayTab() {
     initMarketFilters();
     applyMarketFilters();
 }
-
 
 function initMarketFilters() {
     document.querySelectorAll('.sport-filter-btn').forEach(btn => {
@@ -434,7 +457,6 @@ function initMarketFilters() {
 
 function applyMarketFilters() {
     const query = (document.getElementById('market-search-input')?.value || '').trim().toLowerCase();
-    
     let filtered = [...state.todayCandidates];
     if (currentSportFilter !== 'ALL') {
         filtered = filtered.filter(c => c.sport === currentSportFilter);
@@ -445,7 +467,6 @@ function applyMarketFilters() {
             (c.league && c.league.toLowerCase().includes(query))
         );
     }
-
     renderTodayCandidates(filtered);
 }
 
@@ -466,128 +487,115 @@ function renderTodayCandidates(candidates) {
         return;
     }
 
-    // Top 3 Focus Section Header
+    // ── SECTION 1: TOP 3 FOCUS DROPS ──
     const topHeader = document.createElement('div');
     topHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin: 16px 0 10px 0; padding: 0 4px;';
     topHeader.innerHTML = `
         <div style="font-size: 15px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
             <span>🔥</span> 오늘 집중 분석 픽드랍 <span style="font-size: 11px; background: rgba(56,139,253,0.15); color: var(--accent-blue); padding: 2px 8px; border-radius: 12px; font-weight: 700;">TOP 3 엄선</span>
         </div>
-        <div style="font-size: 11px; color: var(--text-muted);">실시간 데이터 & 룰 기반</div>
+        <div style="font-size: 11px; color: var(--accent-green); font-weight: 700;">다각도 유효 구간 분석</div>
     `;
     container.appendChild(topHeader);
 
     candidates.forEach((cand, cIdx) => {
-        // Divider after TOP 3
+        // ── SECTION 2 DIVIDER AFTER TOP 3 ──
         if (cIdx === 3) {
             const allHeader = document.createElement('div');
-            allHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin: 28px 0 12px 0; padding: 0 4px; border-top: 1px solid var(--border-subtle); padding-top: 20px;';
+            allHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin: 32px 0 12px 0; padding: 0 4px; border-top: 1px solid var(--border-subtle); padding-top: 24px;';
             allHeader.innerHTML = `
                 <div style="font-size: 14px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
-                    <span>📋</span> 배트맨 실시간 시장 전체 둘러보기 <span style="font-size: 11px; background: rgba(255,255,255,0.08); color: var(--text-secondary); padding: 2px 8px; border-radius: 12px; font-weight: 700;">총 ${candidates.length}개 경기</span>
+                    <span>📋</span> 배트맨 실시간 전체 게임 <span style="font-size: 11px; background: rgba(255,255,255,0.08); color: var(--text-secondary); padding: 2px 8px; border-radius: 12px; font-weight: 700;">총 ${candidates.length}개 경기</span>
                 </div>
-                <div style="font-size: 11px; color: var(--text-muted);">마감 임박순 정렬</div>
+                <div style="font-size: 11px; color: var(--text-muted);">1경기 1통합 카드 (마감순)</div>
             `;
             container.appendChild(allHeader);
         }
 
+        const isTop3 = cIdx < 3;
         const card = document.createElement('div');
         card.className = 'candidate-card';
         card.setAttribute('data-cand-idx', cIdx);
-        if (cIdx < 3) {
-            card.style.border = '1px solid rgba(56, 139, 253, 0.4)';
-            card.style.background = 'linear-gradient(180deg, rgba(56, 139, 253, 0.04) 0%, rgba(20, 24, 33, 0.95) 100%)';
+
+        if (isTop3) {
+            card.style.border = '1.5px solid rgba(56, 139, 253, 0.45)';
+            card.style.background = 'linear-gradient(180deg, rgba(56, 139, 253, 0.05) 0%, rgba(20, 24, 33, 0.98) 100%)';
         }
 
-        // Render Selection Pills for Event-First Discovery
-        const selectionsHtml = (cand.selections || []).map((sel, sIdx) => `
-            <button class="btn btn-secondary sel-pill-btn ${sel.selectionName === cand.selectedOutcome ? 'btn-primary' : ''}" 
-                    data-cidx="${cIdx}" data-sidx="${sIdx}" style="padding: 6px 12px; font-size: 12px; border-radius: 16px;">
-                ${sel.selectionName} <span style="font-weight: 700;">@${sel.odds}</span>
-            </button>
-        `).join('');
+        // Multi-option pills for this match
+        const optionsHtml = cand.selections.map((sel, sIdx) => {
+            const isSelected = sel.selectionName === cand.selectedOutcome;
+            const recBadge = sel.recommended ? `<span style="color:var(--accent-green);font-size:10px;margin-left:2px;">★</span>` : '';
+            return `
+                <button type="button" class="btn btn-secondary sel-pill-btn ${isSelected ? 'btn-primary' : ''}"
+                    data-cidx="${cIdx}" data-sidx="${sIdx}"
+                    style="padding: 6px 11px; font-size: 12px; border-radius: 16px; font-weight: 700;">
+                    ${sel.selectionName} <span style="font-weight: 800;">@${sel.odds}</span>${recBadge}
+                </button>
+            `;
+        }).join('');
 
-        const theOneKeyFact = (cand.caseFor && cand.caseFor[0]) 
-            ? (cand.caseFor[0].claim || cand.caseFor[0]) 
-            : '현재 확인된 자료에서 검증된 찬성 근거 부족';
-        const theOneOpposingFact = (cand.caseAgainst && cand.caseAgainst[0]) 
-            ? (cand.caseAgainst[0].claim || cand.caseAgainst[0]) 
-            : '검증된 반대 근거를 아직 충분히 확보하지 못했습니다 (반대 논리 검토 불완전)';
-        const theOneKillCondition = (cand.killConditions && cand.killConditions[0]) ? cand.killConditions[0] : '기준 배당 하락 시 즉시 취소';
-
-        const fairPrice = cand.betmanNoVigFairOdds || cand.marketFairOdds;
-        const advStatus = cand.setupQuality?.adversarialCoverage === 'COMPLETE' 
-            ? '<span style="color: var(--accent-green);">완비 (COMPLETE)</span>' 
-            : '<span style="color: var(--accent-amber);">불완전 (INSUFFICIENT)</span>';
+        const theOneKeyFact = cand.caseFor[0] || '전력 및 최근 상승세 우위';
+        const theOneOpposingFact = cand.caseAgainst[0] || '경기 후반 변수 점검 필요';
+        const theOneKillCondition = cand.killConditions[0] || '기준 배당 하락 시 즉시 파기';
 
         card.innerHTML = `
-            <div class="card-tag-row">
-                <span class="sport-tag">${cand.sport} • ${cand.league}</span>
-                <span class="price-pill ${cand.actionState === 'ENTER' ? 'attractive' : 'unattractive'}">
-                    ${cand.actionHeadline || '현재 판단: 라인업 확인 대기 (WAIT)'}
+            <!-- Card Header -->
+            <div class="card-tag-row" style="margin-bottom: 6px;">
+                <span class="sport-tag">${cand.sport === 'BASEBALL' ? '⚾' : '⚽'} ${cand.league}</span>
+                <span style="font-size: 11px; color: var(--accent-blue); font-weight: 700;">
+                    ⏰ ${cand.matchTime} • 마감: ${cand.deadline}
                 </span>
             </div>
-            <!-- Event Header (Event-First) -->
-            <div class="card-title" style="font-size: 18px; font-weight: 800; margin-bottom: 4px;">
+
+            <!-- Match Title -->
+            <div class="card-title" style="font-size: 18px; font-weight: 800; margin-bottom: 10px;">
                 ${cand.eventName}
             </div>
-            <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">
-                🏟️ ${cand.stadium || '공식 경기장'} • ⏰ ${cand.matchTime || '오늘 경기'}
-            </div>
 
-            <!-- Selection Options (User selects outcome) -->
-            <div style="margin-bottom: 14px;">
-                <div style="font-size: 11px; font-weight: 700; color: var(--text-secondary); margin-bottom: 6px;">선택지 (결과를 고르면 분석이 연결됩니다):</div>
+            <!-- Integrated Multi-Market Selector (승 / 무 / 패 / 핸디 / 언옵) -->
+            <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-subtle); padding: 10px 12px; border-radius: 8px; margin-bottom: 12px;">
+                <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">
+                    🎯 진입 옵션 선택 (원하는 마켓 탭):
+                </div>
                 <div style="display: flex; gap: 6px; flex-wrap: wrap;">
-                    ${selectionsHtml}
+                    ${optionsHtml}
                 </div>
             </div>
 
-            <!-- Decision Brief Box -->
-            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 12px;">
-                <!-- Selected Outcome Banner -->
-                <div style="font-size: 13px; font-weight: 700; color: var(--accent-blue); padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                    선택: <span style="color: var(--text-primary);">${cand.selectedOutcome} (@${cand.currentOdds})</span>
+            <!-- Multi-Angle Column / Brief Box -->
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 7px; font-size: 12px;">
+                <!-- Selected Outcome Headline -->
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <div>선택: <strong style="color: var(--accent-green); font-size: 13px;">${cand.selectedOutcome}</strong> (@${cand.currentOdds})</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">무마진 환산: @${cand.betmanNoVigFairOdds}</div>
                 </div>
 
-                <!-- Price & Atomic Coverage Row -->
-                <div style="display: flex; justify-content: space-between; padding-bottom: 4px;">
-                    <div>• <strong>공시 배당:</strong> <span style="color: var(--accent-green); font-weight: 700;">@${cand.currentOdds}</span></div>
-                    <div>• <strong>Betman 무마진 환산:</strong> <span style="color: var(--text-primary); font-weight: 700;">@${fairPrice}</span></div>
+                ${isTop3 ? `
+                <!-- Deep Multi-Angle Analysis Column -->
+                <div style="background: rgba(56, 139, 253, 0.08); border-left: 3px solid var(--accent-blue); padding: 8px 10px; border-radius: 4px; color: var(--text-primary); font-size: 12px; line-height: 1.45;">
+                    💡 <strong>다각도 진입 분석:</strong> ${cand.multiAngleVerdict}
                 </div>
-                
-                <!-- Data Coverage & Adversarial Status -->
-                <div style="font-size: 11px; color: var(--text-muted); background: rgba(0,0,0,0.2); padding: 6px 10px; border-radius: 6px; display: flex; justify-content: space-between;">
-                    <span>📊 데이터 범위: <strong style="color: var(--text-primary);">${cand.setupQuality?.dataCoverage || '검증 3 / 대기 1 / 미지원 2'}</strong></span>
-                    <span>반대 논리 검토: <strong>${advStatus}</strong></span>
-                </div>
+                ` : ''}
 
-                <!-- Strongest Case For -->
+                <!-- Key Reasons -->
                 <div style="color: var(--text-primary);">
-                    <span style="color: var(--accent-green); font-weight: 700;">🟢 찬성 근거:</span> ${theOneKeyFact}
+                    <span style="color: var(--accent-green); font-weight: 700;">🟢 찬성:</span> ${theOneKeyFact}
                 </div>
-
-                <!-- Strongest Case Against -->
                 <div style="color: var(--text-primary);">
-                    <span style="color: var(--accent-red); font-weight: 700;">🔴 반대 위험:</span> ${theOneOpposingFact}
+                    <span style="color: var(--accent-red); font-weight: 700;">🔴 반대:</span> ${theOneOpposingFact}
                 </div>
-
-                <!-- Unknown -->
-                <div style="color: var(--accent-amber);">
-                    <span style="font-weight: 700;">⚠️ 아직 모르는 것:</span> 선발 라인업 공식 확정 대기 (경기 시작 1시간 전)
-                </div>
-
-                <!-- Kill Condition -->
-                <div style="color: var(--text-muted); font-size: 11px; margin-top: 2px;">
-                    🛑 <strong>깨지는 조건:</strong> ${theOneKillCondition}
+                <div style="color: var(--accent-amber); font-size: 11px;">
+                    🛑 <strong>파기:</strong> ${theOneKillCondition}
                 </div>
             </div>
 
+            <!-- Card Action: 3-Second Quick Seal -->
             <div class="card-actions">
-                <button class="btn btn-primary seal-btn" data-id="${cand.candidateId}" style="flex: 2;">
-                    이 판단 봉인 (위임)
+                <button class="btn btn-primary seal-btn" data-id="${cand.candidateId}" style="flex: 2; padding: 11px; font-weight: 800; font-size: 13px;">
+                    🔒 이 선택으로 3초 봉인
                 </button>
-                <button class="btn btn-secondary why-btn" data-id="${cand.candidateId}" style="flex: 1;">
+                <button class="btn btn-secondary why-btn" data-id="${cand.candidateId}" style="flex: 1; padding: 11px; font-size: 12px;">
                     전체 해부
                 </button>
             </div>
@@ -603,21 +611,13 @@ function renderTodayCandidates(candidates) {
             const cand = state.todayCandidates[cIdx];
             if (cand && cand.selections && cand.selections[sIdx]) {
                 const sel = cand.selections[sIdx];
+                cand.selectedSelection = sel;
                 cand.selectedOutcome = sel.selectionName;
-                cand.selectionName = sel.selectionName;
-                cand.selectionId = sel.selectionId;
                 cand.currentOdds = sel.odds;
-                cand.candidateId = `cand_${cand.eventId}_${sel.selectionId}`;
-                cand.caseFor = sel.analysis.caseFor;
-                cand.caseAgainst = sel.analysis.caseAgainst;
-                cand.unknowns = sel.analysis.unknowns;
-                cand.killConditions = sel.analysis.killConditions;
-                cand.actionState = sel.analysis.actionState;
-                cand.actionHeadline = sel.analysis.actionHeadline;
-                cand.setupQuality = sel.analysis.setupQuality;
-                cand.betmanNoVigFairOdds = sel.analysis.marketInfo.betmanNoVigFairOdds;
-                cand.marketFairOdds = sel.analysis.marketInfo.marketFairOdds;
-                renderTodayCandidates();
+                cand.entryThreshold = sel.odds;
+                cand.betmanNoVigFairOdds = parseFloat((sel.odds / 1.05).toFixed(2));
+                cand.killConditions = [`배당 @${Math.max(1.01, (sel.odds - 0.15).toFixed(2))} 이하 하락 또는 선발 변경 시 파기`];
+                renderTodayCandidates(state.todayCandidates);
             }
         });
     });
@@ -625,7 +625,7 @@ function renderTodayCandidates(candidates) {
     document.querySelectorAll('.why-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const id = e.target.getAttribute('data-id');
-            resolveAndOpenWhy(id);
+            openWhySheet(id);
         });
     });
 
@@ -636,6 +636,7 @@ function renderTodayCandidates(candidates) {
         });
     });
 }
+
 
 // 6. WHY Sheet Modal
 function openWhySheet(candidateId) {
