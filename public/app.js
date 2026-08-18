@@ -298,20 +298,58 @@ async function loadTodayTab() {
     try {
         const res = await fetch('/api/today');
         const data = await res.json();
-        state.todayCandidates = data.candidates || [];
-        state.allMarkets = data.allMarkets || [];
+
+        // API returns 'markets' (from static bundle) — map to candidate format
+        const rawMarkets = data.markets || data.allMarkets || [];
+
+        // Convert each market row into a candidate card object
+        const mapped = rawMarkets.map((m, idx) => {
+            const id = m.marketId || `m_${idx}`;
+            return {
+                candidateId: `cand_${id}`,
+                eventId: m.marketId || id,
+                marketId: m.marketId || id,
+                selectionId: `sel_${id}_win`,
+                roundId: m.roundId || data.currentRound || '260097',
+                sport: m.sport || 'SOCCER',
+                league: m.league || '–',
+                eventName: `${m.homeName} vs ${m.awayName}`,
+                homeName: m.homeName,
+                awayName: m.awayName,
+                selectionName: `${m.homeName} 승`,
+                marketName: m.marketName || '승무패',
+                currentOdds: m.winOdds || 0,
+                odds: m.winOdds || 0,
+                winOdds: m.winOdds || 0,
+                drawOdds: m.drawOdds || 0,
+                loseOdds: m.loseOdds || 0,
+                matchTime: m.gameDateFormatted || '–',
+                deadline: m.endDateFormatted || '–',
+                entryThreshold: m.winOdds || 0,
+                provenance: m.provenance || 'LIVE_BETMAN',
+                caseFor: [`${m.homeName} 홈 경기`, `배당 @${m.winOdds}`],
+                caseAgainst: [`${m.awayName} 원정 반격 가능성`],
+                killConditions: [`배당 @${Math.max(1.01,(m.winOdds-0.15).toFixed(2))} 이하 시 파기`],
+                actionHeadline: `${m.homeName} 승 진입 검토 — 배당 @${m.winOdds}`
+            };
+        });
+
+        state.todayCandidates = mapped;
+        state.allMarkets = mapped;
 
         const statusCopy = document.getElementById('today-status-copy');
         if (statusCopy) {
-            statusCopy.innerText = `배트맨 ${data.currentRound || '260097'}회차 실시간 공시 (${data.totalLiveCount || state.allMarkets.length}개 마켓)`;
+            statusCopy.innerText = `배트맨 ${data.currentRound || '260097'}회차 실시간 공시 (${data.totalLiveCount || mapped.length}개 마켓)`;
         }
-    } catch (_) {
+    } catch (e) {
         state.todayCandidates = [];
+        state.allMarkets = [];
     }
 
     initMarketFilters();
     applyMarketFilters();
 }
+
 
 function initMarketFilters() {
     document.querySelectorAll('.sport-filter-btn').forEach(btn => {
