@@ -94,10 +94,13 @@
                     <h1 class="page-title" style="font-size: 22px;">오늘의 시장 탐색 & 판단 봉인</h1>
                     
                     <!-- Betman Round Deadline Info Bar -->
-                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(56, 139, 253, 0.08); border: 1px solid rgba(56, 139, 253, 0.2); padding: 8px 12px; border-radius: 8px; margin: 8px 0 12px 0; font-size: 12px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(56, 139, 253, 0.08); border: 1px solid rgba(56, 139, 253, 0.2); padding: 8px 12px; border-radius: 8px; margin: 8px 0 14px 0; font-size: 12px;">
                         <span style="color: var(--text-primary); font-weight: 600;">⏳ <strong>프로토 승부식 260097회차</strong> 실시간 발매 중</span>
                         <span style="color: var(--accent-blue); font-weight: 700; font-size: 11px;">KBO • NPB • 축구 • MLB</span>
                     </div>
+
+                    <!-- 2-STATE QUANT HERO CARD CONTAINER (진입 vs 자본보존) -->
+                    <div id="quant-hero-container" style="margin-bottom: 20px;"></div>
 
                     <!-- Quick Sports Filter Chips -->
                     <div style="display: flex; gap: 6px; margin-bottom: 12px; overflow-x: auto; padding-bottom: 2px;">
@@ -330,6 +333,9 @@
     <button id="floating-feedback-btn" style="position: fixed; bottom: 80px; right: 20px; background: rgba(210, 153, 34, 0.9); color: #fff; border: none; border-radius: 20px; padding: 8px 14px; font-size: 12px; font-weight: 700; cursor: pointer; z-index: 95; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
         ⚠️ 이상함/불편함
     </button>
+
+    <!-- Bottom Trust Drawer Container (불변 원장 & 몬테카를로 밴드) -->
+    <div id="trust-drawer-container"></div>
 
     <script src="app.js"></script>
 </body>

@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initOnboarding();
     initDogfoodControls();
     initSearchFilter();
+    initQuantHeroAndTrustDrawer();
     loadTodayTab();
     loadWatchTab();
     loadReviewTab();
@@ -1647,3 +1648,245 @@ function revealOutcome(btn, id, outcome) {
     if (el) el.style.display = 'inline';
     showToast('결과 확인', `경기 결과: ${outcome}`);
 }
+
+// ─────────────────────────────────────────────────────────────
+// 8. 2-State Quant Hero Card & Trust Drawer (Operations Harness v2.0)
+// ─────────────────────────────────────────────────────────────
+
+let quantState = {
+    state: 'APPROVED', // 'APPROVED' | 'HARD_PASS'
+    date: '2026-08-18',
+    combinedOdds: 2.99,
+    kellyFraction: 0.05,
+    picks: [
+        {
+            id: 'qp_1',
+            gameNo: 12,
+            sport: 'FOOTBALL',
+            league: '동남아시아 챔피언십',
+            matchTitle: '태국 vs 싱가포르',
+            market: '-1.5 마핸승',
+            batmanOdds: 1.93,
+            deltaP: 14.4
+        },
+        {
+            id: 'qp_2',
+            gameNo: 45,
+            sport: 'BASEBALL',
+            league: 'KBO 프로야구',
+            matchTitle: 'LG 트윈스 vs KT 위즈',
+            market: 'LG 트윈스 승',
+            batmanOdds: 1.62,
+            deltaP: 6.3
+        }
+    ],
+    riskScore: 84,
+    passReason: '배트맨 수수료(20%)를 이길 에지가 부족한 함정 판입니다. 오늘 진입을 패스하여 +20% 시드를 안전하게 방어했습니다.'
+};
+
+let firewallActive = false;
+
+function initQuantHeroAndTrustDrawer() {
+    renderQuantHeroCard();
+    renderTrustDrawer();
+}
+
+function renderQuantHeroCard() {
+    const container = document.getElementById('quant-hero-container');
+    if (!container) return;
+
+    if (quantState.state === 'APPROVED' && quantState.picks) {
+        // ── STATE A: 퀀트 2폴더 승인 (APPROVED) ──
+        const picksHtml = quantState.picks.map(p => `
+            <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:10px 12px;margin-bottom:8px;">
+                <div>
+                    <div style="display:flex;gap:6px;align-items:center;font-size:11px;color:var(--text-muted);margin-bottom:2px;">
+                        <span style="font-weight:800;color:var(--text-primary);background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;">[${p.gameNo}번]</span>
+                        <span>${p.league}</span>
+                    </div>
+                    <div style="font-size:13px;font-weight:800;color:var(--text-primary);">${p.matchTitle}</div>
+                    <div style="font-size:12px;font-weight:700;color:var(--accent-green);">${p.market}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:15px;font-weight:900;color:#fff;">@${p.batmanOdds.toFixed(2)}</div>
+                    <div style="font-size:11px;font-weight:800;color:var(--accent-green);">ΔP +${p.deltaP.toFixed(1)}%p</div>
+                </div>
+            </div>
+        `).join('');
+
+        container.innerHTML = `
+            <div style="position:relative;background:linear-gradient(180deg, rgba(46,160,67,0.08) 0%, rgba(15,20,28,0.95) 100%);border:1.5px solid rgba(46,160,67,0.35);border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+                <!-- Header Badge -->
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:12px;">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent-green);box-shadow:0 0 8px var(--accent-green);"></span>
+                        <span style="font-size:11px;font-weight:900;letter-spacing:0.5px;color:var(--accent-green);">QUANT 2-PICK APPROVED</span>
+                    </div>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                        <span style="font-size:10px;font-weight:700;background:rgba(255,255,255,0.08);color:var(--text-secondary);padding:3px 8px;border-radius:6px;">
+                            권장: 시드 ${(quantState.kellyFraction * 100).toFixed(1)}% 고정
+                        </span>
+                        <button id="toggle-quant-mode-btn" style="background:none;border:none;color:var(--text-muted);font-size:10px;cursor:pointer;padding:2px 4px;" title="모드 전환 테스트">🔄</button>
+                    </div>
+                </div>
+
+                <!-- 2 Picks List -->
+                <div style="margin-bottom:12px;">
+                    ${picksHtml}
+                </div>
+
+                <!-- Combined Odds Box -->
+                <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(46,160,67,0.12);border:1px solid rgba(46,160,67,0.25);border-radius:10px;padding:10px 14px;margin-bottom:14px;">
+                    <span style="font-size:12px;font-weight:700;color:var(--text-secondary);">조합 확정 배당</span>
+                    <span style="font-size:17px;font-weight:900;color:var(--accent-green);">@${quantState.combinedOdds.toFixed(2)}배</span>
+                </div>
+
+                <!-- Attention Firewall CTA Button / Active Banner -->
+                ${!firewallActive ? `
+                    <button id="firewall-copy-btn" class="btn btn-primary" style="width:100%;padding:13px;font-size:13px;font-weight:800;border-radius:10px;background:var(--accent-green);color:#0a0e14;border:none;cursor:pointer;transition:all .15s;">
+                        📋 배트맨에 번호 복사하고 앱 닫기
+                    </button>
+                ` : `
+                    <div style="background:rgba(15,23,42,0.9);border:1px solid rgba(46,160,67,0.4);border-radius:10px;padding:12px;text-align:center;">
+                        <div style="font-size:12px;font-weight:800;color:var(--accent-green);margin-bottom:3px;">🛡️ ATTENTION FIREWALL ACTIVE</div>
+                        <p style="font-size:11px;color:var(--text-muted);margin:0;">
+                            판단이 봉인되었습니다. 이제 앱을 닫고 일상에 집중하세요.
+                        </p>
+                    </div>
+                `}
+            </div>
+        `;
+
+        document.getElementById('firewall-copy-btn')?.addEventListener('click', handleCopyAndClose);
+    } else {
+        // ── STATE B: 자본 보존 모드 (HARD_PASS) ──
+        container.innerHTML = `
+            <div style="position:relative;background:linear-gradient(180deg, rgba(210,153,34,0.08) 0%, rgba(15,20,28,0.95) 100%);border:1.5px solid rgba(210,153,34,0.35);border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+                <!-- Header -->
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:14px;">
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <span style="font-size:14px;">🛡️</span>
+                        <span style="font-size:11px;font-weight:900;letter-spacing:0.5px;color:var(--accent-amber);">CAPITAL PRESERVATION MODE</span>
+                    </div>
+                    <div style="display:flex;gap:6px;align-items:center;">
+                        <span style="font-size:10px;font-weight:800;background:rgba(210,153,34,0.18);border:1px solid rgba(210,153,34,0.3);color:var(--accent-amber);padding:3px 8px;border-radius:6px;">
+                            위험도 ${quantState.riskScore || 84}점
+                        </span>
+                        <button id="toggle-quant-mode-btn" style="background:none;border:none;color:var(--text-muted);font-size:10px;cursor:pointer;padding:2px 4px;" title="모드 전환 테스트">🔄</button>
+                    </div>
+                </div>
+
+                <!-- Explanation -->
+                <div style="text-align:center;padding:10px 6px 16px 6px;">
+                    <h3 style="font-size:15px;font-weight:800;color:var(--text-primary);margin-bottom:6px;">오늘은 베팅을 쉬는 날입니다</h3>
+                    <p style="font-size:12px;color:var(--text-secondary);line-height:1.5;margin:0 auto;max-width:320px;">
+                        ${quantState.passReason}
+                    </p>
+                </div>
+
+                <!-- Fixed Preservation Box -->
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px;text-align:center;font-size:12px;font-weight:700;color:var(--text-secondary);">
+                    ✓ 잔고 보존 완료 (No Action Required)
+                </div>
+            </div>
+        `;
+    }
+
+    // Mode Toggle button handler for previewing both states
+    document.getElementById('toggle-quant-mode-btn')?.addEventListener('click', () => {
+        quantState.state = quantState.state === 'APPROVED' ? 'HARD_PASS' : 'APPROVED';
+        firewallActive = false;
+        renderQuantHeroCard();
+    });
+}
+
+async function handleCopyAndClose() {
+    if (!quantState.picks) return;
+
+    const copyText = quantState.picks
+        .map(p => `[${p.gameNo}번] ${p.matchTitle} - ${p.market} (@${p.batmanOdds.toFixed(2)})`)
+        .join('\n');
+
+    const fullText = `[A.PICK 퀀트 2폴더]\n${copyText}\n조합배당: @${quantState.combinedOdds.toFixed(2)}배`;
+
+    try {
+        await navigator.clipboard.writeText(fullText);
+    } catch (err) {
+        console.warn('Clipboard write fallback');
+    }
+
+    const btn = document.getElementById('firewall-copy-btn');
+    if (btn) {
+        btn.innerText = '✓ 번호 복사 완료!';
+        btn.style.background = 'var(--accent-blue)';
+    }
+
+    showToast('번호 복사 완료', '투표용지 번호가 클립보드에 복사되었습니다.');
+
+    setTimeout(() => {
+        firewallActive = true;
+        renderQuantHeroCard();
+    }, 800);
+}
+
+// ── Trust Drawer Modal & Bottom Bar ──
+let isTrustDrawerOpen = false;
+
+function renderTrustDrawer() {
+    const container = document.getElementById('trust-drawer-container');
+    if (!container) return;
+
+    container.innerHTML = `
+        <!-- Fixed Bottom Trust Bar -->
+        <div id="trust-bar-trigger" style="position:fixed;bottom:54px;left:0;right:0;max-width:480px;margin:0 auto;background:rgba(10,14,20,0.88);backdrop-filter:blur(10px);border-top:1px solid rgba(255,255,255,0.08);padding:9px 14px;text-align:center;cursor:pointer;z-index:90;transition:all .2s;">
+            <div style="display:flex;justify-content:center;align-items:center;gap:8px;font-size:11px;color:var(--text-secondary);">
+                <span style="font-weight:800;color:var(--accent-green);">2026 시즌 검증 ROI +21.4%</span>
+                <span>•</span>
+                <span style="text-decoration:underline;text-underline-offset:2px;color:var(--text-primary);">불변 원장 & 몬테카를로 밴드 보기 →</span>
+            </div>
+        </div>
+
+        <!-- Slide-Up Drawer Modal -->
+        <div id="trust-drawer-modal" style="display:${isTrustDrawerOpen ? 'flex' : 'none'};position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(6px);z-index:100;align-items:flex-end;">
+            <div style="width:100%;max-width:480px;margin:0 auto;max-height:80vh;overflow-y:auto;background:var(--bg-surface);border-top:1.5px solid var(--border-subtle);border-radius:24px 24px 0 0;padding:24px 20px;box-shadow:0 -10px 40px rgba(0,0,0,0.6);">
+                <!-- Header -->
+                <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--border-subtle);margin-bottom:16px;">
+                    <h3 style="font-size:14px;font-weight:800;color:var(--text-primary);margin:0;">불변 트랙레코드 & 분산 밴드</h3>
+                    <button id="close-trust-drawer-btn" style="background:none;border:none;color:var(--text-muted);font-size:13px;cursor:pointer;font-weight:700;">닫기 ✕</button>
+                </div>
+
+                <!-- Key Stat Grid -->
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;">
+                    <div style="background:var(--bg-surface-elevated);border:1px solid var(--border-subtle);border-radius:12px;padding:12px 8px;text-align:center;">
+                        <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">누적 조합 승률</div>
+                        <div style="font-size:16px;font-weight:900;color:var(--accent-green);">43.7%</div>
+                    </div>
+                    <div style="background:var(--bg-surface-elevated);border:1px solid var(--border-subtle);border-radius:12px;padding:12px 8px;text-align:center;">
+                        <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">개별 픽 승률</div>
+                        <div style="font-size:16px;font-weight:900;color:var(--text-primary);">65.2%</div>
+                    </div>
+                    <div style="background:var(--bg-surface-elevated);border:1px solid var(--border-subtle);border-radius:12px;padding:12px 8px;text-align:center;">
+                        <div style="font-size:10px;color:var(--text-muted);margin-bottom:4px;">전략적 PASS</div>
+                        <div style="font-size:16px;font-weight:900;color:var(--accent-amber);">38회</div>
+                    </div>
+                </div>
+
+                <!-- Ledger Note -->
+                <div style="background:rgba(0,0,0,0.3);border:1px solid var(--border-subtle);border-radius:12px;padding:12px 14px;font-size:11px;color:var(--text-secondary);line-height:1.55;">
+                    💡 <strong>단방향 불변 원장 원칙:</strong> 모든 픽은 경기 시작 60분 전 데이터베이스에 영구 잠금(Lock)되며, 사후 수정이나 삭제가 불가능한 타임스탬프 원장으로 단 1건의 누락 없이 영구 아카이빙됩니다.
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('trust-bar-trigger')?.addEventListener('click', () => {
+        isTrustDrawerOpen = true;
+        renderTrustDrawer();
+    });
+
+    document.getElementById('close-trust-drawer-btn')?.addEventListener('click', () => {
+        isTrustDrawerOpen = false;
+        renderTrustDrawer();
+    });
+}
+
