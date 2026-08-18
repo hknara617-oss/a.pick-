@@ -1029,8 +1029,27 @@ async function executeDecisionSeal(cand, sealMeta) {
             })
         });
         const result = await res.json();
-        state.lastSealedDecisionId = result.contract?.id;
-    } catch (_) {}
+    // Instantly add to state.watchList for seamless WATCH tab sync
+    if (!state.watchList) state.watchList = [];
+    const existingIdx = state.watchList.findIndex(w => w.eventName === cand.eventName && w.selectionName === cand.selectionName);
+    if (existingIdx === -1) {
+        state.watchList.unshift({
+            origin: 'APICK_CREATED',
+            eventName: cand.eventName,
+            selectionName: cand.selectionName,
+            sealedOdds: cand.currentOdds,
+            currentOdds: cand.currentOdds,
+            sport: cand.sport || 'BASEBALL',
+            league: cand.league || 'KBO',
+            status: 'stable',
+            changeSummary: '✓ 감시 활성: 배당 및 선발 라인업 변동 없음 (정상)'
+        });
+    }
+
+    const badge = document.getElementById('watch-badge');
+    const mobileBadge = document.getElementById('mobile-watch-badge');
+    if (badge) badge.innerText = state.watchList.length;
+    if (mobileBadge) mobileBadge.innerText = state.watchList.length;
 
     showToast('판단 저장 완료', '판단을 저장했습니다. A.PICK이 지금부터 가격과 주요 변화를 확인합니다.');
 
@@ -1956,7 +1975,32 @@ async function handleHeroSeal() {
         btn.style.background = 'var(--accent-green)';
     }
 
-    showToast('판단 봉인 완료', '판단이 봉인되었으며 A.PICK이 감시를 시작합니다.');
+    if (!state.watchList) state.watchList = [];
+    if (quantState.picks) {
+        quantState.picks.forEach(p => {
+            const existingIdx = state.watchList.findIndex(w => w.eventName === p.matchTitle && w.selectionName === p.market);
+            if (existingIdx === -1) {
+                state.watchList.unshift({
+                    origin: 'APICK_CREATED',
+                    eventName: p.matchTitle,
+                    selectionName: p.market,
+                    sealedOdds: p.batmanOdds,
+                    currentOdds: p.batmanOdds,
+                    sport: p.sport,
+                    league: p.league,
+                    status: 'stable',
+                    changeSummary: '✓ 감시 활성: 배당 및 선발 라인업 변동 없음 (정상)'
+                });
+            }
+        });
+    }
+
+    const badge = document.getElementById('watch-badge');
+    const mobileBadge = document.getElementById('mobile-watch-badge');
+    if (badge) badge.innerText = state.watchList.length;
+    if (mobileBadge) mobileBadge.innerText = state.watchList.length;
+
+    showToast('판단 봉인 완료', '판단이 봉인되었으며 추적(WATCH) 탭에서 감시를 시작합니다.');
 
     setTimeout(() => {
         toggleFirewallCurtain(true);
