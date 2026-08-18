@@ -599,7 +599,7 @@ function renderTodayCandidates(candidates) {
             <!-- Card Action: 3-Second Quick Seal -->
             <div class="card-actions">
                 <button class="btn btn-primary seal-btn" data-id="${cand.candidateId}" style="flex: 2; padding: 11px; font-weight: 800; font-size: 13px;">
-                    🔒 이 선택으로 3초 봉인
+                    🔒 이 픽으로 맡기기
                 </button>
                 <button class="btn btn-secondary why-btn" data-id="${cand.candidateId}" style="flex: 1; padding: 11px; font-size: 12px;">
                     전체 해부
@@ -815,7 +815,7 @@ function openWhySheet(candidateId) {
                     ${cand.actionHeadline || '현재 판단: 확인 필요 (공식 라인업 및 시장 변화 점검)'}
                 </div>
                 <button class="btn btn-primary" onclick="document.getElementById('why-sheet-modal').style.display='none'; openSealFlow('${cand.candidateId}');" style="width: 100%;">
-                    이 조건으로 판단 봉인하기
+                    🔒 이 픽으로 맡기기
                 </button>
             </div>
         </div>
@@ -933,10 +933,10 @@ function openSealFlow(candidateId) {
             <!-- ── Step 3: 봉인 버튼 ── -->
             <button class="btn btn-primary" id="qs-confirm-btn"
                 style="padding:14px;font-weight:800;font-size:15px;letter-spacing:.3px;opacity:.5;pointer-events:none;">
-                🔒 원칙 봉인하고 앱 닫기
+                🔒 이 픽으로 맡기고 앱 닫기
             </button>
             <div style="text-align:center;font-size:10px;color:var(--text-muted);">
-                봉인 후 배당 변동·선발 변경 시에만 알립니다. 앱을 닫아도 됩니다.
+                맡긴 후 배당 변동·선발 변경 시에만 알립니다. 앱을 닫아도 됩니다.
             </div>
         </div>
     `;
@@ -1051,7 +1051,7 @@ async function executeDecisionSeal(cand, sealMeta) {
     if (badge) badge.innerText = state.watchList.length;
     if (mobileBadge) mobileBadge.innerText = state.watchList.length;
 
-    showToast('판단 저장 완료', '판단을 저장했습니다. A.PICK이 지금부터 가격과 주요 변화를 확인합니다.');
+    showToast('이 픽으로 맡겼어요', '중요한 변화가 생기면 알려드릴게요. 이제 앱을 닫으셔도 됩니다.');
 
     const execModal = document.getElementById('execution-sheet-modal');
     const content = document.getElementById('execution-sheet-content');
@@ -1083,7 +1083,7 @@ async function executeDecisionSeal(cand, sealMeta) {
             <div style="display:flex;flex-direction:column;gap:12px;">
                 <!-- Post-Seal Summary Card -->
                 <div style="background:var(--bg-surface-elevated);border:1px solid var(--border-subtle);border-radius:12px;padding:14px;">
-                    <div style="font-size:11px;color:var(--accent-blue);font-weight:700;margin-bottom:4px;">✓ 판단을 저장했습니다.</div>
+                    <div style="font-size:11px;color:var(--accent-blue);font-weight:700;margin-bottom:4px;">✓ 이 픽으로 맡겼어요.</div>
                     <div style="font-size:15px;font-weight:800;color:var(--text-primary);margin-bottom:4px;">
                         [${gameNumber}번] ${cand.eventName}
                     </div>
@@ -1091,7 +1091,7 @@ async function executeDecisionSeal(cand, sealMeta) {
                         선택: ${cand.selectionName} (현재 @${cand.currentOdds} / 내 기준 @${cand.entryThreshold || cand.currentOdds})
                     </div>
                     <div style="font-size:11px;color:var(--text-muted);">
-                        A.PICK이 지금부터 가격과 주요 변화를 확인합니다.
+                        중요한 변화가 생기면 알려드릴게요.
                     </div>
                 </div>
 
