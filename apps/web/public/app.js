@@ -1457,7 +1457,7 @@ async function loadWatchTab() {
 
         const statusCopy = document.getElementById('watch-status-copy');
         if (statusCopy) {
-            statusCopy.innerText = `현재 통합 추적 중 ${data.activeCount || state.watchList.length}건 — 변화가 없으면 알리지 않습니다.`;
+            statusCopy.innerText = `현재 감시 상태: ✓ 가격 변화(ACTIVE) | ✓ 선발·라인업(ACTIVE) | — 부상·기상(NOT_COVERED)`;
         }
         const badge = document.getElementById('watch-badge');
         const mobileBadge = document.getElementById('mobile-watch-badge');
@@ -1777,7 +1777,6 @@ let quantState = {
     state: 'APPROVED', // 'APPROVED' | 'HARD_PASS'
     date: '2026-08-18',
     combinedOdds: 2.99,
-    bankrollPolicy: '5% 고정 분할 베팅',
     picks: [
         {
             id: 'qp_1',
@@ -1859,7 +1858,7 @@ function renderQuantHeroCard() {
                 </div>
                 <div style="text-align:right;">
                     <div style="font-size:15px;font-weight:900;color:#fff;">@${p.batmanOdds.toFixed(2)}</div>
-                    <div style="font-size:11px;font-weight:700;color:var(--text-muted);">기준 갭 ΔP +${p.deltaP.toFixed(1)}%p</div>
+                    <div style="font-size:11px;font-weight:700;color:var(--text-muted);">외부 무마진 갭 +${p.deltaP.toFixed(1)}%p</div>
                 </div>
             </div>
         `).join('');
@@ -1870,16 +1869,16 @@ function renderQuantHeroCard() {
                 <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);margin-bottom:12px;">
                     <div style="display:flex;align-items:center;gap:6px;">
                         <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent-blue);box-shadow:0 0 8px var(--accent-blue);"></span>
-                        <span style="font-size:11px;font-weight:800;letter-spacing:0.5px;color:var(--accent-blue);">오늘 검토할 2개 시장</span>
+                        <span style="font-size:11px;font-weight:800;letter-spacing:0.5px;color:var(--accent-blue);">오늘 볼 경기 2</span>
                     </div>
                     <span style="font-size:10px;font-weight:700;background:rgba(255,255,255,0.08);color:var(--text-secondary);padding:3px 8px;border-radius:6px;">
-                        ${quantState.bankrollPolicy}
+                        외부 시장 무마진 비교
                     </span>
                 </div>
 
                 <!-- Description -->
                 <div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45;margin-bottom:12px;">
-                    데이터 기준 가격 차이가 관측되어 확인해 볼 가치가 있는 시장입니다.
+                    외부 시장 무마진 기준과 가격 차이가 관측된 시장입니다.
                 </div>
 
                 <!-- 2 Picks List -->
@@ -1896,7 +1895,7 @@ function renderQuantHeroCard() {
                 <!-- Attention Firewall CTA Button / Active Banner -->
                 ${!firewallActive ? `
                     <button id="hero-seal-btn" class="btn btn-primary" style="width:100%;padding:13px;font-size:13px;font-weight:800;border-radius:10px;background:var(--accent-blue);color:#fff;border:none;cursor:pointer;transition:all .15s;">
-                        🔒 판단 봉인하고 추적 준비
+                        🔒 이 판단 맡기기
                     </button>
                 ` : `
                     <div style="background:rgba(15,23,42,0.95);border:1.5px solid rgba(56,139,253,0.5);border-radius:12px;padding:14px;text-align:center;">
