@@ -1085,13 +1085,6 @@ async function executeDecisionSeal(cand, sealMeta) {
                 <button class="btn btn-secondary" id="handoff-close-app-btn" style="width:100%;padding:11px;font-size:12px;border-radius:10px;">
                     ✕ 앱 닫기
                 </button>
-
-                <!-- Tertiary Utility Action -->
-                <div style="text-align:center;margin-top:2px;">
-                    <button id="handoff-copy-number-btn" style="background:none;border:none;color:var(--text-muted);font-size:11px;cursor:pointer;text-decoration:underline;">
-                        📋 ${gameNumber}번 ${cand.selectionName} 복사
-                    </button>
-                </div>
             </div>
         `;
 
@@ -1105,11 +1098,6 @@ async function executeDecisionSeal(cand, sealMeta) {
             execModal.style.display = 'none';
             switchTab('watch');
             loadWatchTab();
-        };
-
-        document.getElementById('handoff-copy-number-btn').onclick = async () => {
-            await navigator.clipboard.writeText(`${gameNumber}번 ${cand.selectionName}`);
-            showToast('경기 번호 복사', `${gameNumber}번 ${cand.selectionName}이 복사되었습니다.`);
         };
     }
 
@@ -1907,8 +1895,8 @@ function renderQuantHeroCard() {
 
                 <!-- Attention Firewall CTA Button / Active Banner -->
                 ${!firewallActive ? `
-                    <button id="firewall-copy-btn" class="btn btn-primary" style="width:100%;padding:13px;font-size:13px;font-weight:800;border-radius:10px;background:var(--accent-blue);color:#fff;border:none;cursor:pointer;transition:all .15s;">
-                        📋 배트맨 번호 복사 & 판단 봉인
+                    <button id="hero-seal-btn" class="btn btn-primary" style="width:100%;padding:13px;font-size:13px;font-weight:800;border-radius:10px;background:var(--accent-blue);color:#fff;border:none;cursor:pointer;transition:all .15s;">
+                        🔒 판단 봉인하고 추적 준비
                     </button>
                 ` : `
                     <div style="background:rgba(15,23,42,0.95);border:1.5px solid rgba(56,139,253,0.5);border-radius:12px;padding:14px;text-align:center;">
@@ -1929,7 +1917,7 @@ function renderQuantHeroCard() {
             </div>
         `;
 
-        document.getElementById('firewall-copy-btn')?.addEventListener('click', handleCopyAndClose);
+        document.getElementById('hero-seal-btn')?.addEventListener('click', handleHeroSeal);
     } else {
         // ── STATE B: 자본 보존 모드 (PASS) ──
         container.innerHTML = `
@@ -1962,28 +1950,14 @@ function renderQuantHeroCard() {
     }
 }
 
-async function handleCopyAndClose() {
-    if (!quantState.picks) return;
-
-    const copyText = quantState.picks
-        .map(p => `[${p.gameNo}번] ${p.matchTitle} - ${p.market} (@${p.batmanOdds.toFixed(2)})`)
-        .join('\n');
-
-    const fullText = `[A.PICK 의사결정 투표권]\n${copyText}\n조합배당: @${quantState.combinedOdds.toFixed(2)}배`;
-
-    try {
-        await navigator.clipboard.writeText(fullText);
-    } catch (err) {
-        console.warn('Clipboard write fallback');
-    }
-
-    const btn = document.getElementById('firewall-copy-btn');
+async function handleHeroSeal() {
+    const btn = document.getElementById('hero-seal-btn');
     if (btn) {
-        btn.innerText = '✓ 복사 및 판단 봉인 완료';
+        btn.innerText = '✓ 판단 봉인 완료';
         btn.style.background = 'var(--accent-green)';
     }
 
-    showToast('번호 복사 & 판단 봉인', '투표용지 번호가 복사되었으며 A.PICK이 감시를 시작합니다.');
+    showToast('판단 봉인 완료', '판단이 봉인되었으며 A.PICK이 감시를 시작합니다.');
 
     setTimeout(() => {
         toggleFirewallCurtain(true);
