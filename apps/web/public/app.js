@@ -289,7 +289,7 @@ function initOnboarding() {
 }
 
 // 5. Tab 1: Market Tab — Match-Centric Architecture (1경기 1통합 카드)
-let currentSportFilter = 'ALL';
+let currentSportFilter = 'TOP3';
 
 async function loadTodayTab() {
     const container = document.getElementById('today-candidates-list');
@@ -458,15 +458,20 @@ function initMarketFilters() {
 function applyMarketFilters() {
     const query = (document.getElementById('market-search-input')?.value || '').trim().toLowerCase();
     let filtered = [...state.todayCandidates];
-    if (currentSportFilter !== 'ALL') {
-        filtered = filtered.filter(c => c.sport === currentSportFilter);
-    }
+
     if (query) {
-        filtered = filtered.filter(c => 
+        filtered = state.todayCandidates.filter(c => 
             c.eventName.toLowerCase().includes(query) || 
             (c.league && c.league.toLowerCase().includes(query))
         );
+    } else if (currentSportFilter === 'TOP3') {
+        filtered = filtered.slice(0, 3);
+    } else if (currentSportFilter === 'BASEBALL') {
+        filtered = filtered.filter(c => c.sport === 'BASEBALL');
+    } else if (currentSportFilter === 'SOCCER') {
+        filtered = filtered.filter(c => c.sport === 'SOCCER');
     }
+
     renderTodayCandidates(filtered);
 }
 
@@ -487,37 +492,37 @@ function renderTodayCandidates(candidates) {
         return;
     }
 
-    // ── SECTION 1: TOP 3 FOCUS DROPS ──
+    const isTop3Mode = currentSportFilter === 'TOP3';
+
+    // ── SECTION HEADER ──
     const topHeader = document.createElement('div');
     topHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin: 16px 0 10px 0; padding: 0 4px;';
-    topHeader.innerHTML = `
-        <div style="font-size: 15px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
-            <span>🔥</span> 오늘 집중 분석 픽드랍 <span style="font-size: 11px; background: rgba(56,139,253,0.15); color: var(--accent-blue); padding: 2px 8px; border-radius: 12px; font-weight: 700;">TOP 3 엄선</span>
-        </div>
-        <div style="font-size: 11px; color: var(--accent-green); font-weight: 700;">다각도 유효 구간 분석</div>
-    `;
+    
+    if (isTop3Mode) {
+        topHeader.innerHTML = `
+            <div style="font-size: 15px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+                <span>🔥</span> 오늘 집중 분석 픽드랍 <span style="font-size: 11px; background: rgba(56,139,253,0.15); color: var(--accent-blue); padding: 2px 8px; border-radius: 12px; font-weight: 700;">TOP 3 엄선</span>
+            </div>
+            <div style="font-size: 11px; color: var(--accent-green); font-weight: 700;">다각도 유효 구간 분석</div>
+        `;
+    } else {
+        const filterName = currentSportFilter === 'BASEBALL' ? '⚾ 야구 (KBO/NPB/MLB)' : currentSportFilter === 'SOCCER' ? '⚽ 축구 (FA컵/유럽)' : '📋 전체 발매 게임';
+        topHeader.innerHTML = `
+            <div style="font-size: 15px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
+                <span>${filterName}</span> <span style="font-size: 11px; background: rgba(255,255,255,0.08); color: var(--text-secondary); padding: 2px 8px; border-radius: 12px; font-weight: 700;">총 ${candidates.length}개 경기</span>
+            </div>
+            <div style="font-size: 11px; color: var(--text-muted);">1경기 1통합 카드 (마감순)</div>
+        `;
+    }
     container.appendChild(topHeader);
 
     candidates.forEach((cand, cIdx) => {
-        // ── SECTION 2 DIVIDER AFTER TOP 3 ──
-        if (cIdx === 3) {
-            const allHeader = document.createElement('div');
-            allHeader.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin: 32px 0 12px 0; padding: 0 4px; border-top: 1px solid var(--border-subtle); padding-top: 24px;';
-            allHeader.innerHTML = `
-                <div style="font-size: 14px; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 6px;">
-                    <span>📋</span> 배트맨 실시간 전체 게임 <span style="font-size: 11px; background: rgba(255,255,255,0.08); color: var(--text-secondary); padding: 2px 8px; border-radius: 12px; font-weight: 700;">총 ${candidates.length}개 경기</span>
-                </div>
-                <div style="font-size: 11px; color: var(--text-muted);">1경기 1통합 카드 (마감순)</div>
-            `;
-            container.appendChild(allHeader);
-        }
-
-        const isTop3 = cIdx < 3;
+        const isTop3Card = isTop3Mode || cIdx < 3;
         const card = document.createElement('div');
         card.className = 'candidate-card';
         card.setAttribute('data-cand-idx', cIdx);
 
-        if (isTop3) {
+        if (isTop3Card) {
             card.style.border = '1.5px solid rgba(56, 139, 253, 0.45)';
             card.style.background = 'linear-gradient(180deg, rgba(56, 139, 253, 0.05) 0%, rgba(20, 24, 33, 0.98) 100%)';
         }
@@ -571,7 +576,7 @@ function renderTodayCandidates(candidates) {
                     <div style="font-size: 11px; color: var(--text-muted);">무마진 환산: @${cand.betmanNoVigFairOdds}</div>
                 </div>
 
-                ${isTop3 ? `
+                ${isTop3Card ? `
                 <!-- Deep Multi-Angle Analysis Column -->
                 <div style="background: rgba(56, 139, 253, 0.08); border-left: 3px solid var(--accent-blue); padding: 8px 10px; border-radius: 4px; color: var(--text-primary); font-size: 12px; line-height: 1.45;">
                     💡 <strong>다각도 진입 분석:</strong> ${cand.multiAngleVerdict}
@@ -603,12 +608,37 @@ function renderTodayCandidates(candidates) {
         container.appendChild(card);
     });
 
+    // If in TOP3 mode, show seamless "Explore All Games" CTA button at bottom
+    if (isTop3Mode && state.todayCandidates.length > 3) {
+        const bottomBox = document.createElement('div');
+        bottomBox.style.cssText = 'text-align: center; margin: 28px 0 20px 0; padding: 0 10px;';
+        bottomBox.innerHTML = `
+            <button class="btn btn-secondary" id="explore-all-games-btn"
+                style="width: 100%; max-width: 440px; padding: 14px 20px; font-size: 14px; font-weight: 800; border-radius: 24px; border: 1.5px solid var(--accent-blue); color: var(--accent-blue); background: rgba(56,139,253,0.08); cursor: pointer; transition: all 0.2s;">
+                🔍 배트맨 전체 게임 탐색하기 (총 ${state.todayCandidates.length}개 경기 펼치기) ▾
+            </button>
+        `;
+        container.appendChild(bottomBox);
+
+        document.getElementById('explore-all-games-btn')?.addEventListener('click', () => {
+            document.querySelectorAll('.sport-filter-btn').forEach(b => {
+                b.classList.replace('btn-primary', 'btn-secondary');
+                if (b.getAttribute('data-sport') === 'ALL') {
+                    b.classList.replace('btn-secondary', 'btn-primary');
+                }
+            });
+            currentSportFilter = 'ALL';
+            applyMarketFilters();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
     // Selection Pills Interactive Toggle
     document.querySelectorAll('.sel-pill-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             const cIdx = parseInt(e.currentTarget.getAttribute('data-cidx'));
             const sIdx = parseInt(e.currentTarget.getAttribute('data-sidx'));
-            const cand = state.todayCandidates[cIdx];
+            const cand = (currentSportFilter === 'TOP3' ? state.todayCandidates.slice(0,3) : state.todayCandidates)[cIdx];
             if (cand && cand.selections && cand.selections[sIdx]) {
                 const sel = cand.selections[sIdx];
                 cand.selectedSelection = sel;
@@ -617,7 +647,7 @@ function renderTodayCandidates(candidates) {
                 cand.entryThreshold = sel.odds;
                 cand.betmanNoVigFairOdds = parseFloat((sel.odds / 1.05).toFixed(2));
                 cand.killConditions = [`배당 @${Math.max(1.01, (sel.odds - 0.15).toFixed(2))} 이하 하락 또는 선발 변경 시 파기`];
-                renderTodayCandidates(state.todayCandidates);
+                applyMarketFilters();
             }
         });
     });
