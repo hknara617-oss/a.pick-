@@ -526,8 +526,9 @@ function renderTodayCandidates(candidates) {
         card.setAttribute('data-cand-idx', cIdx);
 
         if (isTop3Card) {
-            card.style.border = '1.5px solid rgba(56, 139, 253, 0.45)';
-            card.style.background = 'linear-gradient(180deg, rgba(56, 139, 253, 0.05) 0%, rgba(20, 24, 33, 0.98) 100%)';
+            card.style.border = '1.5px solid rgba(56, 139, 253, 0.4)';
+            card.style.background = 'linear-gradient(180deg, rgba(56, 139, 253, 0.06) 0%, rgba(17, 23, 38, 0.98) 100%)';
+            card.style.boxShadow = '0 6px 20px rgba(0,0,0,0.35)';
         }
 
         // Multi-option pills for this match
@@ -537,8 +538,8 @@ function renderTodayCandidates(candidates) {
             return `
                 <button type="button" class="btn btn-secondary sel-pill-btn ${isSelected ? 'btn-primary' : ''}"
                     data-cidx="${cIdx}" data-sidx="${sIdx}"
-                    style="padding: 6px 11px; font-size: 12px; border-radius: 16px; font-weight: 700;">
-                    ${sel.selectionName} <span style="font-weight: 800;">@${sel.odds}</span>${recBadge}
+                    style="padding: 7px 12px; font-size: 12px; border-radius: 18px; font-weight: 700; ${isSelected ? 'box-shadow: 0 0 12px rgba(56,139,253,0.4);' : ''}">
+                    ${sel.selectionName} <span style="font-weight: 800; opacity: 0.95;">@${sel.odds}</span>${recBadge}
                 </button>
             `;
         }).join('');
@@ -549,20 +550,20 @@ function renderTodayCandidates(candidates) {
 
         card.innerHTML = `
             <!-- Card Header -->
-            <div class="card-tag-row" style="margin-bottom: 6px;">
+            <div class="card-tag-row" style="margin-bottom: 8px;">
                 <span class="sport-tag">${cand.sport === 'BASEBALL' ? '⚾' : '⚽'} ${cand.league}</span>
-                <span style="font-size: 11px; color: var(--accent-blue); font-weight: 700;">
+                <span style="font-size: 11.5px; color: var(--accent-blue); font-weight: 700;">
                     ⏰ ${cand.matchTime} • 마감: ${cand.deadline}
                 </span>
             </div>
 
             <!-- Match Title -->
-            <div class="card-title" style="font-size: 18px; font-weight: 800; margin-bottom: 10px;">
+            <div class="card-title" style="font-size: 17px; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.02em;">
                 ${cand.eventName}
             </div>
 
             <!-- Integrated Multi-Market Selector (승 / 무 / 패 / 핸디 / 언옵) -->
-            <div style="background: rgba(0,0,0,0.25); border: 1px solid var(--border-subtle); padding: 10px 12px; border-radius: 8px; margin-bottom: 12px;">
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); padding: 10px 12px; border-radius: 12px; margin-bottom: 12px;">
                 <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">
                     🎯 진입 옵션 선택 (원하는 마켓 탭):
                 </div>
@@ -572,38 +573,38 @@ function renderTodayCandidates(candidates) {
             </div>
 
             <!-- Multi-Angle Column / Brief Box -->
-            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 7px; font-size: 12px;">
+            <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 13px 15px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; font-size: 12.5px;">
                 <!-- Selected Outcome Headline -->
-                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.06);">
-                    <div>선택: <strong style="color: var(--accent-green); font-size: 13px;">${cand.selectedOutcome}</strong> (@${cand.currentOdds})</div>
-                    <div style="font-size: 11px; color: var(--text-muted);">무마진 환산: @${cand.betmanNoVigFairOdds}</div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.06);">
+                    <div>선택: <strong style="color: var(--accent-green); font-size: 13.5px; font-weight: 800;">${cand.selectedOutcome}</strong> (@${cand.currentOdds})</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">외부 무마진: @${cand.betmanNoVigFairOdds}</div>
                 </div>
 
                 ${isTop3Card ? `
                 <!-- Deep Multi-Angle Analysis Column -->
-                <div style="background: rgba(56, 139, 253, 0.08); border-left: 3px solid var(--accent-blue); padding: 8px 10px; border-radius: 4px; color: var(--text-primary); font-size: 12px; line-height: 1.45;">
+                <div style="background: rgba(56, 139, 253, 0.08); border-left: 3px solid var(--accent-blue); padding: 8px 11px; border-radius: 4px; color: var(--text-primary); font-size: 12px; line-height: 1.5;">
                     💡 <strong>다각도 진입 분석:</strong> ${cand.multiAngleVerdict}
                 </div>
                 ` : ''}
 
                 <!-- Key Reasons -->
-                <div style="color: var(--text-primary);">
+                <div style="color: var(--text-primary); line-height: 1.45;">
                     <span style="color: var(--accent-green); font-weight: 700;">🟢 찬성:</span> ${theOneKeyFact}
                 </div>
-                <div style="color: var(--text-primary);">
+                <div style="color: var(--text-primary); line-height: 1.45;">
                     <span style="color: var(--accent-red); font-weight: 700;">🔴 반대:</span> ${theOneOpposingFact}
                 </div>
-                <div style="color: var(--accent-amber); font-size: 11px;">
+                <div style="color: var(--accent-amber); font-size: 11.5px; font-weight: 600;">
                     🛑 <strong>파기:</strong> ${theOneKillCondition}
                 </div>
             </div>
 
             <!-- Card Action: 3-Second Quick Seal -->
             <div class="card-actions">
-                <button class="btn btn-primary seal-btn" data-id="${cand.candidateId}" style="flex: 2; padding: 11px; font-weight: 800; font-size: 13px;">
+                <button class="btn btn-primary seal-btn" data-id="${cand.candidateId}" style="flex: 2; padding: 12px; font-weight: 800; font-size: 13.5px; border-radius: 12px;">
                     🔒 이 픽으로 맡기기
                 </button>
-                <button class="btn btn-secondary why-btn" data-id="${cand.candidateId}" style="flex: 1; padding: 11px; font-size: 12px;">
+                <button class="btn btn-secondary why-btn" data-id="${cand.candidateId}" style="flex: 1; padding: 12px; font-size: 12px; border-radius: 12px;">
                     전체 해부
                 </button>
             </div>
