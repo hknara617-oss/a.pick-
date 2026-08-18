@@ -843,8 +843,8 @@ const PRESET_TAGS = [
     { code: 'VALUE',        label: '🛡️ 역배 가치베팅',     cat: 'odds',      kill: '배당 @기준 이하 하락 시' },
 ];
 
-function openSealFlow(candidateId) {
-    let cand = state.selectedCandidate;
+function openSealFlow(candidateId, fallbackCand = null) {
+    let cand = fallbackCand || state.selectedCandidate;
     if (!cand || cand.candidateId !== candidateId) {
         cand = state.todayCandidates.find(c => c.candidateId === candidateId);
     }
@@ -1971,43 +1971,21 @@ function renderQuantHeroCard() {
     }
 }
 
-async function handleHeroSeal() {
-    const btn = document.getElementById('hero-seal-btn');
-    if (btn) {
-        btn.innerText = '✓ 판단 봉인 완료';
-        btn.style.background = 'var(--accent-green)';
-    }
-
-    if (!state.watchList) state.watchList = [];
-    if (quantState.picks) {
-        quantState.picks.forEach(p => {
-            const existingIdx = state.watchList.findIndex(w => w.eventName === p.matchTitle && w.selectionName === p.market);
-            if (existingIdx === -1) {
-                state.watchList.unshift({
-                    origin: 'APICK_CREATED',
-                    eventName: p.matchTitle,
-                    selectionName: p.market,
-                    sealedOdds: p.batmanOdds,
-                    currentOdds: p.batmanOdds,
-                    sport: p.sport,
-                    league: p.league,
-                    status: 'stable',
-                    changeSummary: '✓ 감시 활성: 배당 및 선발 라인업 변동 없음 (정상)'
-                });
-            }
-        });
-    }
-
-    const badge = document.getElementById('watch-badge');
-    const mobileBadge = document.getElementById('mobile-watch-badge');
-    if (badge) badge.innerText = state.watchList.length;
-    if (mobileBadge) mobileBadge.innerText = state.watchList.length;
-
-    showToast('판단 봉인 완료', '판단이 봉인되었으며 추적(WATCH) 탭에서 감시를 시작합니다.');
-
-    setTimeout(() => {
-        toggleFirewallCurtain(true);
-    }, 600);
+function handleHeroSeal() {
+    const heroCand = {
+        candidateId: 'hero_combination',
+        roundId: '260097',
+        sport: '2폴더 엄선',
+        league: '오늘 볼 경기 2',
+        eventId: 'hero_2pick',
+        marketId: 'hero_combo',
+        selectionId: 'combo_1',
+        eventName: '태국 -1.5 마핸승 + LG 트윈스 승',
+        selectionName: '오늘 볼 경기 2개 조합 (@2.99배)',
+        currentOdds: 2.99,
+        entryThreshold: 2.99
+    };
+    openSealFlow('hero_combination', heroCand);
 }
 
 // ── Trust Drawer Modal & Bottom Bar ──
