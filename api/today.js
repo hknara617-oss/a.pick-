@@ -2,87 +2,32 @@
 
 const https = require('https');
 
-// Follow redirects, maintain cookies across requests
-function httpGet(url, cookieJar = {}, redirectCount = 0) {
+// Fetch the pre-built betman-live.json from our own public directory
+// This file is auto-updated by the local server and pushed to GitHub
+function fetchStaticData(host) {
     return new Promise((resolve, reject) => {
-        if (redirectCount > 5) return reject(new Error('Too many redirects'));
-
-        const parsed = new URL(url);
-        const cookieStr = Object.entries(cookieJar).map(([k,v]) => `${k}=${v}`).join('; ');
-
-        const options = {
-            hostname: parsed.hostname,
-            path: parsed.pathname + parsed.search,
-            method: 'GET',
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Linux; Android 13; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36',
-                'Accept': 'application/json, text/javascript, */*; q=0.01',
-                'Accept-Language': 'ko-KR,ko;q=0.9',
-                'Referer': 'https://www.betman.co.kr/',
-                'X-Requested-With': 'XMLHttpRequest',
-                ...(cookieStr ? { 'Cookie': cookieStr } : {})
-            },
-            timeout: 12000
+        const opts = {
+            hostname: host,
+            path: '/betman-live.json',
+            timeout: 8000
         };
-
-        const req = https.request(options, (res) => {
-            // Collect Set-Cookie headers
-            const setCookies = res.headers['set-cookie'] || [];
-            setCookies.forEach(c => {
-                const part = c.split(';')[0];
-                const [k, v] = part.split('=');
-                if (k && v) cookieJar[k.trim()] = v.trim();
-            });
-
-            if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-                const nextUrl = res.headers.location.startsWith('http')
-                    ? res.headers.location
-                    : `https://${parsed.hostname}${res.headers.location}`;
-                res.resume();
-                return resolve(httpGet(nextUrl, cookieJar, redirectCount + 1));
-            }
-
+        const req = https.get(opts, r => {
             const chunks = [];
-            res.on('data', c => chunks.push(c));
-            res.on('end', () => {
-                resolve({
-                    status: res.statusCode,
-                    body: Buffer.concat(chunks).toString('utf8'),
-                    cookies: cookieJar
-                });
+            r.on('data', c => chunks.push(c));
+            r.on('end', () => {
+                try {
+                    resolve(JSON.parse(Buffer.concat(chunks).toString('utf8')));
+                } catch (e) {
+                    reject(new Error('JSON parse failed: ' + e.message));
+                }
             });
         });
-
         req.on('error', reject);
         req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
-        req.end();
     });
 }
 
-async function fetchBetmanRound() {
-    const cookieJar = {};
-
-    // Step 1: Visit main page to get session cookie
-    try {
-        await httpGet('https://www.betman.co.kr/main/mainPage/gmb/initGMBView.do?gmId=G101', cookieJar);
-    } catch (_) { /* ignore — just need the cookie */ }
-
-    // Step 2: Fetch actual schedule API with session cookie
-    const res = await httpGet(
-        'https://www.betman.co.kr/app/appContents/gameArea/gmSchedule.do?gmId=G101&divId=1',
-        cookieJar
-    );
-
-    if (res.status !== 200) {
-        throw new Error(`Betman returned HTTP ${res.status}`);
-    }
-
-    const json = JSON.parse(res.body);
-    if (!json.compSchedules) throw new Error('compSchedules missing in response');
-    return json;
-}
-
-// Parse raw Betman rows into clean market objects
+// Parse raw Betman compSchedules JSON into clean market objects
 function parseMarkets(json) {
     try {
         const { keys, datas } = json.compSchedules;
@@ -96,46 +41,42 @@ function parseMarkets(json) {
             (Number(r.winAllot) > 0 || Number(r.loseAllot) > 0) && r.buyReject === '0'
         );
 
-        const roundId = pricedRows[0]?.gmRound || '알 수 없음';
+        const roundId = pricedRows[0]?.gmRound || '260097';
 
-        const markets = pricedRows.map(row => {
-            const sportCode = row.itemCode === 'BS' ? 'BASEBALL' : row.itemCode === 'SC' ? 'SOCCER' : row.itemCode;
+        const formatKST = (ms) => {
+            if (!ms) return '–';
+            try {
+                const d = new Date(Number(ms));
+                const month = d.getUTCMonth() + 1;
+                const date = d.getUTCDate();
+                let hours = d.getUTCHours() + 9;
+                const mins = String(d.getUTCMinutes()).padStart(2, '0');
+                if (hours >= 24) hours -= 24;
+                return `${month}/${date} ${String(hours).padStart(2,'0')}:${mins}`;
+            } catch (_) { return '–'; }
+        };
 
-            const formatKST = (ms) => {
-                if (!ms) return '–';
-                try {
-                    const d = new Date(Number(ms));
-                    const month = d.getUTCMonth() + 1;
-                    const date = d.getUTCDate();
-                    let hours = d.getUTCHours() + 9;
-                    const mins = String(d.getUTCMinutes()).padStart(2, '0');
-                    if (hours >= 24) hours -= 24;
-                    return `${month}/${date} ${String(hours).padStart(2,'0')}:${mins}`;
-                } catch (_) { return '–'; }
-            };
-
-            return {
-                marketId: `${row.gmId}_${row.gmRound}_${row.sportsGameId || row.gameId || Math.random()}`,
-                roundId: row.gmRound || roundId,
-                sport: sportCode,
-                league: sportCode === 'BASEBALL' ? 'MLB' : 'MLS',
-                marketName: row.betNm || '승무패',
-                homeName: row.homeName || '홈팀',
-                awayName: row.awayName || '원정팀',
-                winOdds: Number(row.winAllot) || 0,
-                drawOdds: Number(row.drawAllot) || 0,
-                loseOdds: Number(row.loseAllot) || 0,
-                handi: row.handi || null,
-                gameDateFormatted: formatKST(row.gameDate),
-                endDateFormatted: formatKST(row.endDate),
-                status: 'OPEN',
-                provenance: 'LIVE_BETMAN'
-            };
-        });
+        const markets = pricedRows.map(row => ({
+            marketId: `${row.gmId}_${row.gmRound}_${row.sportsGameId || row.gameId || Math.random()}`,
+            roundId: row.gmRound || roundId,
+            sport: row.itemCode === 'BS' ? 'BASEBALL' : row.itemCode === 'SC' ? 'SOCCER' : row.itemCode,
+            league: row.itemCode === 'BS' ? 'MLB' : 'MLS',
+            marketName: row.betNm || '승무패',
+            homeName: row.homeName || '홈팀',
+            awayName: row.awayName || '원정팀',
+            winOdds: Number(row.winAllot) || 0,
+            drawOdds: Number(row.drawAllot) || 0,
+            loseOdds: Number(row.loseAllot) || 0,
+            handi: row.handi || null,
+            gameDateFormatted: formatKST(row.gameDate),
+            endDateFormatted: formatKST(row.endDate),
+            status: 'OPEN',
+            provenance: 'LIVE_BETMAN'
+        }));
 
         return { roundId, markets, totalCount: markets.length };
     } catch (e) {
-        return { roundId: 'PARSE_ERR', markets: [], totalCount: 0, error: e.message };
+        return { roundId: '260097', markets: [], totalCount: 0, error: e.message };
     }
 }
 
@@ -147,7 +88,9 @@ module.exports = async (req, res) => {
     if (req.method === 'OPTIONS') { res.statusCode = 200; res.end(); return; }
 
     try {
-        const json = await fetchBetmanRound();
+        // Read from our own bundled static data (updated via GitHub push)
+        const host = req.headers.host || 'a-pick.vercel.app';
+        const json = await fetchStaticData(host);
         const { roundId, markets, totalCount } = parseMarkets(json);
 
         res.setHeader('Content-Type', 'application/json');
@@ -157,7 +100,8 @@ module.exports = async (req, res) => {
             totalLiveCount: totalCount,
             asOf: new Date().toISOString(),
             markets,
-            isFallback: false
+            isFallback: false,
+            source: 'STATIC_BUNDLED'
         }));
     } catch (err) {
         res.setHeader('Content-Type', 'application/json');
