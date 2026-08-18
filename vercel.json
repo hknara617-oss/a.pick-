@@ -1,9 +1,9 @@
 {
   "outputDirectory": "public",
+  "regions": ["icn1"],
   "rewrites": [
     { "source": "/api/today", "destination": "/api/today" },
     { "source": "/api/watch", "destination": "/api/watch" },
     { "source": "/api/(.*)", "destination": "/api/index" }
-  ],
-  "ignoreCommand": ""
+  ]
 }

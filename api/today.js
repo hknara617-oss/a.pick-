@@ -2,40 +2,63 @@
 
 const https = require('https');
 
-// Fetch live Betman proto round data directly from Betman API
-function fetchBetmanRound() {
+// Multiple Betman API endpoints to try in order
+const BETMAN_ENDPOINTS = [
+    { hostname: 'www.betman.co.kr', path: '/app/appContents/gameArea/gmSchedule.do?gmId=G101&divId=1' },
+    { hostname: 'www.betman.co.kr', path: '/api/schedule/G101/1' },
+];
+
+function fetchUrl(hostname, path, timeoutMs = 12000) {
     return new Promise((resolve, reject) => {
         const options = {
-            hostname: 'www.betman.co.kr',
-            path: '/app/appContents/gameArea/gmSchedule.do?gmId=G101&divId=1',
+            hostname,
+            path,
             method: 'GET',
             headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-                'Accept': 'application/json, text/plain, */*',
-                'Accept-Language': 'ko-KR,ko;q=0.9',
-                'Referer': 'https://www.betman.co.kr/',
-                'Origin': 'https://www.betman.co.kr'
+                'User-Agent': 'Mozilla/5.0 (Linux; Android 13; SM-G981B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Mobile Safari/537.36',
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+                'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+                'Accept-Encoding': 'gzip, deflate, br',
+                'Referer': 'https://www.betman.co.kr/main/mainPage/gmb/initGMBView.do?gmId=G101',
+                'X-Requested-With': 'XMLHttpRequest',
+                'Connection': 'keep-alive',
             },
-            timeout: 8000
+            timeout: timeoutMs
         };
 
         const req = https.request(options, (res) => {
-            let data = '';
-            res.on('data', chunk => data += chunk);
+            const chunks = [];
+            res.on('data', chunk => chunks.push(chunk));
             res.on('end', () => {
+                const body = Buffer.concat(chunks).toString('utf8');
                 try {
-                    resolve(JSON.parse(data));
+                    resolve(JSON.parse(body));
                 } catch (e) {
-                    reject(new Error('Betman JSON parse failed: ' + e.message));
+                    reject(new Error(`Betman JSON parse failed (${res.statusCode}): ` + body.substring(0, 100)));
                 }
             });
         });
 
         req.on('error', reject);
-        req.on('timeout', () => { req.destroy(); reject(new Error('Betman API timeout')); });
+        req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
         req.end();
     });
 }
+
+// Fetch live Betman proto round data — tries multiple endpoints
+async function fetchBetmanRound() {
+    let lastErr;
+    for (const ep of BETMAN_ENDPOINTS) {
+        try {
+            const json = await fetchUrl(ep.hostname, ep.path, 12000);
+            if (json && json.compSchedules) return json;
+        } catch (e) {
+            lastErr = e;
+        }
+    }
+    throw lastErr || new Error('All Betman endpoints failed');
+}
+
 
 // Parse raw Betman rows into clean market objects
 function parseMarkets(json) {
