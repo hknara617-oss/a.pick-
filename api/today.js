@@ -37,9 +37,23 @@ function parseMarkets(json) {
             return obj;
         });
 
-        const pricedRows = rows.filter(r =>
-            (Number(r.winAllot) > 0 || Number(r.loseAllot) > 0) && r.buyReject === '0'
+        const now = Date.now();
+        // Filter ONLY active, open, upcoming markets (마감 전 발매 중인 경기만)
+        let pricedRows = rows.filter(r =>
+            (Number(r.winAllot) > 0 || Number(r.loseAllot) > 0) &&
+            r.buyReject === '0' &&
+            Number(r.endDate) > now
         );
+
+        // If all rows in snapshot are past, fallback to open priced rows
+        if (pricedRows.length === 0) {
+            pricedRows = rows.filter(r =>
+                (Number(r.winAllot) > 0 || Number(r.loseAllot) > 0) && r.buyReject === '0'
+            );
+        }
+
+        // Sort by deadline ascending (가장 임박한 경기부터)
+        pricedRows.sort((a, b) => Number(a.endDate) - Number(b.endDate));
 
         const roundId = pricedRows[0]?.gmRound || '260097';
 
@@ -60,7 +74,7 @@ function parseMarkets(json) {
             marketId: `${row.gmId}_${row.gmRound}_${row.sportsGameId || row.gameId || Math.random()}`,
             roundId: row.gmRound || roundId,
             sport: row.itemCode === 'BS' ? 'BASEBALL' : row.itemCode === 'SC' ? 'SOCCER' : row.itemCode,
-            league: row.itemCode === 'BS' ? 'MLB' : 'MLS',
+            league: row.itemCode === 'BS' ? 'MLB' : (row.leagueName || '축구'),
             marketName: row.betNm || '승무패',
             homeName: row.homeName || '홈팀',
             awayName: row.awayName || '원정팀',
@@ -68,6 +82,8 @@ function parseMarkets(json) {
             drawOdds: Number(row.drawAllot) || 0,
             loseOdds: Number(row.loseAllot) || 0,
             handi: row.handi || null,
+            gameDateMs: Number(row.gameDate),
+            endDateMs: Number(row.endDate),
             gameDateFormatted: formatKST(row.gameDate),
             endDateFormatted: formatKST(row.endDate),
             status: 'OPEN',

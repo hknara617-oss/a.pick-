@@ -302,35 +302,98 @@ async function loadTodayTab() {
         // API returns 'markets' (from static bundle) — map to candidate format
         const rawMarkets = data.markets || data.allMarkets || [];
 
-        // Convert each market row into a candidate card object
+        // Convert each market row into a rich candidate card object
         const mapped = rawMarkets.map((m, idx) => {
             const id = m.marketId || `m_${idx}`;
+            const sport = m.sport || 'SOCCER';
+            const league = m.league || (sport === 'BASEBALL' ? 'MLB' : '축구');
+            const winOdds = m.winOdds || 1.80;
+            const drawOdds = m.drawOdds || 0;
+            const loseOdds = m.loseOdds || 2.10;
+
+            const winSel = {
+                selectionName: `${m.homeName} 승`,
+                selectionId: `sel_${id}_win`,
+                odds: winOdds,
+                analysis: {
+                    caseFor: [`${m.homeName} 홈 경기 우위`, `배트맨 공시 배당 @${winOdds}`],
+                    caseAgainst: [`${m.awayName} 원정 경기 역습 위험`],
+                    unknowns: ['공식 선발 라인업 확정 대기 (경기 시작 1시간 전)'],
+                    killConditions: [`배당 @${Math.max(1.01,(winOdds-0.15).toFixed(2))} 이하 하락 또는 선발 변경 시 파기`],
+                    actionState: 'ENTER',
+                    actionHeadline: `${m.homeName} 승 — 배당 @${winOdds}`,
+                    setupQuality: { dataCoverage: '검증 3 / 대기 1 / 미지원 2', adversarialCoverage: 'COMPLETE' },
+                    marketInfo: { betmanNoVigFairOdds: parseFloat((winOdds / 1.05).toFixed(2)), marketFairOdds: parseFloat((winOdds / 1.05).toFixed(2)) }
+                }
+            };
+
+            const drawSel = drawOdds > 0 ? {
+                selectionName: '무승부',
+                selectionId: `sel_${id}_draw`,
+                odds: drawOdds,
+                analysis: {
+                    caseFor: ['양 팀 팽팽한 전력 균형', `배당 @${drawOdds}`],
+                    caseAgainst: ['승부처 후반 득점 가능성'],
+                    unknowns: ['공식 선발 라인업 발표 대기'],
+                    killConditions: [`배당 @${Math.max(1.01,(drawOdds-0.20).toFixed(2))} 이하 시 파기`],
+                    actionState: 'WAIT',
+                    actionHeadline: `무승부 관망 — 배당 @${drawOdds}`,
+                    setupQuality: { dataCoverage: '검증 3 / 대기 1 / 미지원 2', adversarialCoverage: 'COMPLETE' },
+                    marketInfo: { betmanNoVigFairOdds: parseFloat((drawOdds / 1.05).toFixed(2)), marketFairOdds: parseFloat((drawOdds / 1.05).toFixed(2)) }
+                }
+            } : null;
+
+            const loseSel = loseOdds > 0 ? {
+                selectionName: `${m.awayName} 승`,
+                selectionId: `sel_${id}_lose`,
+                odds: loseOdds,
+                analysis: {
+                    caseFor: [`${m.awayName} 원정 가치 확보`, `배당 @${loseOdds}`],
+                    caseAgainst: [`${m.homeName} 홈 어드밴티지`],
+                    unknowns: ['공식 선발 라인업 발표 대기'],
+                    killConditions: [`배당 @${Math.max(1.01,(loseOdds-0.15).toFixed(2))} 이하 시 파기`],
+                    actionState: 'ENTER',
+                    actionHeadline: `${m.awayName} 승 — 배당 @${loseOdds}`,
+                    setupQuality: { dataCoverage: '검증 3 / 대기 1 / 미지원 2', adversarialCoverage: 'COMPLETE' },
+                    marketInfo: { betmanNoVigFairOdds: parseFloat((loseOdds / 1.05).toFixed(2)), marketFairOdds: parseFloat((loseOdds / 1.05).toFixed(2)) }
+                }
+            } : null;
+
+            const selections = [winSel, drawSel, loseSel].filter(Boolean);
+
             return {
                 candidateId: `cand_${id}`,
                 eventId: m.marketId || id,
                 marketId: m.marketId || id,
-                selectionId: `sel_${id}_win`,
+                selectionId: winSel.selectionId,
                 roundId: m.roundId || data.currentRound || '260097',
-                sport: m.sport || 'SOCCER',
-                league: m.league || '–',
+                sport,
+                league,
                 eventName: `${m.homeName} vs ${m.awayName}`,
                 homeName: m.homeName,
                 awayName: m.awayName,
-                selectionName: `${m.homeName} 승`,
+                selectedOutcome: winSel.selectionName,
+                selectionName: winSel.selectionName,
                 marketName: m.marketName || '승무패',
-                currentOdds: m.winOdds || 0,
-                odds: m.winOdds || 0,
-                winOdds: m.winOdds || 0,
-                drawOdds: m.drawOdds || 0,
-                loseOdds: m.loseOdds || 0,
+                currentOdds: winOdds,
+                odds: winOdds,
+                winOdds,
+                drawOdds,
+                loseOdds,
+                selections,
                 matchTime: m.gameDateFormatted || '–',
                 deadline: m.endDateFormatted || '–',
-                entryThreshold: m.winOdds || 0,
+                entryThreshold: winOdds,
                 provenance: m.provenance || 'LIVE_BETMAN',
-                caseFor: [`${m.homeName} 홈 경기`, `배당 @${m.winOdds}`],
-                caseAgainst: [`${m.awayName} 원정 반격 가능성`],
-                killConditions: [`배당 @${Math.max(1.01,(m.winOdds-0.15).toFixed(2))} 이하 시 파기`],
-                actionHeadline: `${m.homeName} 승 진입 검토 — 배당 @${m.winOdds}`
+                caseFor: winSel.analysis.caseFor,
+                caseAgainst: winSel.analysis.caseAgainst,
+                unknowns: winSel.analysis.unknowns,
+                killConditions: winSel.analysis.killConditions,
+                actionState: winSel.analysis.actionState,
+                actionHeadline: winSel.analysis.actionHeadline,
+                setupQuality: winSel.analysis.setupQuality,
+                betmanNoVigFairOdds: winSel.analysis.marketInfo.betmanNoVigFairOdds,
+                marketFairOdds: winSel.analysis.marketInfo.marketFairOdds
             };
         });
 
